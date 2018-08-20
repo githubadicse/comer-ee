@@ -7,7 +7,7 @@ export class UsuarioModel {
         public dni:string = null,
         public login:string = null,
         public clave:string = null,
-        public activo:boolean = null,
+        public activo:boolean = true,
         public perfil:PerfilModel = null,
         public filial:FilialModel = null,
         public status:any = null

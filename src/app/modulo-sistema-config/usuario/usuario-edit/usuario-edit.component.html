@@ -23,20 +23,23 @@
                       <input type="password"  matInput placeholder="Clave" formControlName="clave">
                   </mat-form-field>
                   <mat-slide-toggle formControlName="activo">Activo</mat-slide-toggle>
+
                   <mat-form-field class="w-100">
-                  <mat-select appNextfocus placeholder="Perfil" formControlName="perfil">
-                  <mat-option *ngFor="let perfil of dbperfil" [value]="perfil">
-                    {{perfil.dscperfil}} 
-                  </mat-option>
-                  </mat-select>
+                      <mat-select appNextfocus placeholder="Perfil" formControlName="perfil" [compareWith]="compararPerfil">
+                        <mat-option *ngFor="let perfil of perfilModel" [value]="perfil">
+                          {{perfil.dscperfil}}
+                        </mat-option>
+                      </mat-select>
                   </mat-form-field>
+
                   <mat-form-field class="w-100">
-                  <mat-select appNextfocus placeholder="Filial" formControlName="filial">
-                  <mat-option *ngFor="let filial of dbfilial" [value]="filial">
-                  {{filial.dscfilial}} 
-                  </mat-option>
-                  </mat-select>
+                      <mat-select appNextfocus placeholder="Filial" formControlName="filial" [compareWith]="compararFilial">
+                        <mat-option *ngFor="let filial of filialModel" [value]="filial">
+                          {{filial.dscfilial}}
+                        </mat-option>
+                      </mat-select>
                   </mat-form-field>
+
                   <mat-form-field class="w-70">
                   <input autocomplete="off" matInput placeholder="Status" formControlName="status">
                   </mat-form-field>

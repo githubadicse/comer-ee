@@ -7,14 +7,20 @@ import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
+import { FilialService } from '../../filial/filial.service';
+import { FilialModel } from '../../filial/filial-model';
+import { FormBuilder, Validators } from '../../../../../node_modules/@angular/forms';
 
 @Component({
   selector: 'app-usuario-list',
   templateUrl: './usuario-list.component.html',
   styleUrls: ['./usuario-list.component.css'],
-  providers : [CrudHttpClientServiceShared]
+  providers : [CrudHttpClientServiceShared,FilialService]
 })
 export class UsuarioListComponent implements OnInit {
+  dataForm: any;
+  public filialModel: FilialModel[];
+  public dscfilial: string = "";
   dataPagination: any;
   public flagRefresh: boolean = false;
   id: number;
@@ -32,11 +38,12 @@ export class UsuarioListComponent implements OnInit {
   @ViewChild('dt') dataTable: Table;
   Typeahead = new Subject<string>();
 
-  constructor(private crudHttpClientServiceShared: CrudHttpClientServiceShared, private activateRoute:ActivatedRoute) { 
+  constructor( private formBuilder: FormBuilder, private filialService: FilialService,private crudHttpClientServiceShared: CrudHttpClientServiceShared, private activateRoute:ActivatedRoute) { 
   }
-
   ngOnInit() {
     this.initObservable();
+    this.getFilial();
+    this.buildForm();
   }
 
   initObservable(){
@@ -110,7 +117,30 @@ export class UsuarioListComponent implements OnInit {
 
   ocultarLista() {
     this.show = false;
+  }
 
+  getFilial() {
+    this.filialService.getFilial(this.dscfilial)
+      .subscribe(
+        res => {
+          this.filialModel = res;
+
+        }
+      )
+  }
+
+  buildForm() {
+    this.dataForm = this.formBuilder.group({
+      dscfilial: [this.dscfilial, Validators.required],
+    })
+  }
+
+  cargarData() {
+    this.dscfilial = this.dataForm.controls['dscfilial'].value;
+  }
+
+  changeValue(e) {
+    this.cargarData();
   }
 
   delete(e) {

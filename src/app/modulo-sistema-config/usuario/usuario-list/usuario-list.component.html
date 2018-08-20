@@ -13,7 +13,14 @@
           <br>
           <br>
       </div>
-
+      <mat-form-field>
+          <mat-select placeholder="Seleccione Filial" [(value)]="selected" (selectionChange)="changeValue($event)">
+            <mat-option *ngFor="let filial of filialModel" [value]="filial.filial">
+              {{filial.dscfilial}}
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
+      <p>You selected: {{selected}}</p>
       <p-table #dt class="f-12" [value]="usuariosModel"  dataKey="idusuario" selectionMode="single" [loading]="Cargando">
         <ng-template pTemplate="header">
           <tr>

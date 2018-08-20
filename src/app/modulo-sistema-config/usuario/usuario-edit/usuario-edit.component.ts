@@ -6,26 +6,34 @@ import { isUndefined } from 'util';
 import { UsuarioModel } from '../usuario-model';
 import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
 import { FilialService } from '../../filial/filial.service';
+import { FilialModel } from '../../filial/filial-model';
+import { PerfilServiceService } from '../../perfil/perfil-service.service';
+import { PerfilModel } from '../../perfil/perfil-model';
 
 @Component({
   selector: 'app-usuario-edit',
   templateUrl: './usuario-edit.component.html',
   styleUrls: ['./usuario-edit.component.css'],
-  providers: [CrudHttpClientServiceShared, FilialService]
+  providers: [CrudHttpClientServiceShared, FilialService, PerfilServiceService]
 })
 export class UsuarioEditComponent implements OnInit {
-
+  public dscfilial: string = "";
+  public dscperfil: string = "";
   usuarioForm: any;
   flagRefreshReturn: boolean = false;
   id: any;
   sub: any;
   dbperfil: any;
   dbfilial: any;
-  checkedActivo: boolean = false;
+  checkedActivo: boolean = true;
   myModel = false;
+  public filialModel: FilialModel[];
+  public perfilModel: PerfilModel[];
   public usuarioModel:UsuarioModel= new UsuarioModel();
   
   constructor(
+    private filialService: FilialService,
+    private perfilService: PerfilServiceService,
     private activateRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private crudHttpClientServiceShared: CrudHttpClientServiceShared,
@@ -39,18 +47,12 @@ export class UsuarioEditComponent implements OnInit {
       }
     );
   }
-
   ngOnInit() {
     this.buildForm();
-    this.maestros();
     if(this.id != 0)
     this.edit();
-    console.log(this.myModel);
-  }
-
-  private maestros(): void {
-    this.crudHttpClientServiceShared.getall('perfil', 'getall').subscribe((res: any) => this.dbperfil = res);
-    this.crudHttpClientServiceShared.getall('filial', 'getall').subscribe((res: any) => this.dbfilial = res);   
+    this.getFilial();
+    this.getPerfil();
   }
 
   buildForm() {
@@ -60,7 +62,7 @@ export class UsuarioEditComponent implements OnInit {
       dni: [this.usuarioModel.dni , Validators.required],
       login: [this.usuarioModel.login , Validators.required],
       clave: [this.usuarioModel.clave , Validators.required],
-      activo: [this.checkedActivo.valueOf , Validators.required],
+      activo: [this.checkedActivo , Validators.required],
       perfil: [this.usuarioModel.perfil , Validators.required],
       filial: [this.usuarioModel.filial , Validators.required],
       status: [this.usuarioModel.status , Validators.required]
@@ -72,7 +74,7 @@ export class UsuarioEditComponent implements OnInit {
       res => {
         this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial,res.status);
         this.usuarioForm.setValue(this.usuarioModel)
-        this.checkedActivo = this.usuarioModel.activo === true ? true : false;
+        this.checkedActivo = this.usuarioModel.activo;
       },
       error=>console.log(error),
       ()=>{
@@ -124,4 +126,31 @@ export class UsuarioEditComponent implements OnInit {
       }
     )
   }
+  getFilial() {
+    this.filialService.getFilial(this.dscfilial)
+      .subscribe(
+        res => {
+          this.filialModel = res;
+        }
+      )
+  }
+  getPerfil() {
+
+    this.perfilService.getPerfil(this.dscperfil)
+      .subscribe(
+        res => {
+          this.perfilModel = res;
+        }
+      )
+  }
+
+  changeValue(e) {
+    this.cargarData();
+  }
+  cargarData() {
+    this.getFilial();
+  }
+
+  compararPerfil(c1: any, c2: any): boolean { return c1 && c2 ? c1.idperfil === c2.idperfil : c1 === c2; }
+  compararFilial(c1: any, c2: any): boolean { return c1 && c2 ? c1.idfilial === c2.idfilial : c1 === c2; }
 }
