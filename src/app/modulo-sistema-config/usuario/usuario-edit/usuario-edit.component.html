@@ -1,61 +1,58 @@
 <div class="m-contenedor">
   <div class="card">
     <div class="card-header">
-      USUARIO
-      <div class="float-sm-right">
-        <button type="button" [routerLink]="['../']" class="btn btn-info btn-sm">Atras</button>
-      </div>
+        USUARIO
+        <div class="float-sm-right">
+          <button type="button" [routerLink]="['../',{flagRefreshReturn:flagRefreshReturn}]" class="btn btn-info btn-sm">Atras</button>
+        </div>
     </div>
-
     <div class="card-body">
-      <form [formGroup]="form">
-      <div class="row">        
+      <form [formGroup]="usuarioForm">
+        <div class="row">        
           <div class="col-md-6">
                   <mat-form-field class="w-100">
                     <input autocomplete="off" autofocus matInput placeholder="Nombres" formControlName="nomusuario">
                   </mat-form-field>
-
                   <mat-form-field class="w-100">
                     <input autocomplete="off" matInput placeholder="DNI" formControlName="dni">
                   </mat-form-field>
-
                   <mat-form-field class="w-70">
                     <input autocomplete="off" matInput placeholder="Login" formControlName="login">
                   </mat-form-field>
-
                   <mat-form-field class="w-70">
-                    <input type="password"  matInput placeholder="Clave" formControlName="clave">
+                      <input type="password"  matInput placeholder="Clave" formControlName="clave">
                   </mat-form-field>
+                  <mat-slide-toggle formControlName="activo">Activo</mat-slide-toggle>
+                  <mat-form-field class="w-100">
+                  <mat-select appNextfocus placeholder="Perfil" formControlName="perfil">
+                  <mat-option *ngFor="let perfil of dbperfil" [value]="perfil">
+                    {{perfil.dscperfil}} 
+                  </mat-option>
+                  </mat-select>
+                  </mat-form-field>
+                  <mat-form-field class="w-100">
+                  <mat-select appNextfocus placeholder="Filial" formControlName="filial">
+                  <mat-option *ngFor="let filial of dbfilial" [value]="filial">
+                  {{filial.dscfilial}} 
+                  </mat-option>
+                  </mat-select>
+                  </mat-form-field>
+                  <mat-form-field class="w-70">
+                  <input autocomplete="off" matInput placeholder="Status" formControlName="status">
+                  </mat-form-field>
+                <br>
+
+                    <button [disabled]="!usuarioForm.valid" type="button" class="btn btn-sm btn-info" (click)="create()" *ngIf="this.usuarioModel.idusuario==0 else elseBlock">
+                    <span class="fa fa-floppy-o"></span>&nbsp; Grabar</button>
+                      <ng-template #elseBlock>
+                        <button [disabled]="!usuarioForm.valid" type="button" class="btn btn-sm btn-info" (click)="update()">
+                        <span class="fa fa-floppy-o"></span>&nbsp; Actualizar</button>
+                      </ng-template>
                   
-                  <br><br>
-                  <mat-slide-toggle [checked]="checkedActivo" (change)="checkedActivo=$event.checked">Activo</mat-slide-toggle>
-                  <br>
-            <br>
-          </div>
-          <div class="col-md-6">
-            <mat-form-field class="w-100">
-              <mat-select appNextfocus placeholder="Filial" formControlName="filial" [compareWith]="compareFilial">
-                <mat-option *ngFor="let filial of dbfilial" [value]="filial">
-                  {{filial.dscfilial}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field class="w-100">
-              <mat-select appNextfocus placeholder="Perfil" formControlName="perfil" [compareWith]="comparePerfil">
-                <mat-option *ngFor="let item of dbperfil" [value]="item">
-                  {{item.dscperfil}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
+          </div> 
+
         </div>
-        </form>
-      <hr>
-      <br>
-      <button appNextfocus appKeyClick="F10" type="button" class="btn btn-success btn-sm mr-2" (click)="guardarCambios()">
-        <i *ngIf="procesando" class="fa fa-spinner fa-spin fa-fw"></i>
-        Guardar
-      </button>
+      </form>
     </div>
   </div>
 </div>

@@ -1,139 +1,127 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
-import swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
-import { MSJ_SUCCESS } from '../../../shared/config.service.const';
+import { FormBuilder, Validators } from '@angular/forms';
+import swal from 'sweetalert2'
+import { isUndefined } from 'util';
 import { UsuarioModel } from '../usuario-model';
-import { FilialModel } from '../../filial/filial-model';
-import { PerfilModel } from '../../perfil/perfil-model';
+import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
+import { FilialService } from '../../filial/filial.service';
 
 @Component({
-  selector: 'ad-usuario-edit',
+  selector: 'app-usuario-edit',
   templateUrl: './usuario-edit.component.html',
   styleUrls: ['./usuario-edit.component.css'],
-  providers: [CrudHttpClientServiceShared]
+  providers: [CrudHttpClientServiceShared, FilialService]
 })
 export class UsuarioEditComponent implements OnInit {
-  public dbperfil: any;
-  public dbfilial: any;
-  perfil_model: PerfilModel;
-  filial_model: FilialModel;
-  usuario_model: UsuarioModel = new UsuarioModel;
-  form: FormGroup;
-  procesando: boolean = false;
-  id: number = null;
-  httpModel: string = 'usuario';
-  isEdit: boolean = false;
-  checkedActivo: boolean = true;
-  private esEdicion: boolean = false;
+
+  usuarioForm: any;
+  flagRefreshReturn: boolean = false;
+  id: any;
+  sub: any;
+  dbperfil: any;
+  dbfilial: any;
+  checkedActivo: boolean = false;
+  myModel = false;
+  public usuarioModel:UsuarioModel= new UsuarioModel();
+  
   constructor(
-    private crudService: CrudHttpClientServiceShared,
+    private activateRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private activateRoute: ActivatedRoute
+    private crudHttpClientServiceShared: CrudHttpClientServiceShared,
   ) {
-    this.activateRoute.params.subscribe(
-    params => this.id = params['id']);
-  }    
+    this.sub = this.activateRoute.params.subscribe(
+      params => {
+        this.id = +params['id'];
+        if (isUndefined(params['flagRefresh'])) {
+          return;
+        }
+      }
+    );
+  }
+
   ngOnInit() {
-    this.prepararFormulario();
-  
-    if (this.id) {
-      this.editar();
-    }
-    if (this.id) { this.editar(); this.esEdicion = true; }
-    this.listarperfiles();
-    this.listarfilial();
-  }  
+    this.buildForm();
+    this.maestros();
+    if(this.id != 0)
+    this.edit();
+    console.log(this.myModel);
+  }
 
-  listarperfiles(){ 
-    this.crudService.getall("perfil","getall").subscribe(rests=>{this.dbperfil=rests;
-    console.log(rests);
+  private maestros(): void {
+    this.crudHttpClientServiceShared.getall('perfil', 'getall').subscribe((res: any) => this.dbperfil = res);
+    this.crudHttpClientServiceShared.getall('filial', 'getall').subscribe((res: any) => this.dbfilial = res);   
+  }
+
+  buildForm() {
+    this.usuarioForm = this.formBuilder.group({
+      idusuario: [this.usuarioModel.idusuario, Validators.required],
+      nomusuario: [this.usuarioModel.nomusuario, Validators.required],
+      dni: [this.usuarioModel.dni , Validators.required],
+      login: [this.usuarioModel.login , Validators.required],
+      clave: [this.usuarioModel.clave , Validators.required],
+      activo: [this.checkedActivo.valueOf , Validators.required],
+      perfil: [this.usuarioModel.perfil , Validators.required],
+      filial: [this.usuarioModel.filial , Validators.required],
+      status: [this.usuarioModel.status , Validators.required]
     })
   }
-  listarfilial(){ 
-    this.crudService.getall("filial","getall").subscribe(rest=>{this.dbfilial=rest;
-    console.log(rest);
-    })
+
+  edit(){
+    this.crudHttpClientServiceShared.edit(this.id,"usuario","edit").subscribe(
+      res => {
+        this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial,res.status);
+        this.usuarioForm.setValue(this.usuarioModel)
+        this.checkedActivo = this.usuarioModel.activo === true ? true : false;
+      },
+      error=>console.log(error),
+      ()=>{
+        console.log(this.usuarioModel);
+      }
+    )
   }
 
-  private prepararFormulario(): void {
-    this.form = this.formBuilder.group({
-      idusuario: this.usuario_model.idusuario || 0,
-      dni: [this.usuario_model.dni, Validators.required],
-      login: [this.usuario_model.login, Validators.required],
-      clave: [this.usuario_model.clave, Validators.required],
-      activo: [this.checkedActivo, Validators.required],
-      status: [1],
-      nomusuario: [this.usuario_model.nomusuario, Validators.required],
-      filial: [this.usuario_model.filial, Validators.required],
-      perfil: [this.usuario_model.perfil, Validators.required]      
-    });
+  create(){
+    let data =  JSON.stringify(this.usuarioForm.value);
+    this.crudHttpClientServiceShared.create(data,"usuario","create").subscribe(
+      res=>{
+        this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial,res.status);
+        this.usuarioForm.setValue(this.usuarioModel)
+        this.flagRefreshReturn = true;
+        this.usuarioForm.value.activo = this.checkedActivo === true ? 1 : 0;
+        console.log(this.checkedActivo);
+      },
+      error=>console.log(error),
+      ()=>{
+        swal({
+          position: 'top-end',
+          type: 'success',
+          title: 'Registro Creado',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    )
   }
 
-
-
-  compareFilial(c1: any, c2: any): boolean { return c1 && c2 ? c1.idfilial === c2.idfilial : c1 === c2; }
-  comparePerfil(c1: any, c2: any): boolean { return c1 && c2 ? c1.idperfil === c2.idperfil : c1 === c2; }
-
-  guardarCambios(): void {
-    if (!this.form.valid || this.procesando) { return; }
-    this.procesando = true;
-    
-    this.form.value.activo = this.checkedActivo === true ? 1 : 0;
-    this.usuario_model = <UsuarioModel>this.form.value;
-    console.log(this.usuario_model);
-    this.crudService.create(this.usuario_model, this.httpModel, 'save').subscribe(res => {
-      setTimeout(() => {
-        if (!this.isEdit) { this.prepararFormulario(); }
-        swal(MSJ_SUCCESS); this.procesando = false;
-      }, 800);
-    });
+  update(){
+    let data =  JSON.stringify(this.usuarioForm.value);
+    this.crudHttpClientServiceShared.update(data,"usuario","update").subscribe(
+      res=>{
+        this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial,res.status);
+        this.usuarioForm.setValue(this.usuarioModel);
+        this.flagRefreshReturn = true;
+      },
+      error=>console.log(error),
+      ()=>{
+        swal({
+          position: 'top-end',
+          type: 'success',
+          title: 'Registro Actualizado',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    )
   }
-
-  private editar(): void {
-    this.crudService.edit(this.id, this.httpModel, 'edit', true).subscribe(res => {
-      this.usuario_model = res;               
-           this.prepararFormulario();
-    });
-  }
-
-  // guardarCambios(): void {
-  //   if (!this.form.valid || this.procesando) { return; }
-  //   this.procesando = true;
-
-  //   this.crudService.create(this.form.value, this.httpModel, 'save').subscribe(res => {
-  //     setTimeout(() => {
-  //       if (!this.esEdicion) { this.prepararFormulario(); }
-  //       swal(MSJ_SUCCESS); this.procesando = false;
-  //     }, 800);
-  //   });
-
-  // }
-
-  update(): void {
-    if (!this.form.valid || this.procesando) { return; }
-    this.procesando = true;
-    
-    this.form.value.activo = this.checkedActivo === true ? 1 : 0;
-    this.usuario_model = <UsuarioModel>this.form.value;
-    console.log(this.usuario_model);
-    this.crudService.create(this.usuario_model, this.httpModel, 'update').subscribe(res => {
-      setTimeout(() => {
-        if (!this.isEdit) { this.prepararFormulario(); }
-        swal(MSJ_SUCCESS); this.procesando = false;
-      }, 800);
-    });
-  }
-  
-    
-  }
-
-
-
-
-
-
-
-
-//}
+}

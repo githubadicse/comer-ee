@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { UsuarioRoutingModule } from './usuario-routing.module';
 import { UsuarioMainComponent } from './usuario-main/usuario-main.component';
 import { UsuarioEditComponent } from './usuario-edit/usuario-edit.component';
