@@ -5,19 +5,22 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { DataTableModule, GrowlModule, AutoCompleteModule, FileUploadModule } from 'primeng/primeng';
 
-
+import { MainComponent } from './main/main.component';
 import { ProductoComponent } from './producto/producto.component';
+import { ProductodetalleComponent } from './productodetalle/productodetalle.component';
+import { AutocompletComponent } from './autocomplet.component';
 
 import { ProductoRoutingModule } from './producto-routing.module';
 
-import { MainComponent } from './main/main.component';
-import { AutocompletComponent } from './autocomplet.component';
-import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
-import { ProductodetalleComponent } from './productodetalle/productodetalle.component';
 import { SharedModule } from '../../shared/shared.module';
+import { TableModule } from 'primeng/table';
 
+// material
+import { MatInputModule, MatSelectModule, MatAutocompleteModule, MatExpansionModule, MatSlideToggleModule } from '@angular/material';
 
+// import { HttpModule } from '@angular/http';
+// import { HttpClientModule } from '@angular/common/http';
+//import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -25,13 +28,16 @@ import { SharedModule } from '../../shared/shared.module';
     ProductoRoutingModule,
     GrowlModule,
     DataTableModule,    
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AutoCompleteModule  ,
+    TableModule,
+    SharedModule,    
+    FormsModule, ReactiveFormsModule,
+    AutoCompleteModule,
     FileUploadModule,
-    HttpModule,
-    HttpClientModule
+    MatInputModule,
+    MatSelectModule,
+    MatAutocompleteModule,    
+    MatExpansionModule,
+    MatSlideToggleModule
   ],
  
   declarations: [ProductoComponent, ProductodetalleComponent, MainComponent, AutocompletComponent]

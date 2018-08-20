@@ -5,7 +5,7 @@ export const appConfig = {
 export const MSJ_SUCCESS: any = {
     // position: 'top-end',
     type: 'success',
-    title: 'Se guardo correctamente.',
+    title: 'Se realizo con exito.',
     showConfirmButton: false,
     timer: 1000
 };

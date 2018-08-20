@@ -1,18 +1,13 @@
-
-import { ProductoModel } from '../model/producto.model';
-
-import { ProductoService } from '../service/producto.service';
-
-
-
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { any } from 'codelyzer/util/function';
-import * as jquery from 'jquery';
-import { Message } from 'primeng/primeng';
-import { BlockUIModule } from 'primeng/primeng';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SharedService } from '../../../shared/servicio/shared.service';
 
+
+import { Subject } from 'rxjs';
+import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import swal from 'sweetalert2';
+import { MSJ_ALERT_BORRAR, MSJ_SUCCESS } from '../../../shared/config.service.const';
+import { Table } from 'primeng/table';
+import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
 
 
 
@@ -22,116 +17,69 @@ declare const $: any;
   selector: 'ad-producto',
   templateUrl: './producto.component.html',
   styleUrls: ['./producto.component.css'],
-
-
-  providers: [ProductoService, SharedService]
+  providers: [SharedService, CrudHttpClientServiceShared]
 })
 
 export class ProductoComponent implements OnInit {
 
-  public titulo: string = "Maestro de productos";
+  public titulo: string = "Productos";
 
-  public productosModel: ProductoModel[] = [];
-  public productoModel: ProductoModel = new ProductoModel();
+  public db_producto: any;
+  public showChild: boolean = false;
+  public ShowBuqueda: boolean = false;
 
+  @ViewChild('dt') dataTable: Table;
+  public Typeahead = new Subject<string>();
+  public filterPage: any;
+  public filtrosActivos: any;
+  public totalRecords: number;
+  public http_model = 'producto';
+  public loading: boolean = true;
 
-
-  //-comandos obligatorios para la paginacion-//
-  private msgPopup: Message[] = [];
-  public blocked: boolean;
-
-  public showPanelBuscarFlag: boolean = false;
-
-  public filterPage: Object;
-  public displayModal: boolean = false;
-  public refreshPage: boolean = false;
   //-----------------------------------------//
 
-
-
   constructor(
-
-    private productoService: ProductoService,
     private sharedService: SharedService,
-   
-
+    private crudService: CrudHttpClientServiceShared
   ) { }
 
-
-
   ngOnInit() {
-   
+    this.maestros();
+    this.initObservable();
   }
 
-  filter(e) {
-    this.filterPage = JSON.stringify(e.filters);
-  }
-  refreshModel(e) {
-    this.productosModel = e;
-  }
-
-  showPanelBuscar() {
-    this.showPanelBuscarFlag = !this.showPanelBuscarFlag;
+  private initObservable(): void {
+    this.Typeahead.pipe(distinctUntilChanged(), debounceTime(500))
+      .subscribe((res: any) => {
+        const value = res[0]; const field = res[1]; const operator = res[2];
+        this.dataTable.filter(value, field, operator);
+      });
   }
 
-  edit(e) {
-    // let id = e.idproducto;
-    // this.sharedService.findById(id,"producto","findbyid")
-    //      .subscribe(
-    //            result => {
-
-    //                this.productoModel = result.data;
-
-    //                console.log(this.productoModel);
-
-    //            },
-    //            error =>{},
-    //            ()=>{
-    //               this.showEdit();
-    //            }
-    //     ) ;
-  }
-
-  showEdit() {
-    $('#myModal').modal({
-      backdrop: 'static',
-      keyboard: false  // to prevent closing with Esc button (if you want this too)
+  private maestros(): void {
+    this.crudService.getall(this.http_model, 'getall').subscribe((res: any) => { 
+      this.db_producto = res; 
+      this.totalRecords = res.totalCount; 
+      this.loading = false;
     });
   }
 
-
-  pdfList() {
-    //this.clear();
-    this.productoService.getPdfListaProductos()
-      .subscribe(
-      res => {
-        if (res.body.size == 0) {
-          //this.showError();
-          return;
-        }
-        //console.log(res.headers.get('X-Custom-Header'));
-        console.log(res)
-        debugger;
-        let mediaType = res.headers.get("Content-Type");
-        console.log(mediaType)
-        let blob = new Blob([res.body], { type: mediaType });
-        //let file = new window.Blob([res.body], {type: 'application/pdf'});
-        var fileURL = URL.createObjectURL(blob);
-        window.open(fileURL);
-        //let urlCreator = window.URL;
-        //let url = urlCreator.createObjectURL(blob);
-        //window.open(url,"titulo","height=600, width=600, status=yes, toolbar=no, menubar=no, location=no") ;
-
-
-      },
-      err => { console.log("error... al mostrar imagen...") }
-      ,
-      () => { console.log("completo subid ") }
-      );
-    ;
-
-
+  public borrarRegistro(data: any): any {
+    swal(MSJ_ALERT_BORRAR).then((res: any) => {
+      if (res.value) {
+        this.crudService.delete(data.idproducto, this.http_model, 'delete').subscribe(res => {
+          swal(MSJ_SUCCESS);
+          // this.refreshModel(this.filtrosActivos); // cuando [lazy]="true"
+          this.maestros();
+        });
+      }
+    });
   }
 
+  onActivateChild() { this.showChild = true; }
+  onDeactivateChild() {
+    this.showChild = false;
+    if (this.sharedService.refreshByStorage(this.http_model)) { this.maestros() }
+  }
 
 }

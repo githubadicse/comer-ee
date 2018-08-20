@@ -11,15 +11,16 @@ export class CrudHttpClientServiceShared {
 
   constructor(private configService:ConfigService, private httpClient:HttpClient) { }
 
-  getall(controller:string,evento:string):Observable<any[]>{
-    let url = this.configService.getUrlSecurityRes(controller,evento);
+  getall(controller:string,evento:string,urlBasic?:boolean):Observable<any[]>{
+    let url = urlBasic ? this.configService.getUrlBasic(controller, evento) : this.configService.getUrlSecurityRes(controller, evento);
+    //let url = this.configService.getUrlSecurityRes(controller, evento);
     //let header = this.configService.getHeaderHttpClientGet();
-    let header = this.configService.getHeaderHttpClientGet();
-    return this.httpClient.get<any[]>(url,{headers:header} );
+       
+    return this.httpClient.get<any[]>(url);
   }
 
-  edit(id:any,controller:string,evento:string):Observable<any>{
-
+  edit(id: any, controller: string, evento: string):Observable<any>{
+    //let url = urlBasic ? this.configService.getUrlBasic(controller, evento) : this.configService.getUrlSecurityRes(controller, evento);    
     let url = this.configService.getUrlSecurityRes(controller,evento);
     let header = this.configService.getHeaderHttpClientGet();
     let parametros = new HttpParams().set("id",id.toString());
@@ -45,8 +46,9 @@ export class CrudHttpClientServiceShared {
     return this.httpClient.put<any>(url,model,{headers:header});
   }
 
-  delete(id:any,controller:string,evento:string):Observable<any>{
-    let url = `${this.configService.getUrlSecurityRes(controller,evento)}/${id}`;
+  delete(id: any, controller: string, evento: string, urlBasic?: boolean):Observable<any>{
+    let url = urlBasic ? `${this.configService.getUrlBasic(controller, evento)}/${id}` : `${this.configService.getUrlSecurityRes(controller, evento)}/${id}`;
+    //let url = `${this.configService.getUrlSecurityRes(controller,evento)}/${id}`;
     let header = this.configService.getHeaderHttpClientGet();
       
     return this.httpClient.delete<any>(url,{headers:header });

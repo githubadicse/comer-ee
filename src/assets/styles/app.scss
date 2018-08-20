@@ -9,6 +9,8 @@
 @import "scss/material";
 @import "scss/utilities/utilities";
 
+
+.cursor{ cursor: pointer; }
 .m-contenedor {
     font-size: 12px;
     line-height: 2;
@@ -24,4 +26,33 @@
   
 .m-contenedor .mat-form-field-label-wrapper {
   font-size: 14px;
+}
+
+.bg-grey {
+  background: #eeeeee;
+}
+
+.table-1 {
+    width: 100%;
+    font-size: 14px; 
+    font-weight: 500;    
+}
+
+.table-1 tr {    
+    border-bottom: 1px solid rgb(182, 182, 182);    
+}
+.table-1 tr:hover {
+    background: #e3f5fd;
+}
+
+.table-1 tr.selected {
+    background: #c6e2ee;
+}
+
+.table-1 tr.sin-borde{    
+    border-bottom: none;
+}
+
+.table-1 tr td{
+    padding-top: 11px;
 }

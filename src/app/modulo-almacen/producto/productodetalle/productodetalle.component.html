@@ -1,4 +1,186 @@
-<p-growl [value]="this.msgPopup" [life]=1500>
+<div class="m-contenedor">
+  <div class="card">
+    <div class="card-header">
+      {{ nomproducto }}
+      <div class="float-sm-right">
+        <button type="button" [routerLink]="['../']" class="btn btn-info btn-sm">Atras</button>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <form [formGroup]="form">
+      <div class="row">
+        <div class="col-12">
+          <div class="float-right">
+            <mat-slide-toggle [checked]="checkedActivo" (change)="checkedActivo=$event.checked">Activo</mat-slide-toggle>
+          </div>
+          <h4>Datos Basicos del Producto/Articulo</h4>          
+          <hr>
+          <br>          
+        </div>                        
+        <div class="col-md-6">                                     
+              <mat-form-field>
+                <input matInput placeholder="Codigo" formControlName="idproducto">
+              </mat-form-field>
+            
+              <mat-form-field class="w-100">
+                <input autocomplete="off" autofocus matInput placeholder="Descripcion" formControlName="dscproducto">
+              </mat-form-field>
+
+              <mat-form-field class="w-100">
+                <input matInput placeholder="Descripcion corta" formControlName="dscproductocorto">
+              </mat-form-field>
+
+              <mat-form-field class="w-100">
+                <mat-select appNextfocus placeholder="Categoria" formControlName="categoria" [compareWith]="compareCategoria">
+                  <mat-option *ngFor="let categoria of categoriasModel" [value]="categoria">
+                    {{categoria.dsccategoria}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              
+                         
+            <br>
+        </div>        
+
+        <div class="col-md-6">
+            <mat-form-field class="w-100">
+              <input AutocompleteSelectionValidator appNextfocus matInput autocomplete="off" placeholder="Marca" [matAutocomplete]="auto"
+                formControlName="marca" appCtrlAutocomplete [data]="marcasModel" etiqueta="dscmarca" (DatosFiltrados)="setAutoCompleteDatosFiltradosMarca($event)">
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnAutoCompleteMarca">
+                <mat-option *ngFor="let marca of listMarcaFilter" [value]="marca">
+                  <span>{{marca.dscmarca}}</span>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="w-100">
+              <mat-select appNextfocus placeholder="Unidad de Medida" formControlName="unidadmedida" [compareWith]="compareUndMedida">
+                <mat-option *ngFor="let unidad of unidadmedidasModel" [value]="unidad">
+                  {{unidad.dscunidadmedida}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>                        
+
+            <mat-form-field class="w-100">
+              <input matInput placeholder="Stock Minimo" formControlName="stockminimo">
+            </mat-form-field>
+            
+        </div>                   
+      </div>
+
+      <br>
+      
+
+      <div class="row">
+        <div class="col-md-12">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header class="bg-grey">
+              <mat-panel-title>
+                 Precios de venta
+              </mat-panel-title>              
+            </mat-expansion-panel-header>
+            <hr><br>
+
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field class="w-33">
+                  <input matInput placeholder="Precio 2" formControlName="precio1">
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field class="w-33">
+                  <input matInput placeholder="Precio 2" formControlName="precio2">
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field class="w-33">
+                  <input matInput placeholder="Precio 3" formControlName="precio3">
+                </mat-form-field>
+              </div>
+            </div>
+
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header class="bg-grey">
+              <mat-panel-title>
+                Codigo de barra
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <hr><br>
+          
+            <div class="row">
+              <div class="col-md-12">                
+                <mat-form-field class="w-100">
+                  <input matInput autocomplete="off" placeholder="Codigo de barras" (keydown.enter)="addCodigoBarra(InputcodigoBarra.value); InputcodigoBarra.value=''" #InputcodigoBarra>
+                </mat-form-field>
+                <br>
+                <table class="table-1">
+                  <tr *ngFor="let item of listCodigoBarras; let i=index">
+                    <td>{{item.codigo}}</td>
+                    <td width="50px"><i class="fa fa-trash-o cursor" aria-hidden="true" title="Eliminar" (click)="removeCodigoBarra(i)"></i></td>
+                  </tr>                  
+                </table>
+                <br>
+              </div>
+            </div>
+          
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header class="bg-grey">
+              <mat-panel-title>
+                Imagen del producto
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <hr><br>
+          
+            <div class="row">
+              <div class="col-md-12">                                
+                  <input type="file" placeholder="Imagen(es): " readonly multiple accept="image/*" (change)="obtnerImagenes($event)" #txtImagenes>                
+                  <br>
+                  <br>
+                  <img *ngFor="let imagen of ListImagenes" [src]="imagen" alt="" width="150px" height="150px">
+                  <img *ngIf="!ListImagenes && imagenProducto != null" height="200" width="150px" height="150px" src={{this.imagenProducto}}>
+                <br>                
+              </div>
+            </div>
+          
+          </mat-expansion-panel>
+
+
+        </mat-accordion>
+        </div>
+
+
+        
+      </div>
+
+
+      </form>
+
+      <hr>
+      <br>
+
+       <!-- [disabled]="!form.valid" -->
+      <button appNextfocus appKeyClick="F10" type="button" class="btn btn-success btn-sm mr-2" (click)="guardarCambios()" [disabled]="!form.valid">
+        <i *ngIf="procesando" class="fa fa-spinner fa-spin fa-fw"></i>
+        [F10] 
+        <span *ngIf="!isEdit"> Guardar </span>
+        <span *ngIf="isEdit"> Guardar Cambios </span>
+      </button>
+
+    </div>
+
+
+  </div>
+</div>
+<!-- 
+
+
+<p-growl [value]="msgPopup" [life]=1500>
 
 </p-growl>
 
@@ -48,9 +230,6 @@
           <input formControlName="dscproductocorto" class="form-control inputfield col-8">
           <span *ngIf="!productoForm.get('dscproductocorto').valid" style="color:red">*</span>
         </div>
-        <!--     
-          <ad-autocomplet [items]="categoriasModel"   (completeMethod)="searchCategoria($event)"></ad-autocomplet> -->
-
 
 
         <div class="row">
@@ -186,7 +365,6 @@
                       <span data-toggle="tooltip" title="Quitar Codigo" class="glyphicon glyphicon-trash" style="cursor: pointer;"></span>
 
                     </td>
-                    <!--  <td> <a href="" (click)="agregarCodigoBarra(cb)">Quitar</a> </td> -->
 
                   </tr>
 
@@ -321,4 +499,4 @@
       </div>
     </div>
   </div>
-  <router-outlet></router-outlet>
+  <router-outlet></router-outlet> -->

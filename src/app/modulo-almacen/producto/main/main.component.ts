@@ -14,34 +14,4 @@ export class MainComponent implements OnInit {
   ngOnInit() {
   }
 
-  onActivate() {
-    console.log("Activate edicion");
-    this.showLista = false;
-    this.showEdicion = true;
-
-  }  
-
-  onDeactivate() {
-    console.log("Deactivate edicion");
-    this.showLista = true;
-    this.showEdicion = false;
-
-  }
-
-
-
-
-
-  onActivateLista() {
-    console.log("Activate lista");
-    this.showLista = true;
-    this.showEdicion = false;
-
-  }
-  onDeactivateLista() {
-    console.log("Deactivate Lista");
-    this.showLista = false;
-    this.showEdicion = true;
-
-  }
 }

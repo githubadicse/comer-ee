@@ -5,12 +5,15 @@ import { BlockUIModule, DataTableModule, GrowlModule } from 'primeng/primeng';
 
 import { DecimalDirective } from './directives/decimal.directive';
 import { CurrencyPipePipe } from './directives/currency-pipe.pipe';
+import { CtrlAutocompleteDirective } from './directives/ctrl-autocomplete.directive';
 
 import { AuthGuard } from './guard/auth.guard';
 import { HighlightDirective } from './directives/highlight.directive';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorAutorizationService } from './interceptor-autorization.service';
 import {TableModule} from 'primeng/table';
+import { AutocompleteSelectionValidatorDirective } from './validators/autocomplete-selection-validator.directive';
+
 
 
 
@@ -25,7 +28,7 @@ import {TableModule} from 'primeng/table';
     TableModule
    
   ],
-  declarations: [ PaginationComponent, DecimalDirective, CurrencyPipePipe,HighlightDirective],
+  declarations: [PaginationComponent, DecimalDirective, CurrencyPipePipe, HighlightDirective, CtrlAutocompleteDirective, AutocompleteSelectionValidatorDirective],
   providers: [AuthGuard,CurrencyPipePipe
      
     //  {
@@ -35,7 +38,7 @@ import {TableModule} from 'primeng/table';
     //  }
  
   ],
-  exports:[PaginationComponent,HighlightDirective, CurrencyPipePipe,DecimalDirective]
+  exports: [PaginationComponent, HighlightDirective, CurrencyPipePipe, DecimalDirective, CtrlAutocompleteDirective, AutocompleteSelectionValidatorDirective]
 
 })
 export class SharedModule { }

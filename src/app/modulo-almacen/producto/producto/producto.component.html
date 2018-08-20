@@ -1,80 +1,91 @@
-
+<!-- <div [hidden]="!this.show"> -->
 <h3>
   {{titulo}}
 </h3>
+<div [hidden]="showChild" class="m-contenedor">
+  <div style="height: 70%;">
+    <button type="button" class="btn btn-danger btn-circle" [routerLink]="['./edicion']" (click)="showChild=true">
+      <i class="fa fa-plus"></i>
+    </button>
+    <!-- <button type="button" class="btn btn-info btn-circle" [routerLink]="['./productoedicion', {id:0}]">
+      <i class="fa fa-print"></i>
+    </button> -->
+    <button type="button" class="btn btn-success btn-circle" (click)="ShowBuqueda = !ShowBuqueda">
+      <i class="fa fa-search"></i>
+    </button>
+    <br>
+    <br>
 
-<p-growl [value]="this.msgPopup" [life]=1500></p-growl>
-
-<div style="height: 70%;">
-  <button type="button" class="btn btn-danger btn-circle" [routerLink]="['./productoedicion', {id:0}]"><i class="fa fa-plus"></i></button>
-  <button type="button" class="btn btn-info btn-circle" (click)="pdfList()"><i class="fa fa-print"></i></button>
-  <button type="button" class="btn btn-success btn-circle" (click)="showPanelBuscar()"><i class="fa fa-search"></i></button>
-  <!-- <a class="btn btn-default btn-sm" style="cursor: pointer;" (click)="showDialog()"><i class="fa fa-file-o fa-gl" style="cursor: pointer;" aria-hidden="true" ></i>&nbsp; Agregar Producto</a> -->
-  <!-- <a class="btn btn-default btn-sm" style="cursor: pointer;" href=""><i class="fa fa-print fa-gl"  aria-hidden="true"></i>&nbsp; Imprimir Lista</a> -->
-  <!-- <a class="btn btn-default btn-sm" style="cursor: pointer;" (click)="showPanelBuscar()"><i class="fa fa-search fa-gl" style="cursor: pointer;" aria-hidden="true"></i>&nbsp; Buscar</a> -->
-  <br><br>
-
-  <p-dataTable emptyMessage=" " [value]="productosModel" [filterDelay]=500 [lazy]="true" (onFilter)="filter($event)" selectionMode="single"
-    scrollHeight="70%" [style]="{'height':'80%'}">
-
-    <p-column field="idproducto" #idcategoria header="CODIGO" [style]="{'width':'90px'}" [filter]="showPanelBuscarFlag"> > </p-column>
-
-    <p-column field="dscproducto" header="DESCRIPCION" [style]="{'width':'500px'}" [filter]="showPanelBuscarFlag"> ></p-column>
-
-    <p-column field="unidadmedida.dscunidadmedida" header="UND" [style]="{'width':'70px'}" [filter]="showPanelBuscarFlag"> ></p-column>
-
-    <p-column>
-      <ng-template let-data="rowData" pTemplate type="body">
-        <i [routerLink]="['productoedicion', {id:data.idproducto}]" style="cursor: pointer;" class="fa fa-pencil fa-1x" aria-hidden="true" data-toggle="tooltip" title="Editar"></i>&nbsp;
-
-        <i style="cursor: pointer;" class="fa fa-trash-o fa-1x" aria-hidden="true" data-toggle="tooltip" title="Eliminar"></i>
-         
+    <p-table #dt class="f-12" [value]="db_producto" selectionMode="single" [paginator]="true" [lazy]="false" (onLazyLoad)="filter($event)"
+      [rows]="10" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[10,20,30]" editable="true" editMode="cell" [loading]="loading">
+      <ng-template pTemplate="header">
+        <tr>          
+          <th width="90px" [pSortableColumn]="'idproducto'">
+            Codigo
+            <p-sortIcon [field]="'idproducto'"></p-sortIcon>
+          </th>
+          <th [pSortableColumn]="'marca.dscmarca'">
+            Marca
+            <p-sortIcon [field]="'marca.dscmarca'"></p-sortIcon>
+          </th>
+          <th [pSortableColumn]="'categoria.dsccategoria'">
+            Categoria
+            <p-sortIcon [field]="'categoria.dsccategoria'"></p-sortIcon>
+          </th>
+          <th width="35%" [pSortableColumn]="'dscproducto'">
+            Descripcion
+            <p-sortIcon [field]="'dscproducto'"></p-sortIcon>
+          </th>
+          <th [pSortableColumn]="'unidadmedida.abrunidadmedida'">
+            Medida
+            <p-sortIcon [field]="'unidadmedida.abrunidadmedida'"></p-sortIcon>
+          </th>
+          
+          <th width="70px"></th>
+        </tr>
+        <ng-container *ngIf="ShowBuqueda">
+          <tr>
+            <th>
+              <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'idproducto','equals'])">
+            </th>
+            <th>
+              <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'marca.dscmarca','contains'])">
+            </th>
+            <th>
+              <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'categoria.dsccategoria','contains'])">
+            </th>
+            <th>
+              <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'dscproducto','contains'])">
+            </th>
+            <th>
+              <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'unidadmedida.abrunidadmedida','contains'])">
+            </th>            
+            <th>-</th>
+          </tr>
+        </ng-container>
       </ng-template>
-    </p-column>
+      <ng-template pTemplate="body" let-item>
+        <tr [pSelectableRow]="item">
+          <td>{{item.idproducto}}</td>
+          <td>{{item.marca.dscmarca}}</td>
+          <td>{{item.categoria.dsccategoria}}</td>
+          <td>{{item.dscproducto}}</td>          
+          <td>{{item.unidadmedida.abrunidadmedida}}</td>          
+          <td>
+            <i class="fa fa-trash-o cursor pr-1" aria-hidden="true" title="Eliminar" (click)="borrarRegistro(item)"></i>
+            <i class="fa fa-pencil cursor" aria-hidden="true" title="Editar" [routerLink]="['./edicion', {id: item.idproducto}]"></i>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
 
-  </p-dataTable>
-
-</div>
-
-<ad-pagination [rowsForPageCbo]="[10,20,30,40]" [model]="this.productosModel"  [filterPage]=[this.filterPage] [controller]="'producto'" [orden]="'dscproducto'" [_refreshPage]="this.refreshPage" 
-  (onPageChange)="refreshModel($event)"></ad-pagination>
-
-
-
-
-
-
-
-
-
-
-<hr>
-
-
-<!-- Modal -->
-<div class="modal fade" id="myModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document" style="width:700px;">
-    <div class="modal-content">
-      <div class="modal-header modal-header-info">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><i class="glyphicon glyphicon-thumbs-up"></i>&nbsp;&nbsp;&nbsp;<span>Producto</span></h4>
-      </div>
-      <div class="modal-body" >
-
-       <!--  tab para el formulario de producto -->
-
-    
-              <!-- <ad-productodetalle  [productoModel]="this.productoModel"></ad-productodetalle> -->
-    
-
-        <!--  tab para el formulario de producto -->
-      </div>
- <!--      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Grabar Cambios</button>
-      </div> -->
-    </div>
   </div>
+
+  <!-- <ad-pagination [rowsForPageCbo]="[10,20,30,40]" [model]="this.perfilsModel" [filterPage]=[this.filterPage] [controller]="'perfil'"
+    [orden]="'idperfil'" [_refreshPage]="this.refreshPage" (onPageChange)="refreshModel($event)"></ad-pagination> -->
+
 </div>
 
-
+<div>
+  <router-outlet (activate)='onActivateChild()' (deactivate)='onDeactivateChild()'></router-outlet>
+</div>

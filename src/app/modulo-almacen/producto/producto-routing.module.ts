@@ -6,31 +6,24 @@ import { ProductodetalleComponent } from './productodetalle/productodetalle.comp
 import { MainComponent } from './main/main.component';
 
 
-
 const routes: Routes = [
   {
+    path: '', component: MainComponent,
 
-    path: 'main',
-    component: MainComponent,
     children: [
       {
-        path: '', component: ProductoComponent,  outlet: 'outlet-list-producto'
+        path: '', redirectTo: 'lista'
       },
       {
-        path: 'productoedicion', component: ProductodetalleComponent
+        path: 'lista', component: ProductoComponent,
+        children: [
+          {
+            path: 'edicion', component: ProductodetalleComponent
+          }
+        ]
       }
-  
     ]
-
-
-  },
-
-  {
-    path: '**', component: ProductoComponent
   }
-
-
-
 ];
 
 @NgModule({

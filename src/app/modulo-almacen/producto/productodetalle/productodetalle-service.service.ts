@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http } from "@angular/http";
 import { HttpParams, HttpClient } from '@angular/common/http';
 import { ConfigService } from '../../../shared/config.service';
+import { Observable } from 'rxjs/Observable';
 
 
 
@@ -24,12 +25,18 @@ export class ProductodetalleServiceService {
             ;
   }
 
+  guardarImagen(formData: FormData){
+    let url = this.configService.getUrlSecurityRes("producto", "uploadimage");
+    return this.httpClient.put<any>(url, formData);
+
+  }
+
   getUrlUploadImage(){
     let url = this.configService.getUrlSecurityRes ("producto","uploadimage");
     return url;
   }
 
-   getImage(idproducto,imageSize){
+   getImage(idproducto,imageSize):Observable<any>{
        let obj = {'idproducto':idproducto,'imageSize':imageSize};
 
        let objser = this.configService.serialize(obj);
@@ -44,9 +51,5 @@ export class ProductodetalleServiceService {
 
 
     }  
-
-
-
-
 
 }
