@@ -6,7 +6,7 @@ import { UsuarioEditComponent } from './usuario-edit/usuario-edit.component';
 
 const routes: Routes = [
   {
-    path: 'main', component: UsuarioMainComponent,
+    path: '', component: UsuarioMainComponent,
 
     children : [
       {
