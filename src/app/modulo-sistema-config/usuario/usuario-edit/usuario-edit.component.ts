@@ -143,6 +143,7 @@ export class UsuarioEditComponent implements OnInit {
       )
   }
 
+  
   changeValue(e) {
     this.cargarData();
   }
