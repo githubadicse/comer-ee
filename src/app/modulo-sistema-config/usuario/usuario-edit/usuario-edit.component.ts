@@ -135,7 +135,6 @@ export class UsuarioEditComponent implements OnInit {
       )
   }
   getPerfil() {
-
     this.perfilService.getPerfil(this.dscperfil)
       .subscribe(
         res => {

@@ -18,6 +18,7 @@ import { FormBuilder, Validators } from '../../../../../node_modules/@angular/fo
   providers : [CrudHttpClientServiceShared,FilialService]
 })
 export class UsuarioListComponent implements OnInit {
+  selected : any;
   dataForm: any;
   public filialModel: FilialModel[];
   public dscfilial: string = "";
@@ -142,7 +143,6 @@ export class UsuarioListComponent implements OnInit {
   changeValue(e) {
     this.cargarData();
   }
-
   delete(e) {
     swal({
       title: 'Esta Seguro?',
@@ -174,4 +174,5 @@ export class UsuarioListComponent implements OnInit {
       }
     })
   }
+  compararFilial(c1: any, c2: any): boolean { return c1 && c2 ? c1.idfilial === c2.idfilial : c1 === c2; }
 }
