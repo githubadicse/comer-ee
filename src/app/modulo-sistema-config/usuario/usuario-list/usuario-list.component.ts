@@ -18,7 +18,6 @@ import { FormBuilder, Validators } from '../../../../../node_modules/@angular/fo
   providers : [CrudHttpClientServiceShared,FilialService]
 })
 export class UsuarioListComponent implements OnInit {
-  flagRefreshReturn: boolean = false;
   selected : any;
   dataForm: any;
   public filialModel: FilialModel[];
@@ -45,6 +44,9 @@ export class UsuarioListComponent implements OnInit {
   ngOnInit() {
     this.initObservable();
     this.getFilial();
+    this.buildForm();
+this.filter(1);
+    // this.filterfilial();
   }
   initObservable(){
     this.Typeahead.pipe(distinctUntilChanged(),debounceTime(1000),
@@ -58,6 +60,7 @@ export class UsuarioListComponent implements OnInit {
         this.refreshModel(this.dataPagination,true);
     })
   }
+
   filter2(value,field,operator){
     setTimeout(() => {
       this.dataTable.filter(value, field, operator);
@@ -65,10 +68,12 @@ export class UsuarioListComponent implements OnInit {
       this.refreshModel(this.dataPagination,true);
     }, 250);
   }
+
   filter3(e) {
     this.filterPage = JSON.stringify(e.filters);
     this.refreshModel(this.dataPagination, true);
   }
+
   refreshModel(e, flagFilter?, currentPage?) {
     this.flagRefresh = false;
     if (flagFilter) {
@@ -84,13 +89,16 @@ export class UsuarioListComponent implements OnInit {
         }
       );
   }
+
   showPanelBuscar() {
     this.showPanelBuscarFlag = !this.showPanelBuscarFlag;
   }
+
   onActivate() {
     console.log("Activate outlet list");
     this.show = false;
   }
+
   onDeactivate() {
     console.log("Deactivate outlet list");
     this.sub = this.activateRoute.params.subscribe(
@@ -108,9 +116,11 @@ export class UsuarioListComponent implements OnInit {
     )
     this.show = true;
   }
+
   ocultarLista() {
     this.show = false;
   }
+
   getFilial() {
     this.filialService.getFilial()
       .subscribe(
@@ -119,6 +129,20 @@ export class UsuarioListComponent implements OnInit {
 
         }
       )
+  }
+
+  buildForm() {
+    this.dataForm = this.formBuilder.group({
+      dscfilial: [this.dscfilial, Validators.required],
+    })
+  }
+
+  cargarData() {
+    this.dscfilial = this.dataForm.controls['dscfilial'].value;
+  }
+
+  changeValue(e) {
+    this.cargarData();
   }
   delete(e) {
     swal({
@@ -135,7 +159,7 @@ export class UsuarioListComponent implements OnInit {
           res => {
             swal(
               'Deleted!',
-              'El Usuario fue eliminado.',
+              'El registro fue eliminado.',
               'success'
             )
             this.refreshPage = !this.refreshPage;
@@ -143,7 +167,7 @@ export class UsuarioListComponent implements OnInit {
           error => {
             swal(
               'Deleted!',
-              'El Usuario No se elimino.' + error,
+              'El Registro No se elimino.' + error,
               'error'
             )
           }
@@ -153,10 +177,9 @@ export class UsuarioListComponent implements OnInit {
   }
   compararFilial(c1: any, c2: any): boolean { return c1 && c2 ? c1.idfilial === c2.idfilial : c1 === c2; }
 
-  valor(event) {
-      this.dataTable.filter(event.value.idfilial,'filial.idfilial','equals');
-    
-       this.filterPage = JSON.stringify(this.dataTable.filters);      
-       this.refreshModel(this.dataPagination,true);
-     }
+    filter(valor) {
+      this.dataTable._filter();
+      this.filterPage = JSON.stringify(this.dataTable.filters);      
+      this.refreshModel(this.dataPagination,true);
+    }
 }

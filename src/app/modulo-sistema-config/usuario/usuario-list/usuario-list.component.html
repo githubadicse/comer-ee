@@ -14,13 +14,6 @@
           <br>
       </div>
 
-      <mat-form-field class="w-25">
-        <mat-select  [(value)]="filial" placeholder="Filial" [compareWith]="compararFilial" (selectionChange)="valor($event)">
-          <mat-option *ngFor="let filial of filialModel" [value]="filial">
-            {{filial.dscfilial}}
-          </mat-option>
-        </mat-select>
-    </mat-form-field>
 
       <p-table #dt class="f-12" [value]="usuariosModel"  dataKey="idusuario" selectionMode="single" [loading]="Cargando">
         <ng-template pTemplate="header">

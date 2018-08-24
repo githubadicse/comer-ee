@@ -47,6 +47,7 @@ export class UsuarioEditComponent implements OnInit {
       }
     );
   }
+  
   ngOnInit() {
     this.buildForm();
     if(this.id != 0)
@@ -98,7 +99,7 @@ export class UsuarioEditComponent implements OnInit {
         swal({
           position: 'top-end',
           type: 'success',
-          title: 'Usuario Creado',
+          title: 'Registro Creado',
           showConfirmButton: false,
           timer: 1500
         })
@@ -119,7 +120,7 @@ export class UsuarioEditComponent implements OnInit {
         swal({
           position: 'top-end',
           type: 'success',
-          title: 'Usuario Actualizado',
+          title: 'Registro Actualizado',
           showConfirmButton: false,
           timer: 1500
         })
@@ -141,6 +142,13 @@ export class UsuarioEditComponent implements OnInit {
           this.perfilModel = res;
         }
       )
+  }
+
+  changeValue(e) {
+    this.cargarData();
+  }
+  cargarData() {
+    // this.getFilial();
   }
   compararPerfil(c1: any, c2: any): boolean { return c1 && c2 ? c1.idperfil === c2.idperfil : c1 === c2; }
   compararFilial(c1: any, c2: any): boolean { return c1 && c2 ? c1.idfilial === c2.idfilial : c1 === c2; }
