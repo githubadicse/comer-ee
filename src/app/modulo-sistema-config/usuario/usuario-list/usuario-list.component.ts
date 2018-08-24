@@ -18,10 +18,7 @@ import { FormBuilder, Validators } from '../../../../../node_modules/@angular/fo
   providers : [CrudHttpClientServiceShared,FilialService]
 })
 export class UsuarioListComponent implements OnInit {
-<<<<<<< HEAD
-=======
   flagRefreshReturn: boolean = false;
->>>>>>> b77417a7d10d29a63784a041387b4e6427cc1faf
   selected : any;
   dataForm: any;
   public filialModel: FilialModel[];
@@ -47,11 +44,9 @@ export class UsuarioListComponent implements OnInit {
   }
   ngOnInit() {
     this.initObservable();
-    this.getFilial();
-<<<<<<< HEAD
-    this.buildForm();
-this.filter(1);
-    // this.filterfilial();
+    this.getFilial()
+  
+  
   }
   initObservable(){
     this.Typeahead.pipe(distinctUntilChanged(),debounceTime(1000),
@@ -65,22 +60,6 @@ this.filter(1);
         this.refreshModel(this.dataPagination,true);
     })
   }
-
-=======
-  }
-  initObservable(){
-    this.Typeahead.pipe(distinctUntilChanged(),debounceTime(1000),
-    ).subscribe(
-      res =>{
-        let value = res[0];
-        let field = res[1];
-        let operator = res[2];
-        this.dataTable.filter(value, field, operator);
-        this.filterPage = JSON.stringify(this.dataTable.filters);      
-        this.refreshModel(this.dataPagination,true);
-    })
-  }
->>>>>>> b77417a7d10d29a63784a041387b4e6427cc1faf
   filter2(value,field,operator){
     setTimeout(() => {
       this.dataTable.filter(value, field, operator);
@@ -88,18 +67,10 @@ this.filter(1);
       this.refreshModel(this.dataPagination,true);
     }, 250);
   }
-<<<<<<< HEAD
-
-=======
->>>>>>> b77417a7d10d29a63784a041387b4e6427cc1faf
   filter3(e) {
     this.filterPage = JSON.stringify(e.filters);
     this.refreshModel(this.dataPagination, true);
   }
-<<<<<<< HEAD
-
-=======
->>>>>>> b77417a7d10d29a63784a041387b4e6427cc1faf
   refreshModel(e, flagFilter?, currentPage?) {
     this.flagRefresh = false;
     if (flagFilter) {
@@ -118,18 +89,10 @@ this.filter(1);
   showPanelBuscar() {
     this.showPanelBuscarFlag = !this.showPanelBuscarFlag;
   }
-<<<<<<< HEAD
-
-=======
->>>>>>> b77417a7d10d29a63784a041387b4e6427cc1faf
   onActivate() {
     console.log("Activate outlet list");
     this.show = false;
   }
-<<<<<<< HEAD
-
-=======
->>>>>>> b77417a7d10d29a63784a041387b4e6427cc1faf
   onDeactivate() {
     console.log("Deactivate outlet list");
     this.sub = this.activateRoute.params.subscribe(
@@ -147,10 +110,6 @@ this.filter(1);
     )
     this.show = true;
   }
-<<<<<<< HEAD
-
-=======
->>>>>>> b77417a7d10d29a63784a041387b4e6427cc1faf
   ocultarLista() {
     this.show = false;
   }
@@ -160,35 +119,9 @@ this.filter(1);
         res => {
           this.filialModel = res;
 
-<<<<<<< HEAD
-  getFilial() {
-    this.filialService.getFilial()
-      .subscribe(
-        res => {
-          this.filialModel = res;
-
         }
       )
   }
-
-  buildForm() {
-    this.dataForm = this.formBuilder.group({
-      dscfilial: [this.dscfilial, Validators.required],
-    })
-  }
-
-  cargarData() {
-    this.dscfilial = this.dataForm.controls['dscfilial'].value;
-  }
-
-  changeValue(e) {
-    this.cargarData();
-  }
-=======
-        }
-      )
-  }
->>>>>>> b77417a7d10d29a63784a041387b4e6427cc1faf
   delete(e) {
     swal({
       title: 'Esta Seguro?',
@@ -204,11 +137,7 @@ this.filter(1);
           res => {
             swal(
               'Deleted!',
-<<<<<<< HEAD
-              'El registro fue eliminado.',
-=======
               'El Usuario fue eliminado.',
->>>>>>> b77417a7d10d29a63784a041387b4e6427cc1faf
               'success'
             )
             this.refreshPage = !this.refreshPage;
@@ -216,11 +145,7 @@ this.filter(1);
           error => {
             swal(
               'Deleted!',
-<<<<<<< HEAD
-              'El Registro No se elimino.' + error,
-=======
               'El Usuario No se elimino.' + error,
->>>>>>> b77417a7d10d29a63784a041387b4e6427cc1faf
               'error'
             )
           }
@@ -229,21 +154,10 @@ this.filter(1);
     })
   }
   compararFilial(c1: any, c2: any): boolean { return c1 && c2 ? c1.idfilial === c2.idfilial : c1 === c2; }
-
-<<<<<<< HEAD
-    filter(valor) {
-      this.dataTable._filter();
-      this.filterPage = JSON.stringify(this.dataTable.filters);      
-      this.refreshModel(this.dataPagination,true);
-    }
-}
-
-=======
-  valor(event) {
-      this.dataTable.filter(event.value.idfilial,'filial.idfilial','equals');
-    
+ 
+  UsuariosxFilial(event) {
+      this.dataTable.filter(event.value.idfilial.toString(),"filial.idfilial","equals");
        this.filterPage = JSON.stringify(this.dataTable.filters);      
        this.refreshModel(this.dataPagination,true);
      }
 }
->>>>>>> b77417a7d10d29a63784a041387b4e6427cc1faf
