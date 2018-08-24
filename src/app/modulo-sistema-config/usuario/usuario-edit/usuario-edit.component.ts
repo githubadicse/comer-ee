@@ -127,7 +127,7 @@ export class UsuarioEditComponent implements OnInit {
     )
   }
   getFilial() {
-    this.filialService.getFilial(this.dscfilial)
+    this.filialService.getFilial()
       .subscribe(
         res => {
           this.filialModel = res;
@@ -135,7 +135,7 @@ export class UsuarioEditComponent implements OnInit {
       )
   }
   getPerfil() {
-    this.perfilService.getPerfil(this.dscperfil)
+    this.perfilService.getPerfil()
       .subscribe(
         res => {
           this.perfilModel = res;
@@ -143,14 +143,12 @@ export class UsuarioEditComponent implements OnInit {
       )
   }
 
-  
   changeValue(e) {
     this.cargarData();
   }
   cargarData() {
-    this.getFilial();
+    // this.getFilial();
   }
-
   compararPerfil(c1: any, c2: any): boolean { return c1 && c2 ? c1.idperfil === c2.idperfil : c1 === c2; }
   compararFilial(c1: any, c2: any): boolean { return c1 && c2 ? c1.idfilial === c2.idfilial : c1 === c2; }
 }

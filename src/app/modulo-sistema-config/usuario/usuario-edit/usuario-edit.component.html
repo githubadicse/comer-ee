@@ -44,7 +44,6 @@
                   <input autocomplete="off" matInput placeholder="Status" formControlName="status">
                   </mat-form-field>
                 <br>
-
                     <button [disabled]="!usuarioForm.valid" type="button" class="btn btn-sm btn-info" (click)="create()" *ngIf="this.usuarioModel.idusuario==0 else elseBlock">
                     <span class="fa fa-floppy-o"></span>&nbsp; Grabar</button>
                       <ng-template #elseBlock>

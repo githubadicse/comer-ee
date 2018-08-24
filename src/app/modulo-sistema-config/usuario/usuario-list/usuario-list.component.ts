@@ -45,8 +45,9 @@ export class UsuarioListComponent implements OnInit {
     this.initObservable();
     this.getFilial();
     this.buildForm();
+this.filter(1);
+    // this.filterfilial();
   }
-
   initObservable(){
     this.Typeahead.pipe(distinctUntilChanged(),debounceTime(1000),
     ).subscribe(
@@ -68,7 +69,7 @@ export class UsuarioListComponent implements OnInit {
     }, 250);
   }
 
-  filter(e) {
+  filter3(e) {
     this.filterPage = JSON.stringify(e.filters);
     this.refreshModel(this.dataPagination, true);
   }
@@ -121,7 +122,7 @@ export class UsuarioListComponent implements OnInit {
   }
 
   getFilial() {
-    this.filialService.getFilial(this.dscfilial)
+    this.filialService.getFilial()
       .subscribe(
         res => {
           this.filialModel = res;
@@ -175,4 +176,15 @@ export class UsuarioListComponent implements OnInit {
     })
   }
   compararFilial(c1: any, c2: any): boolean { return c1 && c2 ? c1.idfilial === c2.idfilial : c1 === c2; }
+
+    // filterfilial(event) {
+    //   this.filterPage = JSON.stringify(event.filters);
+    //   this.refreshModel(this.dataPagination, true);
+    // }
+
+    filter(valor) {
+      this.dataTable._filter();
+      this.filterPage = JSON.stringify(this.dataTable.filters);      
+      this.refreshModel(this.dataPagination,true);
+    }
 }
