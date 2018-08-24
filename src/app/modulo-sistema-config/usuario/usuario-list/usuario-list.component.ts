@@ -177,11 +177,6 @@ this.filter(1);
   }
   compararFilial(c1: any, c2: any): boolean { return c1 && c2 ? c1.idfilial === c2.idfilial : c1 === c2; }
 
-    // filterfilial(event) {
-    //   this.filterPage = JSON.stringify(event.filters);
-    //   this.refreshModel(this.dataPagination, true);
-    // }
-
     filter(valor) {
       this.dataTable._filter();
       this.filterPage = JSON.stringify(this.dataTable.filters);      

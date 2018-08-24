@@ -47,6 +47,7 @@ export class UsuarioEditComponent implements OnInit {
       }
     );
   }
+  
   ngOnInit() {
     this.buildForm();
     if(this.id != 0)
