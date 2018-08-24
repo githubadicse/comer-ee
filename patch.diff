@@ -1,0 +1,79 @@
+diff --git a/src/app/modulo-sistema-config/usuario/usuario-edit/usuario-edit.component.html b/src/app/modulo-sistema-config/usuario/usuario-edit/usuario-edit.component.html
+index f1857be..846dffd 100644
+--- a/src/app/modulo-sistema-config/usuario/usuario-edit/usuario-edit.component.html
++++ b/src/app/modulo-sistema-config/usuario/usuario-edit/usuario-edit.component.html
+@@ -51,7 +51,6 @@
+                         <button [disabled]="!usuarioForm.valid" type="button" class="btn btn-sm btn-info" (click)="update()">
+                         <span class="fa fa-floppy-o"></span>&nbsp; Actualizar</button>
+                       </ng-template>
+-                      
+           </div> 
+         </div>
+       </form>
+diff --git a/src/app/modulo-sistema-config/usuario/usuario-edit/usuario-edit.component.ts b/src/app/modulo-sistema-config/usuario/usuario-edit/usuario-edit.component.ts
+index 062f70e..ef6673a 100644
+--- a/src/app/modulo-sistema-config/usuario/usuario-edit/usuario-edit.component.ts
++++ b/src/app/modulo-sistema-config/usuario/usuario-edit/usuario-edit.component.ts
+@@ -143,6 +143,7 @@ export class UsuarioEditComponent implements OnInit {
+       )
+   }
+ 
++  
+   changeValue(e) {
+     this.cargarData();
+   }
+diff --git a/src/app/modulo-sistema-config/usuario/usuario-list/usuario-list.component.html b/src/app/modulo-sistema-config/usuario/usuario-list/usuario-list.component.html
+index 27f2376..420a90c 100644
+--- a/src/app/modulo-sistema-config/usuario/usuario-list/usuario-list.component.html
++++ b/src/app/modulo-sistema-config/usuario/usuario-list/usuario-list.component.html
+@@ -53,4 +53,4 @@
+ </div>
+ <div class="container-fluit">
+         <router-outlet (activate)='onActivate($event)' (deactivate)='onDeactivate($event)'></router-outlet>
+-</div>
++</div>
+\ No newline at end of file
+diff --git a/src/app/modulo-sistema-config/usuario/usuario-list/usuario-list.component.ts b/src/app/modulo-sistema-config/usuario/usuario-list/usuario-list.component.ts
+index 61fc49c..944cbc8 100644
+--- a/src/app/modulo-sistema-config/usuario/usuario-list/usuario-list.component.ts
++++ b/src/app/modulo-sistema-config/usuario/usuario-list/usuario-list.component.ts
+@@ -43,7 +43,7 @@ export class UsuarioListComponent implements OnInit {
+   }
+   ngOnInit() {
+     this.initObservable();
+-    this.getFilial();
++    // this.getFilial();
+     this.buildForm();
+   }
+ 
+@@ -120,15 +120,15 @@ export class UsuarioListComponent implements OnInit {
+     this.show = false;
+   }
+ 
+-  getFilial() {
+-    this.filialService.getFilial(this.dscfilial)
+-      .subscribe(
+-        res => {
+-          this.filialModel = res;
++  // getFilial() {
++  //   this.filialService.getFilial(this.dscfilial)
++  //     .subscribe(
++  //       res => {
++  //         this.filialModel = res;
+ 
+-        }
+-      )
+-  }
++  //       }
++  //     )
++  // }
+ 
+   buildForm() {
+     this.dataForm = this.formBuilder.group({
+@@ -175,4 +175,4 @@ export class UsuarioListComponent implements OnInit {
+     })
+   }
+   compararFilial(c1: any, c2: any): boolean { return c1 && c2 ? c1.idfilial === c2.idfilial : c1 === c2; }
+-}
++}
+\ No newline at end of file

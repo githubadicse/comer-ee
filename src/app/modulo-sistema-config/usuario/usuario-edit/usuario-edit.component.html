@@ -1,183 +1,57 @@
-<p-growl [value]="this.msgPopup" [life]=1500>
-</p-growl>
-<button type="button" [routerLink]="['../']" class="btn btn-success">Atras</button>
-<div class="card">
-
-  <div class="card-header">
-    DATOS DEL USUARIO
-  </div>
-  <br>
-  <br>
-
-
-  <form [formGroup]="usuarioForm">
-    <div style="padding:10px;">
-      <div class="row">
-        <label class="col-md-2" for="">idusuario</label>
-        <div class="col-md-2">
-          <input formControlName="idusuario" type="text" class="form-control inputfield" readonly>
+<div class="m-contenedor">
+  <div class="card">
+    <div class="card-header">
+        USUARIO
+        <div class="float-sm-right">
+          <button type="button" [routerLink]="['../',{flagRefreshReturn:flagRefreshReturn}]" class="btn btn-info btn-sm">Atras</button>
         </div>
-      </div>
-
-      <div class="row">
-        <label class="col-md-2" for="">Nombres</label>
-        <div class="col-md-4">
-          <input formControlName="nomusuario" type="text" class="form-control inputfield">
-        </div>
-        <div class="col-md-2">
-          <span *ngIf="!usuarioForm.get('nomusuario').valid" style="color:red">*</span>
-        </div>
-      </div>
-
-      <div class="row">
-        <label class="col-md-2" for="">DNI </label>
-        <div class="col-md-4">
-          <input formControlName="dni" type="text" class="form-control inputfield">
-        </div>
-        <div class="col-md-2">
-          <span *ngIf="!usuarioForm.get('dni').valid" style="color:red">*</span>
-        </div>
-      </div>
-
-      <div class="row">
-        <label class="col-md-2" for="">login</label>
-        <div class="col-md-4">
-          <input formControlName="login" type="text" class="form-control inputfield">
-        </div>
-        <div class="col-md-2">
-          <span *ngIf="!usuarioForm.get('login').valid" style="color:red">*</span>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <label class="col-md-2" for="">Clave</label>
-        <div class="col-md-4">
-          <input formControlName="clave" type="text" class="form-control inputfield">
-        </div>
-        <div class="col-md-2">
-          <span *ngIf="!usuarioForm.get('clave').valid" style="color:red">*</span>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <label class="col-md-2" for="">Perfil</label>
-        <div class="col-md-4">
-          <select class="form-control inputselect" formControlName="perfil" style="padding-left:5px;">
-            <option *ngFor="let perfil of perfilsModel" [selected]="perfil.idperfil == (this.usuarioForm.controls['perfil'].value == null?'':this.usuarioForm.controls['perfil'].value.idperfil)"
-              [ngValue]="perfil">
-              {{perfil.dscperfil}}
-            </option>
-          </select>
-
-        </div>
-        <div class="col-md-2">
-          <span *ngIf="!usuarioForm.get('perfil').valid" style="color:red">*</span>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <label class="col-md-2" for="">Filial</label>
-        <div class="col-md-4">
-
-          <select class="form-control inputselect" formControlName="filial" style="padding-left:5px;">
-            <option *ngFor="let filial of this.filialsModel" [selected]="filial.idfilial  == (this.usuarioForm.controls['filial'].value == null ? '' : this.usuarioForm.controls['filial'].value.idfilial )"
-              [ngValue]="filial">
-              {{filial.dscfilial}}
-            </option>
-
-          </select>
-
-        </div>
-        <div class="col-md-2">
-          <span *ngIf="!usuarioForm.get('filial').valid" style="color:red">*</span>
-        </div>
-      </div>
-
-      <div class="row">
-        <label class="col-md-2" for="">Estado</label>
-        <div class="col-md-4">
-          <label class="switch">
-
-            <input type="checkbox" formControlName="status">
-            <span class="slider round"></span>
-          </label>
-        </div>
-
-      </div>
-
-
-      <dir class="row">
-        <label class="col-md-2" for="">Empleado</label>
-        <div class="col-md-4">
-
-          <table class="table">
-            <tbody>
-              <tr *ngFor="let usuarioempleados of this.usuarioEmpleadosModel">
-                <td>{{usuarioempleados.empleado.nomempleado}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="col-md-2">
-          <button (click)="getEmpleadoByDni()" type="button" class="btn btn-primary btn-sm" style="height:25px; padding:0px;"> &nbsp;&nbsp;Generar Relacion&nbsp;&nbsp; </button>
-        </div>
-        <p-messages [(value)]="msgs"></p-messages>
-
-      </dir>
-
-
-      <div class="row" style="padding:10px;">
-
-        <div class="col-md-4">
-          <button [disabled]="!usuarioForm.valid" type="button" class="btn btn-sm btn-success" (click)="beforeSave()">
-            <span class="fa fa-floppy-o"></span>&nbsp; Grabar</button>
-
-
-          <button type="button" class="btn btn-sm btn-success" (click)="save()">
-            <span class="fa fa-floppy-o"></span>&nbsp; cancelar</button>
-
-        </div>
-
-      </div>
     </div>
-  </form>
+    <div class="card-body">
+      <form [formGroup]="usuarioForm">
+        <div class="row">        
+          <div class="col-md-6">
+                  <mat-form-field class="w-100">
+                    <input autocomplete="off" autofocus matInput placeholder="Nombres" formControlName="nomusuario">
+                  </mat-form-field>
+                  <mat-form-field class="w-100">
+                    <input autocomplete="off" matInput placeholder="DNI" formControlName="dni">
+                  </mat-form-field>
+                  <mat-form-field class="w-70">
+                    <input autocomplete="off" matInput placeholder="Login" formControlName="login">
+                  </mat-form-field>
+                  <mat-form-field class="w-70">
+                      <input type="password"  matInput placeholder="Clave" formControlName="clave">
+                  </mat-form-field>
+                  <mat-slide-toggle formControlName="activo">Activo</mat-slide-toggle>
 
+                  <mat-form-field class="w-100">
+                      <mat-select appNextfocus placeholder="Perfil" formControlName="perfil" [compareWith]="compararPerfil">
+                        <mat-option *ngFor="let perfil of perfilModel" [value]="perfil">
+                          {{perfil.dscperfil}}
+                        </mat-option>
+                      </mat-select>
+                  </mat-form-field>
 
-</div>
-
-
-<div class="card">
-  <div class="card-header">Foto del usuario</div>
-  <div class="card-body">
-    <div style="margin-left:20px;">
-
-      <div class="row">
-        <div>
-          <div id="imageSmall">
-            <img height="200" width="200" src={{this.imageSmall}}>
-          </div>
+                  <mat-form-field class="w-100">
+                      <mat-select appNextfocus placeholder="Filial" formControlName="filial" [compareWith]="compararFilial">
+                        <mat-option *ngFor="let filial of filialModel" [value]="filial">
+                          {{filial.dscfilial}}
+                        </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+                  <mat-form-field class="w-70">
+                  <input autocomplete="off" matInput placeholder="Status" formControlName="status">
+                  </mat-form-field>
+                <br>
+                    <button [disabled]="!usuarioForm.valid" type="button" class="btn btn-sm btn-info" (click)="create()" *ngIf="this.usuarioModel.idusuario==0 else elseBlock">
+                    <span class="fa fa-floppy-o"></span>&nbsp; Grabar</button>
+                      <ng-template #elseBlock>
+                        <button [disabled]="!usuarioForm.valid" type="button" class="btn btn-sm btn-info" (click)="update()">
+                        <span class="fa fa-floppy-o"></span>&nbsp; Actualizar</button>
+                      </ng-template>
+          </div> 
         </div>
-
-      </div>
-      <br>
-
-      <div class="row">
-
-        <div>
-          <div>
-            <p-fileUpload chooseLabel="Seleccionar imagen" id="f1x" uploadLabel='Subir' name="uploads[]" url={{this.urlCargarImagenes}}
-              withCredentials="true" multiple="multiple" accept="image/*" (onBeforeSend)="onBeforeUpload($event)" (onUpload)="onUpload($event)"></p-fileUpload>
-          </div>
-          <br>
-
-
-        </div>
-      </div>
-
+      </form>
     </div>
-
   </div>
 </div>
