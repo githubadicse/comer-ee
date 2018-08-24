@@ -1,333 +1,156 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
-
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-
-import { debug } from 'util';
+import swal from 'sweetalert2'
+import { isUndefined } from 'util';
 import { UsuarioModel } from '../usuario-model';
+import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
+import { FilialService } from '../../filial/filial.service';
 import { FilialModel } from '../../filial/filial-model';
+import { PerfilServiceService } from '../../perfil/perfil-service.service';
 import { PerfilModel } from '../../perfil/perfil-model';
 
-import { UsuarioEmpleadoModel } from '../usuario-empleado-model';
-
-import { UsuarioService } from '../usuario.service';
-import { EmpleadoService } from '../../../modulo-cuenta-rr-hh/empleado/empleado.service';
-import { SharedService } from '../../../shared/servicio/shared.service';
-import { EmpleadoModel } from '../../../modulo-cuenta-rr-hh/empleado/empleado-model';
-
-
-
 @Component({
-  selector: 'ad-usuario-edit',
+  selector: 'app-usuario-edit',
   templateUrl: './usuario-edit.component.html',
   styleUrls: ['./usuario-edit.component.css'],
-  providers: [SharedService, UsuarioService, EmpleadoService]
+  providers: [CrudHttpClientServiceShared, FilialService, PerfilServiceService]
 })
 export class UsuarioEditComponent implements OnInit {
-  msgPopup = [];
-  detail: any;
-  msgs = [];
-  action: string;
-
-  id: number;
+  public dscfilial: string = "";
+  public dscperfil: string = "";
+  usuarioForm: any;
+  flagRefreshReturn: boolean = false;
+  id: any;
   sub: any;
-
-  public imageSmall: string;
-  public imageLarge: string;
-  public urlCargarImagenes: string;
-  private loadedFilial: boolean = false;
-  private loadedPerfil: boolean = false;
-  private data: Observable<any>;
-  private suscripcion: any;
-  public usuarioForm: any;
-  public usuarioModel: UsuarioModel = new UsuarioModel();
-
-  public filialsModel: FilialModel[] = [];
-  public filialModel: FilialModel;
-
-  public perfilsModel: PerfilModel[] = [];
-  public perfilModel: PerfilModel;
-
-  public empleadoModel: EmpleadoModel;
-  public empleadosModel: EmpleadoModel[] = [];
-
-  public usuarioEmpleadosModel:UsuarioEmpleadoModel[] = [];
-  public usuarioEmpleadoModel:UsuarioEmpleadoModel;
-
-  constructor(private formBuilder: FormBuilder,
-    private sharedService: SharedService,
-    private usuarioService: UsuarioService,
-
-    private route: ActivatedRoute,
-    private router: Router,
-    private empleadoService: EmpleadoService
+  dbperfil: any;
+  dbfilial: any;
+  checkedActivo: boolean = true;
+  myModel = false;
+  public filialModel: FilialModel[];
+  public perfilModel: PerfilModel[];
+  public usuarioModel:UsuarioModel= new UsuarioModel();
+  
+  constructor(
+    private filialService: FilialService,
+    private perfilService: PerfilServiceService,
+    private activateRoute: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private crudHttpClientServiceShared: CrudHttpClientServiceShared,
   ) {
-
-    this.sub = this.route.params.subscribe(
+    this.sub = this.activateRoute.params.subscribe(
       params => {
         this.id = +params['id'];
-
-
+        if (isUndefined(params['flagRefresh'])) {
+          return;
+        }
       }
     );
   }
-
   ngOnInit() {
-    this.buidForm();
-    this.Observar();
-    this.urlImage();
-
-
+    this.buildForm();
+    if(this.id != 0)
+    this.edit();
+    this.getFilial();
+    this.getPerfil();
   }
 
-  buidForm() {
+  buildForm() {
     this.usuarioForm = this.formBuilder.group({
-      idusuario: ['0'],
-
-      nomusuario: ['', Validators.required],
-      dni: ['', Validators.required],
-      login: ['', Validators.required],
-      clave: ['', Validators.required],
-      activo: ['0', Validators.required],
-      perfil: ['', Validators.required],
-      filial: ['', Validators.required],
-      status: ['', Validators.required],
-      usuarioempleados: ['']
+      idusuario: [this.usuarioModel.idusuario, Validators.required],
+      nomusuario: [this.usuarioModel.nomusuario, Validators.required],
+      dni: [this.usuarioModel.dni , Validators.required],
+      login: [this.usuarioModel.login , Validators.required],
+      clave: [this.usuarioModel.clave , Validators.required],
+      activo: [this.checkedActivo , Validators.required],
+      perfil: [this.usuarioModel.perfil , Validators.required],
+      filial: [this.usuarioModel.filial , Validators.required],
+      status: [this.usuarioModel.status , Validators.required]
     })
-
   }
 
-  beforeSave() {
-   
-
-    let build = this.usuarioForm;
-    this.usuarioModel = new UsuarioModel();
-    this.usuarioModel.idusuario = build.controls['idusuario'].value;//
-    this.usuarioModel.nomusuario = build.controls['nomusuario'].value;
-    this.usuarioModel.dni = build.controls['dni'].value;
-    this.usuarioModel.login = build.controls['login'].value;
-    this.usuarioModel.clave = build.controls['clave'].value;
-
-    this.usuarioModel.perfil = build.controls['perfil'].value;
-
-    this.usuarioModel.filial = build.controls['filial'].value;
-    this.usuarioModel.status = build.controls['status'].value == true ? 1 : 0;
-    this.usuarioModel.activo = this.usuarioModel.status;
-   
-    this.usuarioModel.usuarioempleados = build.controls['usuarioempleados'].value == "" ? null:build.controls['usuarioempleados'].value;
-
-
-    this.save();
-
-  }
-
-  save() {
-
-    debugger;
-    this.sharedService.save(this.usuarioModel, "usuario", "save")
-      .subscribe(
+  edit(){
+    this.crudHttpClientServiceShared.edit(this.id,"usuario","edit").subscribe(
       res => {
-        this.msgPopup = [];
-     /*    if (res.success == false) {
-          this.msgPopup.push({ severity: 'error', summary: 'Aviso', detail: res.msg });
-          return false;
-        } */
-
-        this.msgPopup.push({ severity: 'success', summary: 'Aviso', detail: 'Registro Grabado !' });
-
-        //this.usuarioModel.idusuario = res.idusuario;
-
-        //this.usuarioForm.controls['idusuario'].setValue(res.idusuario);
-
-
-      }
-      )
-  }
-
-  editUsuario(id: number) {
-    this.sharedService.findById(id, "usuario", "findbyid")
-      .subscribe(
-      res => {
-        //this.usuarioModel = res.data;
-   
-        this.usuarioEmpleadosModel = this.usuarioModel.usuarioempleados;
-   
-        this.setForm(this.usuarioModel);
-        this.getImage(id, "small");
-
-      })
-  }
-
-  setForm(model: UsuarioModel) {
-
-   
-    this.usuarioForm.controls['idusuario'].setValue(model.idusuario);
-    this.usuarioForm.controls['nomusuario'].setValue(model.nomusuario);
-    this.usuarioForm.controls['dni'].setValue(model.dni);
-    this.usuarioForm.controls['login'].setValue(model.login);
-    this.usuarioForm.controls['clave'].setValue(model.clave);
-
-    this.usuarioForm.controls['perfil'].setValue(model.perfil);
-    this.usuarioForm.controls['filial'].setValue(model.filial);
-    this.usuarioForm.controls['status'].setValue(model.status == 1 ? true : false);
-    this.usuarioForm.controls['usuarioempleados'].setValue(model.usuarioempleados );
-    
-
-  }
-
-  Observar() {
-    this.data = new Observable(
-      observer => {
-
-        this.getFilial(observer);
-
-        this.getPerfil(observer);
-
-      }
-
-    );
-
-    this.suscripcion = this.data.subscribe(
-      value => {
-
-        if (value == 1) {
-          this.loadedPerfil = true;
-        }
-        if (value == 2) {
-          this.loadedFilial = true;
-        }
-        console.log("valor ... " + value);
-
-        if (this.loadedFilial && this.loadedPerfil) {
-          if (isNaN(this.id) || this.id == 0) {
-            console.log("nuevo usuario")
-            //this.usuarioModel = new UsuarioModel();
-            //this.usuarioModel.idusuario = 0;
-            this.buidForm();
-            this.usuarioForm.controls['idusuario'].setValue(0);
-          } else {
-            console.log("edit usuario");
-            this.editUsuario(this.id);
-          }
-        }
-
+        this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial,res.status);
+        this.usuarioForm.setValue(this.usuarioModel)
+        this.checkedActivo = this.usuarioModel.activo;
+      },
+      error=>console.log(error),
+      ()=>{
+        console.log(this.usuarioModel);
       }
     )
   }
 
-  getPerfil(obs: any) {
-    this.sharedService.getAll("perfil", "getall")
-      .subscribe(
-      res => {
-
-        //this.perfilsModel = res;
-        obs.next(1);
+  create(){
+    let data =  JSON.stringify(this.usuarioForm.value);
+    this.crudHttpClientServiceShared.create(data,"usuario","create").subscribe(
+      res=>{
+        this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial,res.status);
+        this.usuarioForm.setValue(this.usuarioModel)
+        this.flagRefreshReturn = true;
+        this.usuarioForm.value.activo = this.checkedActivo === true ? 1 : 0;
+        console.log(this.checkedActivo);
+      },
+      error=>console.log(error),
+      ()=>{
+        swal({
+          position: 'top-end',
+          type: 'success',
+          title: 'Registro Creado',
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
-      )
-
+    )
   }
 
-  getFilial(obs: any) {
-    this.sharedService.getAll("filial", "getall")
-      .subscribe(
-      res => {
-        //this.filialsModel = res.data;
-        obs.next(2);
+  update(){
+    let data =  JSON.stringify(this.usuarioForm.value);
+    this.crudHttpClientServiceShared.update(data,"usuario","update").subscribe(
+      res=>{
+        this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial,res.status);
+        this.usuarioForm.setValue(this.usuarioModel);
+        this.flagRefreshReturn = true;
+      },
+      error=>console.log(error),
+      ()=>{
+        swal({
+          position: 'top-end',
+          type: 'success',
+          title: 'Registro Actualizado',
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
-      )
-
+    )
   }
-
-  getEmpleadoByDni() {
-    let dni = this.usuarioForm.controls['dni'].value;
-    
-    this.empleadoService.getEmpleadoByDni(dni)
+  getFilial() {
+    this.filialService.getFilial(this.dscfilial)
       .subscribe(
-      res => {
-    /*     if (res.success == true) {
-          this.usuarioEmpleadosModel= [];
-          this.empleadoModel = res.data;
-          this.empleadosModel[0] = this.empleadoModel;
-          
-          this.usuarioEmpleadoModel = new UsuarioEmpleadoModel();
-          this.usuarioEmpleadoModel.idusuarioempleado = '',
-          this.usuarioEmpleadoModel.empleado = this.empleadosModel[0];
-          this.usuarioEmpleadoModel.usuario = this.usuarioModel;
-
-          this.usuarioEmpleadosModel.push(this.usuarioEmpleadoModel);
-
-          this.usuarioForm.controls['usuarioempleados'].setValue(this.usuarioEmpleadoModel);
-
-
-        } else {
-          this.detail = 'No se encontro DNI, en la tabla empleados para relacionarlo con Usuarios ...';
-          this.show();
-        } */
-
-      }
+        res => {
+          this.filialModel = res;
+        }
       )
   }
-
-  urlImage() {
-    this.urlCargarImagenes = this.usuarioService.getUrlUploadImage();
-    console.log(this.urlCargarImagenes);
-
+  getPerfil() {
+    this.perfilService.getPerfil(this.dscperfil)
+      .subscribe(
+        res => {
+          this.perfilModel = res;
+        }
+      )
   }
-  onBeforeUpload(event) {
 
   
-    //event.xhr.setRequestHeader("Authorization", 'Bearer ' + localStorage.getItem("token"));
-    //event.formData.append('idusuario', this.usuarioForm.controls["idusuario"].value);
-
+  changeValue(e) {
+    this.cargarData();
   }
-  onUpload(event) {
-    this.getImage(this.usuarioForm.controls["idusuario"].value, "small");
-
+  cargarData() {
+    this.getFilial();
   }
 
-  getImage(idusuario, imageSize) {
-
-    if (!idusuario) {
-      return;
-    }
-    let src = "";
-    this.usuarioService.getImage(idusuario, imageSize)
-      .subscribe(
-      result => {
-        //src = result.data;
-
-
-    /*      if (result.data.length > 0) {
-          let str = 'data:image/jpeg;base64,' + result.data[0];
-          switch (imageSize) {
-            case 'small':
-              this.imageSmall = str;
-              break;
-            case 'large':
-              this.imageLarge = str;
-              break;
-
-            default:
-              // code...
-              break;
-          } 
-        } */
-
-      },
-      err => { console.log("error... al mostrar imagen...") }
-      , () => { console.log("completo subid ") }
-      );
-  }
-
-
-
-  show() {
-    this.msgs.push({ severity: 'info', summary: '', detail: this.detail });
-  }
-
-  hide() {
-    this.msgs = [];
-  }
-
+  compararPerfil(c1: any, c2: any): boolean { return c1 && c2 ? c1.idperfil === c2.idperfil : c1 === c2; }
+  compararFilial(c1: any, c2: any): boolean { return c1 && c2 ? c1.idfilial === c2.idfilial : c1 === c2; }
 }
