@@ -4,6 +4,8 @@ import { PerfilDetalleModel } from './perfil-detalle-model';
 import { ConfigService } from '../../shared/config.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
+
+import { PerfilModel } from '../perfil/perfil-model';
 @Injectable()
 export class PerfilService {
 
@@ -18,6 +20,11 @@ export class PerfilService {
     
     return this.httpCliente.get<PerfilDetalleModel[]>(url,{params:httpParams});
 
+  }
+  getPerfil():Observable<PerfilModel[]>{
+    let url = this.configService.getUrlSecurityRes("perfil","getall");
+
+    return this.http.get<PerfilModel[]>(url);
   }
 
 }
