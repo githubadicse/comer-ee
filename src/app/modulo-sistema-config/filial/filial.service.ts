@@ -13,7 +13,6 @@ export class FilialService {
 
     let obj = { 'dscfilial': query };
     let objser = this.configService.serialize(obj);
-
     let url = this.configService.getUrlSecurityRes("filial", "findAllByDscFilialContainsIgnoreCaseOrderByDscFilial");
     let header = this.configService.getHeaderHttpClientFormPost();
     return this.http.post(url, objser, { headers: header })
