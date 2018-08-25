@@ -24,7 +24,7 @@ export interface Menu {
 }
 
 const MenuUsuario = [];
-
+//ejemplo
 const MENUITEMS = [
   {
     state: '/',
