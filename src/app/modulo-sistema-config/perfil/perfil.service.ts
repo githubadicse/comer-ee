@@ -14,7 +14,7 @@ export class PerfilService {
     let url = this.configService.getUrlSecurityRes("perfildetalle","getPerfilDetalleByLogin");
     let httpParams = new HttpParams().set("login",login.toString());
     return this.httpCliente.get<PerfilDetalleModel[]>(url,{params:httpParams});
-
+//uyhygh
   }
 
 }
