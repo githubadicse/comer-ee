@@ -25,6 +25,7 @@ export interface Menu {
 
 const MenuUsuario = [];
 //ejemplo
+//segunda modificacion
 const MENUITEMS = [
   {
     state: '/',
