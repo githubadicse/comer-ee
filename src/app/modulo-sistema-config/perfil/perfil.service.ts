@@ -9,7 +9,6 @@ export class PerfilService {
 
   constructor(private configService:ConfigService, private httpCliente:HttpClient) { }
 
-
   getPerfilDetalleByIdLogin(login:string):Observable<PerfilDetalleModel[]>{
     
     let url = this.configService.getUrlSecurityRes("perfildetalle","getPerfilDetalleByLogin");
