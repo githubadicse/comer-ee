@@ -16,5 +16,5 @@ export class PerfilService {
     return this.httpCliente.get<PerfilDetalleModel[]>(url,{params:httpParams});
 //uyhygh
   }
-
+//ujujujuj
 }
