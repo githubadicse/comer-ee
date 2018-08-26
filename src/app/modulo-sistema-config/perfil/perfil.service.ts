@@ -19,5 +19,11 @@ export class PerfilService {
     return this.httpCliente.get<PerfilDetalleModel[]>(url,{params:httpParams});
 
   }
+  getPerfil():Observable<PerfilModel[]>{
+    let url = this.configService.getUrlSecurityRes("perfil","getall");
+
+    return this.http.get<PerfilModel[]>(url);
+  }
+
 
 }
