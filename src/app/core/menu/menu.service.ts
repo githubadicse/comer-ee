@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+//cambio en la rama
 export interface BadgeItem {
   type: string;
   value: string;
