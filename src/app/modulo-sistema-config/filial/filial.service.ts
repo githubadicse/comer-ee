@@ -11,7 +11,7 @@ export class FilialService {
 ///lui
 // comentario desde marcel
   
-  getFilialFilter1(query: string) {
+  getFilialFilter(query: string) {
     let obj = { 'dscfilial': query };
     let objser = this.configService.serialize(obj);
 
