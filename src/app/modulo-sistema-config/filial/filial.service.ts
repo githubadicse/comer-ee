@@ -10,8 +10,8 @@ export class FilialService {
   constructor(private configService: ConfigService, private http: HttpClient) { }
 ///lui
 // comentario desde marcel
-  getFilialFilter2(query: string) {
-
+  
+  getFilialFilter1(query: string) {
     let obj = { 'dscfilial': query };
     let objser = this.configService.serialize(obj);
 
