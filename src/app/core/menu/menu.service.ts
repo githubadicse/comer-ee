@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+// desde controles 2
 export interface BadgeItem {
   type: string;
   value: string;
