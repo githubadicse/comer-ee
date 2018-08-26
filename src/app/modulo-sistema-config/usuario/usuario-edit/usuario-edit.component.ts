@@ -144,12 +144,14 @@ export class UsuarioEditComponent implements OnInit {
       )
   }
   getPerfil() {
-    this.perfilService.getPerfil()
-      .subscribe(
-        res => {
-          this.perfilModel = res;
-        }
-      )
+
+    //se comenta esta linea por que no existe el evento getPerfil en el servicio perfilSevice
+    // this.perfilService.getPerfil()
+    //   .subscribe(
+    //     res => {
+    //       this.perfilModel = res;
+    //     }
+    //   )
   }
   compararPerfil(c1: any, c2: any): boolean { 
     return c1 && c2 ? c1.idperfil === c2.idperfil : c1 === c2; 
