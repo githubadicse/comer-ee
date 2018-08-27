@@ -72,15 +72,15 @@ export class UsuarioEditComponent implements OnInit {
       clave: [this.usuarioModel.clave , Validators.required],
       activo: [this.checkedActivo , Validators.required],
       perfil: [this.usuarioModel.perfil , Validators.required],
-      filial: [this.usuarioModel.filial , Validators.required],
-      status: [this.usuarioModel.status , Validators.required]
+      filial: [this.usuarioModel.filial , Validators.required]
+      
     })
   }
 
   edit(){
     this.crudHttpClientServiceShared.edit(this.id,"usuario","edit").subscribe(
       res => {
-        this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial,res.status);
+        this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial);
         this.usuarioForm.setValue(this.usuarioModel)
         this.checkedActivo = this.usuarioModel.activo;
       },

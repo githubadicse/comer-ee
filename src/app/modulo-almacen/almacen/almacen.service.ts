@@ -20,6 +20,10 @@ export class AlmacenService {
     return this._http.get<AlmacenModel[]>(url);
   }
 
+  getAlmacenByIdFilial(){
+    
+  }
+
 
 
 }

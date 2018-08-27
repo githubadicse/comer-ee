@@ -14,8 +14,6 @@
           <br>
       </div>
 
-<<<<<<< HEAD
-=======
       <mat-form-field class="w-25">
         <mat-select  [(value)]="filial" placeholder="Filial" [compareWith]="compararFilial" (selectionChange)="valor($event)">
           <mat-option *ngFor="let filial of filialModel" [value]="filial">
@@ -24,7 +22,6 @@
         </mat-select>
     </mat-form-field>
 
->>>>>>> b77417a7d10d29a63784a041387b4e6427cc1faf
       <p-table #dt class="f-12" [value]="usuariosModel"  dataKey="idusuario" selectionMode="single" [loading]="Cargando">
         <ng-template pTemplate="header">
           <tr>
