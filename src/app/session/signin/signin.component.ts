@@ -38,7 +38,6 @@ export class SigninComponent implements OnInit {
     .subscribe(
     res => {
   
-
        request = res;
        let x = JSON.stringify(res)
        let y = JSON.parse(x);
@@ -48,7 +47,7 @@ export class SigninComponent implements OnInit {
          localStorage.setItem("token", y.token);
          localStorage.setItem("anno",y.anno);
          localStorage.setItem("numeroEntrega",y.numeroEntrega)
-
+         localStorage.setItem("filial",y.filial)
          this.router.navigate ( [ '/' ] );
 
 
