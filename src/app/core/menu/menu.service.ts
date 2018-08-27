@@ -166,7 +166,7 @@ export class MenuService {
   }
   
   addMenuUsuario(menu){
-    debugger
+  
     MenuUsuario.push(menu);
   }
 
