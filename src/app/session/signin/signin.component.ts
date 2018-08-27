@@ -38,7 +38,6 @@ export class SigninComponent implements OnInit {
     .subscribe(
     res => {
   
-      debugger;
        request = res;
        let x = JSON.stringify(res)
        let y = JSON.parse(x);
