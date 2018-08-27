@@ -71,12 +71,15 @@ export class PerfilEditComponent implements OnInit {
     if (node.children) {
       node.children.forEach(childNode => {
         nodosBD.map(n => {          
-          if (n.idmenu.length > 2) {
+          //if (n.idmenu.length > 2) {
             if (childNode['idmenu'] === n.idmenu) {
               this.arr.push(childNode);
+              const siNodoPadre = this.arr.filter(x => x.idmenu === node['idmenu']).length;
+              if (siNodoPadre === 0) { this.arr.push(node); }
               node.partialSelected = true;
+              return;
             }
-          }
+          //}
         });
       });
     }
