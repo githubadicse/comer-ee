@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { PlanRastreabilidadService } from './plan-rastreabilidad.service';
 import swal from 'sweetalert2';
+import { AlmacenModel } from '../../../modulo-almacen/almacen/almacen-model';
 
 @Component({
   selector: 'app-plan-rastreabilidad',
@@ -17,22 +18,28 @@ export class PlanRastreabilidadComponent implements OnInit {
   public numeroEntrega:number = 1;
   public titulo = "PLAN DE RASTREABILIDAD"
   constructor(private formBuilder: FormBuilder,private planRastreabilidadService:PlanRastreabilidadService) { }
-
+  myControl:FormControl
   ngOnInit() {
     this.numeroEntrega = parseInt( localStorage.getItem("numeroEntrega"));
     this.buildForm();
+
   }
 
   buildForm(){
     this.dataForm = this.formBuilder.group({
       anno: [this.anno, Validators.required],
       numeroEntrega: [this.numeroEntrega, Validators.required],
-     
+      almacen : ['',Validators.required]
    
     })
   }
 
+  _getObject(e:AlmacenModel){
+    console.log("Informacion desde el componente :" + JSON.stringify(e) );
+  }
+
   generar(){
+  
     this.blocked = true;
     let d = new Date();
     let a = document.createElement("a");

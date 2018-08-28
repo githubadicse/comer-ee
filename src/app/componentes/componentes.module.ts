@@ -12,12 +12,13 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    CompFindAlmacenComponent,
+ 
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule
     
   ],
-  declarations: []
+  declarations: [CompFindAlmacenComponent],
+  exports : [CompFindAlmacenComponent]
 })
 export class ComponentesModule { }

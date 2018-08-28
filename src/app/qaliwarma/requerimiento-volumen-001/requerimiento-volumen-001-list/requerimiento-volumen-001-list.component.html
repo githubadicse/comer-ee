@@ -46,40 +46,7 @@
         <i style="cursor: pointer;" class="fa fa-search fa-2x" aria-hidden="true" data-toggle="tooltip" title="Filtrar" (click)="sendConsulta()"></i>&nbsp;
       </div>
     </div>
-    <!-- <p-dataTable emptyMessage="No hay registros" [value]="this.requerimientoVolumen001sModel" [filterDelay]=500 [lazy]="true"
-      (onFilter)="filter($event)" [loading]="loading" loadingIcon="fa-spinner" selectionMode={{this.selectionModeDataTable}}
-      [responsive]="true" dataKey="codigomodularIinstitucionEducativa.codigoModular" [(selection)]="requerimientoVolumen001SeleccionadosModel"
-      (onRowSelect)="handleRowSelect($event)" (onRowUnselect)="handleRowUnSelect($event)" (onHeaderCheckboxToggle)="onHeaderCheckboxToggle($event)">
-
-
-      <p-column *ngIf="showCheck" [style]="{'width':'38px'}" selectionMode={{this.selectionMode}}></p-column>
-      <p-column field="ubigeo.nombreProvincia" header="Provincia" [style]="{'width':'90px'}" [filter]="showPanelBuscarFlag"></p-column>
-      <p-column field="ubigeo.nombreDistrito" header="Distrito" [style]="{'width':'90px'}" [filter]="showPanelBuscarFlag"></p-column>
-      <p-column field="centroPoblado" header="Centro Poblado" [style]="{'width':'150px'}" [filter]="showPanelBuscarFlag"></p-column>
-
-      <p-column *ngIf="showPeriodoEntrega" field="entregaPorItem.itemEntrega.dscitem" header="Item" [style]="{'width':'90px'}" [filter]="showPanelBuscarFlag"></p-column>
-
-      <p-column *ngIf="showPeriodoEntrega" field="entregaPorItem.numeroEntrega.numeroEntregaValor" header="Nro Entrega" [style]="{'width':'90px'}" [filter]="showPanelBuscarFlag"></p-column>
-
-      <p-column  field="codigomodularIinstitucionEducativa.codigoModular" header="Cod.Modular" [style]="{'width':'90px'}" [filter]="showPanelBuscarFlag">
-      </p-column>
-      <p-column field="codigomodularIinstitucionEducativa.nombreInstitucionEducativa" header="IE" [style]="{'width':'90px'}" [filter]="showPanelBuscarFlag">
-      </p-column>
-      <p-column field="codigomodularIinstitucionEducativa.direccionInstitucionEducativa" header="Direccion IE" [style]="{'width':'190px'}"
-        [filter]="showPanelBuscarFlag"> </p-column>
-      <p-column *ngIf="!showCheck">
-        <ng-template let-data="rowData" pTemplate type="body">
-          <i *ngIf="!isBuscador" [routerLink]="['edicion', {id:data.idVehiculo}]" (click)="ocultarLista()" style="cursor: pointer;"
-            class="fa fa-pencil fa-1x" aria-hidden="true" data-toggle="tooltip" title="Editar"></i>&nbsp;
-          <i *ngIf="!isBuscador" style="cursor: pointer;" class="fa fa-trash-o fa-1x" aria-hidden="true" data-toggle="tooltip" title="Eliminar"
-            (click)="delete(data)"></i>
-          &nbsp;&nbsp;
-          <button *ngIf="isBuscador" type="button" class="btn btn-primary btn-sm" (click)="eventBackFill(data)">Seleccionar</button>
-        </ng-template>
-      </p-column>
-
-    </p-dataTable> -->
-
+ 
 
     <p-table #dt [value]="requerimientoVolumen001sModel" selectionMode="single" [loading]="Cargando" [responsive]="true" selectionMode={{this.selectionModeDataTable}} [(selection)]="requerimientoVolumen001SeleccionadosModel"
     (onRowSelect)="handleRowSelect($event)" (onRowUnselect)="handleRowUnSelect($event)" (onHeaderCheckboxToggle)="onHeaderCheckboxToggle($event)"
