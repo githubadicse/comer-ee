@@ -57,7 +57,7 @@ export class PerfilEditComponent implements OnInit {
   }
 
   private maestros(): void {
-    // memu desde el menuservice    
+    // memu desde el menuservice
       const res: any = this.menuService.getAll();          
       let str: string = JSON.stringify(res);
 
@@ -68,18 +68,24 @@ export class PerfilEditComponent implements OnInit {
 
   // selecciona los permisos al cargar usuario existente
   flattenTree(node: TreeNode, nodosBD: any) {
+    // parent's
+    if (this.buscarNodo(nodosBD, node['idmenu'])) {
+      this.arr.push(node);
+    }
+
     if (node.children) {
       node.children.forEach(childNode => {
-        nodosBD.map(n => {          
-          if (n.idmenu.length > 2) {
-            if (childNode['idmenu'] === n.idmenu) {
-              this.arr.push(childNode);
-              node.partialSelected = true;
-            }
-          }
-        });
+        if (this.buscarNodo(nodosBD, childNode['idmenu'])){
+          this.arr.push(childNode);
+          node.partialSelected = true;         
+        }        
       });
     }
+  }
+
+  private buscarNodo(listNodos: any, idmenu: string):boolean {
+    const rpt = listNodos.filter(n => n.idmenu === idmenu).length > 0 ? true : false;
+    return rpt;
   }
 
   private prepararFormulario(): void {

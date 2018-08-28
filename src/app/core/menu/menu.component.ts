@@ -2,7 +2,8 @@ import { Component, NgZone, ViewChild, Output, EventEmitter } from '@angular/cor
 import { MenuService } from './menu.service';
 
 import { TranslateService } from '@ngx-translate/core';
-
+//getAllMenuUsuario()
+//getAll()
 @Component({
   selector: 'app-menu',
   template: `

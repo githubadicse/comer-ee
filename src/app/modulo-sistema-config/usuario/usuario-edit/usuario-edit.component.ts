@@ -67,8 +67,9 @@ export class UsuarioEditComponent implements OnInit {
       clave: [this.usuarioModel.clave , Validators.required],
       activo: [this.checkedActivo , Validators.required],
       perfil: [this.usuarioModel.perfil , Validators.required],
-      filial: [this.usuarioModel.filial , Validators.required],
-     
+
+      filial: [this.usuarioModel.filial , Validators.required]
+    
     })
   }
 
@@ -139,12 +140,13 @@ export class UsuarioEditComponent implements OnInit {
       )
   }
   getPerfil() {
+    
+     this.perfilService.getPerfil()
+       .subscribe(
+         res => {
+           this.perfilModel = res;
+         }
 
-        this.perfilService.getPerfil()
-      .subscribe(
-        res => {
-          this.perfilModel = res;
-        }
       )
   }
   compararPerfil(c1: any, c2: any): boolean { 

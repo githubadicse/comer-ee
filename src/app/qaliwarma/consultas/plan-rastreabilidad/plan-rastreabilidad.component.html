@@ -27,10 +27,15 @@
       <br/> la unidades segun presentacion para las entregas y generacion de guias como plan de rastreabilidad.
     </div>
     <br>
+
+    <p><app-comp-find-almacen [idFilial]="idfilial" (getObject)="_getObject($event)" [_formControlName]="this.dataForm.get('almacen')"></app-comp-find-almacen></p>
+
     <button type="button" class="btn btn-outline-success" [disabled]="!dataForm.valid" (click)="generar()">Procesar</button>
 
 
   </form>
+
+    
 
 
 </div>

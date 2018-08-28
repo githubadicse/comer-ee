@@ -166,6 +166,7 @@ export class MenuService {
   }
   
   addMenuUsuario(menu){
+  
     MenuUsuario.push(menu);
   }
 
