@@ -25,8 +25,7 @@ export class MenuAppService {
       .subscribe(
         res=> {
           this.perfilDetallesModel = res;
-          //console.log(this.perfilDetalleModel);
-          debugger;
+          
           this.addValidarAcceso();
         }
       )
@@ -153,7 +152,7 @@ export class MenuAppService {
 
       menuSys["children"] = array;
     }
-    debugger;
+  
     this.menuService.addMenuUsuario(menuSys);    
   }
 }
