@@ -13,10 +13,7 @@ export class UsuarioModel {
         public clave:string = null,
         public activo:boolean = null,
         public perfil:PerfilModel = null,
-        public filial:FilialModel = null,
-        public usuarioempleados: UsuarioEmpleadoModel[] = null
-
-        
+        public filial:FilialModel = null,    
 
     ){
 

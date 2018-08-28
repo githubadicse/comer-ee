@@ -11,11 +11,6 @@ import { FilialModel } from '../../filial/filial-model';
 import { PerfilModel } from '../../perfil/perfil-model';
 import { PerfilService } from '../../perfil/perfil.service';
 
-
-
-
-
-
 @Component({
   selector: 'app-usuario-edit',
   templateUrl: './usuario-edit.component.html',
@@ -72,8 +67,9 @@ export class UsuarioEditComponent implements OnInit {
       clave: [this.usuarioModel.clave , Validators.required],
       activo: [this.checkedActivo , Validators.required],
       perfil: [this.usuarioModel.perfil , Validators.required],
+
       filial: [this.usuarioModel.filial , Validators.required]
-      
+    
     })
   }
 
@@ -95,7 +91,7 @@ export class UsuarioEditComponent implements OnInit {
     let data =  JSON.stringify(this.usuarioForm.value);
     this.crudHttpClientServiceShared.create(data,"usuario","create").subscribe(
       res=>{
-        this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial,res.status);
+        this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial);
         this.usuarioForm.setValue(this.usuarioModel)
         this.flagRefreshReturn = true;
         this.usuarioForm.value.activo = this.checkedActivo === true ? 1 : 0;
@@ -118,7 +114,7 @@ export class UsuarioEditComponent implements OnInit {
     let data =  JSON.stringify(this.usuarioForm.value);
     this.crudHttpClientServiceShared.update(data,"usuario","update").subscribe(
       res=>{
-        this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial,res.status);
+        this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial);
         this.usuarioForm.setValue(this.usuarioModel);
         this.flagRefreshReturn = true;
       },
@@ -144,13 +140,13 @@ export class UsuarioEditComponent implements OnInit {
       )
   }
   getPerfil() {
-
     
      this.perfilService.getPerfil()
        .subscribe(
          res => {
            this.perfilModel = res;
          }
+
       )
   }
   compararPerfil(c1: any, c2: any): boolean { 
