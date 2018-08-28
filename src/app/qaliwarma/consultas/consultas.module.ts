@@ -14,6 +14,10 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatCheckboxModule } from '@angular/material';
 import {MatListModule} from '@angular/material/list';
 import { PlanRastreabilidadComponent } from './plan-rastreabilidad/plan-rastreabilidad.component';
+import { ComponentesModule } from '../../componentes/componentes.module';
+
+import { AlmacenService } from '../../modulo-almacen/almacen/almacen.service';
+
 
 
 @NgModule({
@@ -26,8 +30,11 @@ import { PlanRastreabilidadComponent } from './plan-rastreabilidad/plan-rastreab
     ConsultasRoutingModule,
     MatSidenavModule,
     MatCheckboxModule,
-    MatListModule
+    MatListModule,
+    ComponentesModule
+    
   ],
+  providers : [AlmacenService],
   declarations: [MainComponent, ControlDespachoMainComponent, ValorizacionMainComponent, PlanRastreabilidadComponent]
 })
 export class ConsultasModule { }
