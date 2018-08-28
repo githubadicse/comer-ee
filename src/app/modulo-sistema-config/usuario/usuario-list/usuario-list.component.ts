@@ -155,10 +155,10 @@ export class UsuarioListComponent implements OnInit {
     return c1 && c2 ? c1.idfilial === c2.idfilial : c1 === c2; 
   }
 
-  valor(event) {
-      this.dataTable.filter(event.value.idfilial,'filial.idfilial','equals');
-    
-       this.filterPage = JSON.stringify(this.dataTable.filters);      
-       this.refreshModel(this.dataPagination,true);
-     }
+  UsuariosxFilial(event) {
+    this.dataTable.filter(event.value.idfilial.toString(),"filial.idfilial","equals");
+    this.filterPage = JSON.stringify(this.dataTable.filters);      
+    this.refreshModel(this.dataPagination,true);
+
+   }
 }

@@ -14,8 +14,8 @@ export class UsuarioModel {
         public activo:boolean = null,
         public perfil:PerfilModel = null,
         public filial:FilialModel = null,
-        public usuarioempleados: UsuarioEmpleadoModel[] = [],
-        public status:boolean = null
+
+
         
 
     ){

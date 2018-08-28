@@ -73,14 +73,14 @@ export class UsuarioEditComponent implements OnInit {
       activo: [this.checkedActivo , Validators.required],
       perfil: [this.usuarioModel.perfil , Validators.required],
       filial: [this.usuarioModel.filial , Validators.required],
-      status: [this.usuarioModel.status , Validators.required]
+     
     })
   }
 
   edit(){
     this.crudHttpClientServiceShared.edit(this.id,"usuario","edit").subscribe(
       res => {
-        this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial,res.status);
+        this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial);
         this.usuarioForm.setValue(this.usuarioModel)
         this.checkedActivo = this.usuarioModel.activo;
       },
@@ -95,7 +95,7 @@ export class UsuarioEditComponent implements OnInit {
     let data =  JSON.stringify(this.usuarioForm.value);
     this.crudHttpClientServiceShared.create(data,"usuario","create").subscribe(
       res=>{
-        this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial,res.status);
+        this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial);
         this.usuarioForm.setValue(this.usuarioModel)
         this.flagRefreshReturn = true;
         this.usuarioForm.value.activo = this.checkedActivo === true ? 1 : 0;
@@ -118,7 +118,7 @@ export class UsuarioEditComponent implements OnInit {
     let data =  JSON.stringify(this.usuarioForm.value);
     this.crudHttpClientServiceShared.update(data,"usuario","update").subscribe(
       res=>{
-        this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial,res.status);
+        this.usuarioModel = new UsuarioModel(res.idusuario,res.nomusuario,res.dni,res.login,res.clave,res.activo,res.perfil,res.filial);
         this.usuarioForm.setValue(this.usuarioModel);
         this.flagRefreshReturn = true;
       },
@@ -145,13 +145,12 @@ export class UsuarioEditComponent implements OnInit {
   }
   getPerfil() {
 
-    //se comenta esta linea por que no existe el evento getPerfil en el servicio perfilSevice
-    // this.perfilService.getPerfil()
-    //   .subscribe(
-    //     res => {
-    //       this.perfilModel = res;
-    //     }
-    //   )
+        this.perfilService.getPerfil()
+      .subscribe(
+        res => {
+          this.perfilModel = res;
+        }
+      )
   }
   compararPerfil(c1: any, c2: any): boolean { 
     return c1 && c2 ? c1.idperfil === c2.idperfil : c1 === c2; 

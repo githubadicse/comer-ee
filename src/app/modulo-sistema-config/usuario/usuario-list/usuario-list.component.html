@@ -14,18 +14,17 @@
           <br>
       </div>
 
-<<<<<<< HEAD
-=======
       <mat-form-field class="w-25">
-        <mat-select  [(value)]="filial" placeholder="Filial" [compareWith]="compararFilial" (selectionChange)="valor($event)">
+        <mat-select  [(value)]="filial" placeholder="Filial" [compareWith]="compararFilial" (selectionChange)="UsuariosxFilial($event)">
           <mat-option *ngFor="let filial of filialModel" [value]="filial">
             {{filial.dscfilial}}
           </mat-option>
         </mat-select>
     </mat-form-field>
 
->>>>>>> b77417a7d10d29a63784a041387b4e6427cc1faf
-      <p-table #dt class="f-12" [value]="usuariosModel"  dataKey="idusuario" selectionMode="single" [loading]="Cargando">
+
+
+       <p-table #dt class="f-12" [value]="usuariosModel"  dataKey="idusuario" selectionMode="single" >
         <ng-template pTemplate="header">
           <tr>
             <th>Codigo</th>
@@ -34,6 +33,7 @@
             <th>Login</th>
             <th>Perfil</th>
             <th>Filial</th>
+            <th></th>
           </tr>
           <tr>
             <th><input style="width: 100%" (click)="$event.stopPropagation()" (keyup)="Typeahead.next([$event.target.value,'idusuario','equals'])" pInputText type="text" ></th>
