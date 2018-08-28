@@ -55,6 +55,11 @@ export const AppRoutes: Routes = [
         loadChildren: './modulo-sistema-config/perfil/perfil.module#PerfilModule'        
 
       },
+      // almacen
+      {
+        path: 'almacen/catalogo',
+        loadChildren: './modulo-almacen/producto/producto.module#ProductoModule'
+      },
 
       //CONFIGURACION
       {
@@ -64,8 +69,7 @@ export const AppRoutes: Routes = [
       {
         path : 'configuracion/usuarios',
         loadChildren : './modulo-sistema-config/usuario/usuario.module#UsuarioModule'
-      }      
-
+      }
     ]
   }, 
  
