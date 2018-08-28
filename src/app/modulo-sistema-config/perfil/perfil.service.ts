@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PerfilDetalleModel } from './perfil-detalle-model';
@@ -5,10 +6,11 @@ import { ConfigService } from '../../shared/config.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PerfilModel } from './perfil-model';
 
+
 @Injectable()
 export class PerfilService {
 
-  constructor(private configService:ConfigService, private httpCliente:HttpClient) { }
+  constructor(private configService:ConfigService, private httpCliente:HttpClient, private http: HttpClient) { }
 
 
   getPerfilDetalleByIdLogin(login:string):Observable<PerfilDetalleModel[]>{
@@ -26,6 +28,4 @@ export class PerfilService {
     return this.httpCliente.get<PerfilModel[]>(url);
     
   }
-
-
 }
