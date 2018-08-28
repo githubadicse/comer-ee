@@ -11,11 +11,6 @@ import { FilialModel } from '../../filial/filial-model';
 import { PerfilModel } from '../../perfil/perfil-model';
 import { PerfilService } from '../../perfil/perfil.service';
 
-
-
-
-
-
 @Component({
   selector: 'app-usuario-edit',
   templateUrl: './usuario-edit.component.html',

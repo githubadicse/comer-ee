@@ -25,6 +25,4 @@ export class PerfilService {
 
     return this.http.get<PerfilModel[]>(url);
   }
-
-
 }
