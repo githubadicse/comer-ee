@@ -1,3 +1,8 @@
 <p>
-  comp-find-codigo-barra works!
+  Control busca por codigo de barra
 </p>
+
+<mat-form-field>
+  <input matInput placeholder="Codigo de Barra" (keyup.enter)="buscarCodigo(txtCodigo.value)" #txtCodigo>
+</mat-form-field>
+

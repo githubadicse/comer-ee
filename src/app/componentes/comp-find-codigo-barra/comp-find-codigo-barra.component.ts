@@ -12,4 +12,8 @@ export class CompFindCodigoBarraComponent implements OnInit {
   ngOnInit() {
   }
 
+  public buscarCodigo(valor: string): void {
+    
+  }
+
 }

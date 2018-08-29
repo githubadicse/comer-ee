@@ -4,7 +4,7 @@ import { TipodocumentoModel } from '../../modulo-sistema-config/tipodocumento/ti
 @Component({
   selector: 'app-controles-documentacion',
   templateUrl: './controles-documentacion.component.html',
-  styles: []
+  styles: []  
 })
 export class ControlesDocumentacionComponent implements OnInit {
 

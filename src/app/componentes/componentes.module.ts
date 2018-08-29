@@ -6,6 +6,8 @@ import { CompFindAlmacenComponent } from './comp-find-almacen/comp-find-almacen.
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material';
+
 
 @NgModule({
   imports: [
@@ -21,4 +23,5 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
   declarations: [CompFindAlmacenComponent],
   exports : [CompFindAlmacenComponent]
 })
+
 export class ComponentesModule { }
