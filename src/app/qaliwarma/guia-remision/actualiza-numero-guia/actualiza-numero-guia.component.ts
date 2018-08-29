@@ -98,7 +98,7 @@ export class ActualizaNumeroGuiaComponent implements OnInit {
     
     if (event.key === "Tab" || event.key === "Enter" ) {
       this.buscarCodigoModular();
-    }//validacion
+    }
   }
 
   clickPestana1(){
