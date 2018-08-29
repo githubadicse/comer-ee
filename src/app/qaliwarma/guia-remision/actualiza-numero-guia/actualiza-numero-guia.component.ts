@@ -96,7 +96,7 @@ export class ActualizaNumeroGuiaComponent implements OnInit {
 
   onKeydown(event) {
     
-    if (event.key === "Enter") {
+    if (event.key === "Tab" || event.key === "Enter" ) {
       this.buscarCodigoModular();
     }
   }
@@ -112,5 +112,4 @@ export class ActualizaNumeroGuiaComponent implements OnInit {
      this.trgCodigoModularFocusEl.nativeElement.focus();
    },100);
  }
-
 }

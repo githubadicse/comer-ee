@@ -13,6 +13,7 @@ import { ConfigService } from '../../../shared/config.service';
 })
 export class PlanRastreabilidadComponent implements OnInit {
 
+ 
   dataForm: any;
   blocked :boolean= false;
   public anno:number = 2018;

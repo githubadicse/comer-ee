@@ -357,7 +357,7 @@ getHeadersFormBlob() {
 
     let decodificado = jwt_decode(idToken);
 
-    return decodificado['idusuario'].toString();
+    return decodificado['idusuario'];
    
   }
 
@@ -366,7 +366,7 @@ getHeadersFormBlob() {
 
     let decodificado = jwt_decode(idToken);
 
-    return decodificado['idfilial'].toString();
+    return decodificado['idfilial'];
   }
   
 
