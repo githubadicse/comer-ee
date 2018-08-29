@@ -12,6 +12,7 @@ import { AlmacenModel } from '../../../modulo-almacen/almacen/almacen-model';
 })
 export class PlanRastreabilidadComponent implements OnInit {
 
+  idfilial = 1;
   dataForm: any;
   blocked :boolean= false;
   public anno:number = 2018;
