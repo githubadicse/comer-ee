@@ -96,7 +96,7 @@ export class ActualizaNumeroGuiaComponent implements OnInit {
 
   onKeydown(event) {
     
-    if (event.key === "Enter") {
+    if (event.key === "Tab" || event.key === "Enter" ) {
       this.buscarCodigoModular();
     }
   }
