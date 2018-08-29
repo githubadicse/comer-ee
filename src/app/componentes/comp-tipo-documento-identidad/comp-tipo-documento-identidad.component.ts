@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { ProveedorclienteService } from '../../modulo-almacen/proveedorcliente/proveedorcliente.service';
+import { ProveedorclientedireccionModel } from '../../modulo-almacen/proveedorcliente/proveedorclientedireccion-model';
+import { CrudHttpClientServiceShared } from '../../shared/servicio/crudHttpClient.service.shared';
+import { httpOptions } from '../../shared/httpOptions.cons';
+
 
 @Component({
   selector: 'app-comp-tipo-documento-identidad',
@@ -6,10 +12,42 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./comp-tipo-documento-identidad.component.scss']
 })
 export class CompTipoDocumentoIdentidadComponent implements OnInit {
+  @Input()
+  myControl = new FormControl();
 
-  constructor() { }
+  @Input()
+  _formControlName: FormControl;
+  
+  @Output()
+  getObject: EventEmitter<ProveedorclientedireccionModel> = new EventEmitter();  
+
+  public proveedor_cliente: ProveedorclientedireccionModel;
+
+  public cargando: boolean = false;  
+
+  constructor(private crudService: CrudHttpClientServiceShared) { }
 
   ngOnInit() {
+    if (this._formControlName == undefined) {
+      this._formControlName = this.myControl;      
+      // this._formControlName.setErrors({ 'incorrect': true, 'msj': 'No se encontro registros.'}); 
+    }
+  }
+
+  public buscarDNI(dni: string): void {
+    const filtros = `documentoidentificacion.iddocumentoidentificacion:1:equals,nrodocumento:${dni}:equals`;
+    this.cargando = true;    
+    this.crudService.getAllByFilter('proveedorcliente', 'getByFilter', filtros).subscribe(
+      (res: any) => {                
+        this.proveedor_cliente = <ProveedorclientedireccionModel>res[0] || null;
+        if (!this.proveedor_cliente) { this._formControlName.setErrors({ 'incorrect': true, 'msj': 'No se encontro registros.'}); }
+        
+        this.getObject.emit(this.proveedor_cliente);
+        console.log(this.proveedor_cliente)
+        console.log(this._formControlName );
+        this.cargando = false;
+      }
+    )  
   }
 
 }

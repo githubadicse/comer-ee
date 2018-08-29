@@ -1,0 +1,32 @@
+<h1>Documento de identidad</h1>
+<div class="card border border-primary">
+  <div class="card-body">
+    <form [formGroup]="dataForm">
+      <input type="text" formControlName="anno" [hidden]="true">
+      <app-comp-tipo-documento-identidad (getObject)="_getObject($event)" [_formControlName]="this.dataForm.get('dni')"></app-comp-tipo-documento-identidad>
+    </form>
+  </div>
+</div>
+
+<br>
+<hr>
+<br>
+
+<h2>Propiedades</h2>
+
+<table class="table">
+  <thead>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+  </thead>
+  <tr>
+    <td>
+      <strong>getObject</strong>
+      <p>Evento que emite</p>
+    </td>
+    <td>
+      Devuelve un ProveedorCliente:
+      <span class="text-info">{{proveedor_cliente | json}}</span>
+    </td>
+  </tr>
+</table>
