@@ -21,7 +21,8 @@ import { SharedModule } from '../../shared/shared.module';
     FormsModule,
     ReactiveFormsModule,
     AutoCompleteModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    SharedModule
   ],
   declarations: [AlmacenMainComponent, AlmacenListaComponent, AlmacenEdicionComponent]
 })
