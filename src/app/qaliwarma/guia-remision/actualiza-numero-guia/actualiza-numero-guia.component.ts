@@ -112,5 +112,4 @@ export class ActualizaNumeroGuiaComponent implements OnInit {
      this.trgCodigoModularFocusEl.nativeElement.focus();
    },100);
  }
-
 }
