@@ -3,6 +3,10 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { RequestOptions } from '@angular/http';
 import { isUndefined } from 'util';
+import * as jwt_decode from "jwt-decode";
+
+
+
 @Injectable()
 export class ConfigService {
 
@@ -346,5 +350,24 @@ getHeadersFormBlob() {
     return jsonRpt;
   }
     
+
+  //Decodifica Token
+  getIdUsuarioToken():string{
+    let idToken = localStorage.getItem("token");
+
+    let decodificado = jwt_decode(idToken);
+
+    return decodificado['idusuario'].toString();
+   
+  }
+
+  getIdFilialToken(){
+    let idToken = localStorage.getItem("token");
+
+    let decodificado = jwt_decode(idToken);
+
+    return decodificado['idfilial'].toString();
+  }
+  
 
 }
