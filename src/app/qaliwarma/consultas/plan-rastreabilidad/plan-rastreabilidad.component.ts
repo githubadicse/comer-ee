@@ -13,7 +13,7 @@ import { ConfigService } from '../../../shared/config.service';
 })
 export class PlanRastreabilidadComponent implements OnInit {
 
-  idfilial = 1;
+ 
   dataForm: any;
   blocked :boolean= false;
   public anno:number = 2018;
@@ -30,7 +30,7 @@ export class PlanRastreabilidadComponent implements OnInit {
     this.numeroEntrega = parseInt( localStorage.getItem("numeroEntrega"));
     this.buildForm();
     this.idfilial = this.configService.getIdFilialToken();
-    
+    debugger
 
   }
 
