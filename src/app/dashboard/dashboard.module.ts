@@ -11,6 +11,8 @@ import { ComFindTipoDocumentoSunatModule } from '../intercambio/com-find-tipo-do
 import { ControlesDocumentacionComponent } from '../documentacion/controles-documentacion/controles-documentacion.component';
 
 
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -24,6 +26,7 @@ import { ControlesDocumentacionComponent } from '../documentacion/controles-docu
     FlexLayoutModule,
     MatSlideToggleModule,
     ComFindTipoDocumentoSunatModule
+
   ],
   declarations: [ DashboardComponent, ControlesDocumentacionComponent ]
 })

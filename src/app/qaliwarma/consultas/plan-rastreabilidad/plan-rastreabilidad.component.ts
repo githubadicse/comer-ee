@@ -29,7 +29,6 @@ export class PlanRastreabilidadComponent implements OnInit {
     this.numeroEntrega = parseInt( localStorage.getItem("numeroEntrega"));
     this.buildForm();
     this.idfilial = this.configService.getIdFilialToken();
-    
 
   }
 

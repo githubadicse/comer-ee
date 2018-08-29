@@ -10,7 +10,7 @@ export class InterceptorAutorizationService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const idToken = localStorage.getItem("token");
+    let idToken = localStorage.getItem("token");
     
 
     if (idToken) {
