@@ -1,9 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ProveedorclienteService } from '../../modulo-almacen/proveedorcliente/proveedorcliente.service';
 import { ProveedorclientedireccionModel } from '../../modulo-almacen/proveedorcliente/proveedorclientedireccion-model';
 import { CrudHttpClientServiceShared } from '../../shared/servicio/crudHttpClient.service.shared';
-import { httpOptions } from '../../shared/httpOptions.cons';
 
 
 @Component({
@@ -30,7 +28,6 @@ export class CompTipoDocumentoIdentidadComponent implements OnInit {
   ngOnInit() {
     if (this._formControlName == undefined) {
       this._formControlName = this.myControl;      
-      // this._formControlName.setErrors({ 'incorrect': true, 'msj': 'No se encontro registros.'}); 
     }
   }
 

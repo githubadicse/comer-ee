@@ -17,6 +17,7 @@ import { ControlFindCodigoBarraComponent } from './control-find-codigo-barra/con
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ControlProveedorClienteComponent } from './control-proveedor-cliente/control-proveedor-cliente.component';
 import { CompTipoDocumentoIdentidadComponent } from '../componentes/comp-tipo-documento-identidad/comp-tipo-documento-identidad.component';
+import { CompFindProveedorClienteRucComponent } from '../componentes/comp-find-proveedor-cliente-ruc/comp-find-proveedor-cliente-ruc.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { CompTipoDocumentoIdentidadComponent } from '../componentes/comp-tipo-do
     ControlFindAlmacenComponent,
     CompFindCodigoBarraComponent,
     CompTipoDocumentoIdentidadComponent,
+    CompFindProveedorClienteRucComponent,
     ControlFindCodigoBarraComponent,
     ControlProveedorClienteComponent
   ]
