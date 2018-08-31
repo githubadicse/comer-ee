@@ -1,3 +1,13 @@
-<p>
-  comp-tipo-documento-identidad works!
-</p>
+<div class="w-100">
+  <mat-form-field class="w-100">
+    <input autocomplete="off" matInput placeholder="DNI" (keyup.enter)="buscarDNI(txtCodigo.value)" [formControl]="_formControlName" maxlength="8" #txtCodigo>
+    <mat-hint *ngIf="!cargando && _formControlName.invalid"><span class="text-danger">{{_formControlName.errors['msj']}}</span></mat-hint>
+    <mat-error *ngIf="!cargando && _formControlName.invalid">       
+      {{ _formControlName.errors['msj'] }}
+    </mat-error>
+    <mat-hint align="end">{{txtCodigo.value.length}} / 8</mat-hint>
+  </mat-form-field>
+  <div style="margin-top:-18px; height: 10px;">
+    <mat-progress-bar mode="indeterminate" [hidden]="!cargando"></mat-progress-bar>
+  </div>
+</div>

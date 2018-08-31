@@ -142,9 +142,11 @@ const MENUITEMS = [
 ,
 
 {
-    state: 'http://primer.nyasha.me/docs',
-    name: 'DOCS',
-    type: 'extTabLink',
+    // state: 'http://primer.nyasha.me/docs',
+    // type: 'extTabLink',
+    state: 'documentacion',
+    name: 'DOCUMENTACION',
+    type: 'link',
     icon: 'local_library',
     idmenu : '07'
   }

@@ -69,6 +69,11 @@ export const AppRoutes: Routes = [
       {
         path : 'configuracion/usuarios',
         loadChildren : './modulo-sistema-config/usuario/usuario.module#UsuarioModule'
+      },
+      //DOCUMENTACION
+      {
+        path: 'documentacion',
+        loadChildren: './documentacion/documentacion.module#DocumentacionModule'
       }
     ]
   }, 

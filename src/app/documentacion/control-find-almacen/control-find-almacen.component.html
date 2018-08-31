@@ -1,0 +1,10 @@
+<h1>Control Buscar Almacen</h1>
+
+<form [formGroup]="dataForm">
+    <input type="text" formControlName="anno" [hidden]="true">
+    <div class="card border border-primary">
+      <div class="card-body">
+        <app-comp-find-almacen idFilial="1" (getObject)="_getObject($event)" [_formControlName]="this.dataForm.get('almacen')"></app-comp-find-almacen>
+      </div>
+    </div>
+</form>
