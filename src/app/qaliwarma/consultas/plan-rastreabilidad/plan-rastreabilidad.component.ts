@@ -3,6 +3,7 @@ import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { PlanRastreabilidadService } from './plan-rastreabilidad.service';
 import swal from 'sweetalert2';
 import { AlmacenModel } from '../../../modulo-almacen/almacen/almacen-model';
+import { ConfigService } from '../../../shared/config.service';
 
 @Component({
   selector: 'app-plan-rastreabilidad',
@@ -12,16 +13,23 @@ import { AlmacenModel } from '../../../modulo-almacen/almacen/almacen-model';
 })
 export class PlanRastreabilidadComponent implements OnInit {
 
+ 
   dataForm: any;
   blocked :boolean= false;
   public anno:number = 2018;
   public numeroEntrega:number = 1;
   public titulo = "PLAN DE RASTREABILIDAD"
-  constructor(private formBuilder: FormBuilder,private planRastreabilidadService:PlanRastreabilidadService) { }
+  idfilial = 0;
+
+  constructor(private formBuilder: FormBuilder,private planRastreabilidadService:PlanRastreabilidadService, private configService:ConfigService ) { 
+
+  }
+
   myControl:FormControl
   ngOnInit() {
     this.numeroEntrega = parseInt( localStorage.getItem("numeroEntrega"));
     this.buildForm();
+    this.idfilial = this.configService.getIdFilialToken();
 
   }
 
