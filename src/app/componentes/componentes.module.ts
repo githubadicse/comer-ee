@@ -11,6 +11,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material';
 import { CompFindCodigoBarraModule } from './comp-find-codigo-barra/comp-find-codigo-barra.module';
 import { CompTipoDocumentoIdentidadComponent } from './comp-tipo-documento-identidad/comp-tipo-documento-identidad.component';
+import { CompFindProveedorClienteRucComponent } from './comp-find-proveedor-cliente-ruc/comp-find-proveedor-cliente-ruc.component';
 
 
 @NgModule({
@@ -27,8 +28,8 @@ import { CompTipoDocumentoIdentidadComponent } from './comp-tipo-documento-ident
     CompFindCodigoBarraModule
     
   ],
-  declarations: [CompFindAlmacenComponent, CompTipoDocumentoIdentidadComponent],
-  exports: [CompFindAlmacenComponent, CompTipoDocumentoIdentidadComponent]
+  declarations: [CompFindAlmacenComponent, CompTipoDocumentoIdentidadComponent, CompFindProveedorClienteRucComponent],
+  exports: [CompFindAlmacenComponent, CompTipoDocumentoIdentidadComponent, CompFindProveedorClienteRucComponent]
 })
 
 export class ComponentesModule { }

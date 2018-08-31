@@ -21,7 +21,8 @@ export class ControlProveedorClienteComponent implements OnInit {
   buildForm() {
     this.dataForm = this.formBuilder.group({
       anno: ['1', Validators.required],
-      dni: ['', Validators.required]
+      dni: ['', Validators.required],
+      ruc: ['', Validators.required]
     })
   }
 

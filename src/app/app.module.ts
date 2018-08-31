@@ -53,7 +53,6 @@ import { AuthGuard } from './shared/guard/auth.guard';
 import { ConfigService } from './shared/config.service';
 import { InterceptorAutorizationService } from './shared/interceptor-autorization.service';
 import { CrudHttpClientServiceShared } from './shared/servicio/crudHttpClient.service.shared';
-import { ComponentesModule } from './componentes/componentes.module';
 
 
 
@@ -81,11 +80,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AuthLayoutComponent,
     AccordionAnchorDirective,
     AccordionLinkDirective,
-    AccordionDirective,
-    ComponentesModule
+    AccordionDirective,    
    
-
-
   ],
   imports: [
     BrowserModule,
