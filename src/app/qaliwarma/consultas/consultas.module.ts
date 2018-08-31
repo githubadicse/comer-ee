@@ -31,7 +31,8 @@ import { AlmacenService } from '../../modulo-almacen/almacen/almacen.service';
     MatSidenavModule,
     MatCheckboxModule,
     MatListModule,
-    ComponentesModule
+    ComponentesModule,
+    SharedModule
     
   ],
   providers : [AlmacenService],

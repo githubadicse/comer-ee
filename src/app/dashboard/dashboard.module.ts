@@ -7,6 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutes } from './dashboard.routing';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -18,7 +19,6 @@ import { DashboardRoutes } from './dashboard.routing';
     MatProgressBarModule,
     MatMenuModule,
     FlexLayoutModule,
-    MatSlideToggleModule
   ],
   declarations: [ DashboardComponent ]
 })
