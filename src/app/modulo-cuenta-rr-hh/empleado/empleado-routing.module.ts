@@ -6,7 +6,7 @@ import { EmpleadoEditComponent } from './empleado-edit/empleado-edit.component';
 
 
 const routes: Routes = [{
-  path : 'main' , component : EmpleadoMainComponent,
+  path : '' , component : EmpleadoMainComponent,
   children : [
     {
       path : '', redirectTo : 'lista'

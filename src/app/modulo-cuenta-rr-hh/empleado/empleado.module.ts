@@ -9,20 +9,23 @@ import { GrowlModule, DataTableModule, FileUploadModule, ConfirmDialogModule } f
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
+import { MatTableModule } from '@angular/material';
+
 
 
 @NgModule({
   imports: [
     CommonModule,
     EmpleadoRoutingModule,
-   
     GrowlModule,
     DataTableModule,
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
     FileUploadModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    MatTableModule
+
   ],
   declarations: [EmpleadoGridComponent, EmpleadoEditComponent, EmpleadoMainComponent]
 })

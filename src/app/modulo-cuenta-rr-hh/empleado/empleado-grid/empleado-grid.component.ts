@@ -37,6 +37,8 @@ export class EmpleadoGridComponent implements OnInit {
    public refreshPage: boolean = false;
    //-----------------------------------------//
 
+
+   displayedColumns = ['idempleado', 'nomempleado', 'dni', 'email', 'estado', 'action'];
   constructor(private sharedService:SharedService, private confirmationService: ConfirmationService,) { }
 
   ngOnInit() {

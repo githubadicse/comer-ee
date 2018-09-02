@@ -70,6 +70,13 @@ export const AppRoutes: Routes = [
         path : 'configuracion/usuarios',
         loadChildren : './modulo-sistema-config/usuario/usuario.module#UsuarioModule'
       }
+      //TABLAS
+      ,
+      {
+        path : 'tablas/empleado',
+        loadChildren : './modulo-cuenta-rr-hh/empleado/empleado.module#EmpleadoModule'
+      }
+
     ]
   }, 
  
