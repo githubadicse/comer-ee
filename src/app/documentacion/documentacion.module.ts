@@ -18,6 +18,11 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ControlProveedorClienteComponent } from './control-proveedor-cliente/control-proveedor-cliente.component';
 import { CompTipoDocumentoIdentidadComponent } from '../componentes/comp-tipo-documento-identidad/comp-tipo-documento-identidad.component';
 import { CompFindProveedorClienteRucComponent } from '../componentes/comp-find-proveedor-cliente-ruc/comp-find-proveedor-cliente-ruc.component';
+import { ControlMedioPagoComponent } from './control-medio-pago/control-medio-pago.component';
+import { CompFindMedioPagoComponent } from '../componentes/comp-find-medio-pago/comp-find-medio-pago.component';
+import { ControlFindProductoComponent } from './control-find-producto/control-find-producto.component';
+import { CompFindProductoComponent } from '../componentes/comp-find-producto/comp-find-producto.component';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 @NgModule({
@@ -25,6 +30,7 @@ import { CompFindProveedorClienteRucComponent } from '../componentes/comp-find-p
     CommonModule,
     FormsModule, ReactiveFormsModule,
     DocumentacionRoutingModule,    
+    PaginatorModule,
     MatInputModule,
     MatSlideToggleModule,
     MatTabsModule,    
@@ -41,8 +47,11 @@ import { CompFindProveedorClienteRucComponent } from '../componentes/comp-find-p
     CompFindCodigoBarraComponent,
     CompTipoDocumentoIdentidadComponent,
     CompFindProveedorClienteRucComponent,
+    CompFindMedioPagoComponent,
+    CompFindProductoComponent,
     ControlFindCodigoBarraComponent,
-    ControlProveedorClienteComponent
+    ControlProveedorClienteComponent,    
+    ControlMedioPagoComponent, ControlFindProductoComponent
   ]
 })
 
