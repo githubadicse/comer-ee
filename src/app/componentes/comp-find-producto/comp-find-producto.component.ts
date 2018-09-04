@@ -16,7 +16,7 @@ import { AlmacenModel } from '../../modulo-almacen/almacen/almacen-model';
 export class CompFindProductoComponent implements OnInit {
   private productoRespuesta: ProductoModel;
   private LastCharFind: string = ''; // ultimo caracter buscado  
-  private Idalmacen: number = 1;  
+  private Idalmacen: number = 1;    
 
   private pageMostar: number = 0;
   private rows: number = 10;
@@ -25,6 +25,7 @@ export class CompFindProductoComponent implements OnInit {
   public listProductos: any;
   public listAlmacen: AlmacenModel[];
   public frmCtrl_textBuscar = new FormControl();
+  public procesando: boolean = true;
 
   private indexSelect: number = 0;
   @ViewChildren('rowSelect') rowsProductos: QueryList<any> // para la seccion con las flechas del teclado up down
@@ -64,7 +65,8 @@ export class CompFindProductoComponent implements OnInit {
     this.crudService.getPagination(this.pageMostar === null ? 0 : this.pageMostar, this.rows === null ? 10 : this.rows, 'asc', 'producto.dscproducto', filters, 'stockactual', 'pagination', null)
       .subscribe(res => {
         this.totalRecords = res.totalCount;
-        this.listProductos = res.data;        
+        this.listProductos = res.data;
+        this.procesando = false;
       });
   }
 
@@ -88,6 +90,7 @@ export class CompFindProductoComponent implements OnInit {
   public compareAlmacen(c1: any, c2: number): boolean { return c1.idalmacen === c2; }
   
   public changeSelectAlamcen(value) : void {
+    this.procesando = true;
     this.Idalmacen = value.idalmacen;
     this._filterProductos(this.LastCharFind);
   }
