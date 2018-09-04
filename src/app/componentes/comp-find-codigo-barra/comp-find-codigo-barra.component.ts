@@ -10,6 +10,7 @@ import { ProductoService } from '../../modulo-almacen/producto/service/producto.
   styleUrls: ['./comp-find-codigo-barra.component.scss'],
   providers: [ProductoService],    
 })
+
 export class CompFindCodigoBarraComponent implements OnInit {
   @Input()
   myControl = new FormControl();

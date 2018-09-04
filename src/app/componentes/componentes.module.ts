@@ -12,13 +12,16 @@ import { MatSelectModule } from '@angular/material';
 import { CompFindCodigoBarraModule } from './comp-find-codigo-barra/comp-find-codigo-barra.module';
 import { CompTipoDocumentoIdentidadComponent } from './comp-tipo-documento-identidad/comp-tipo-documento-identidad.component';
 import { CompFindProveedorClienteRucComponent } from './comp-find-proveedor-cliente-ruc/comp-find-proveedor-cliente-ruc.component';
-
+import { CompFindMedioPagoComponent } from './comp-find-medio-pago/comp-find-medio-pago.component';
+import { CompFindProductoComponent } from './comp-find-producto/comp-find-producto.component';
+import { PaginatorModule } from 'primeng/paginator';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    PaginatorModule,
     MatSelectModule,
     MatFormFieldModule,
     MatInputModule,
@@ -28,8 +31,14 @@ import { CompFindProveedorClienteRucComponent } from './comp-find-proveedor-clie
     CompFindCodigoBarraModule
     
   ],
-  declarations: [CompFindAlmacenComponent, CompTipoDocumentoIdentidadComponent, CompFindProveedorClienteRucComponent],
-  exports: [CompFindAlmacenComponent, CompTipoDocumentoIdentidadComponent, CompFindProveedorClienteRucComponent]
+  declarations: [
+    CompFindAlmacenComponent, 
+    CompTipoDocumentoIdentidadComponent, 
+    CompFindProveedorClienteRucComponent, 
+    CompFindMedioPagoComponent, 
+    CompFindProductoComponent
+  ],
+  exports: [CompFindAlmacenComponent, CompTipoDocumentoIdentidadComponent, CompFindProveedorClienteRucComponent, CompFindMedioPagoComponent, CompFindProductoComponent]
 })
 
 export class ComponentesModule { }

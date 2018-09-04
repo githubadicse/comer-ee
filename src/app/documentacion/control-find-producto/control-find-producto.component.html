@@ -1,0 +1,38 @@
+<app-comp-find-producto
+    [IdalmacenPreSeleccionado]=1
+    [disabledAlamcen]="disabledAlamcen"
+    (getObject)="_getObject($event)"
+>
+</app-comp-find-producto>
+
+<br>
+<br>
+
+<h2>Propiedades</h2>
+
+<table class="table">
+    <thead>
+        <th>Nombre</th>
+        <th>Descripcion</th>
+    </thead>
+    <tr>
+        <td>
+            <strong>[disabledAlamcen]</strong>
+            <p>Boolean</p>
+            <mat-slide-toggle [checked]="disabledAlamcen" (change)="disabledAlamcen = $event.checked">Deshabilitar</mat-slide-toggle>
+        </td>
+        <td>
+            Deshabilita la lista de almacenes
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <strong>getObject</strong>
+            <p>Evento que emite</p>
+        </td>
+        <td>
+            Devuelve un producto:
+            <span class="text-info">{{producto | json}}</span>
+        </td>
+    </tr>
+</table>

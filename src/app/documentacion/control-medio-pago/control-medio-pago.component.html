@@ -1,0 +1,32 @@
+<h1>Control medio de pago</h1>
+<div class="card border border-primary">
+  <div class="card-body">
+    <form [formGroup]="dataForm">
+      <input type="text" formControlName="anno" [hidden]="true">      
+      <app-comp-find-medio-pago (getObject)="_getObject($event)" [_formControlName]="this.dataForm.get('mediopago')"></app-comp-find-medio-pago>
+    </form>
+  </div>
+</div>
+
+<br>
+<hr>
+<br>
+
+<h2>Propiedades</h2>
+
+<table class="table">
+  <thead>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+  </thead>
+  <tr>
+    <td>
+      <strong>getObject</strong>
+      <p>Evento que emite</p>
+    </td>
+    <td>
+      Devuelve un json mediopago:
+      <span class="text-info">{{mediopago | json}}</span>
+    </td>
+  </tr>
+</table>

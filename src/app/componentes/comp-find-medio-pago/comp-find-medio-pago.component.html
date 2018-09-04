@@ -1,3 +1,7 @@
-<p>
-  comp-find-medio-pago works!
-</p>
+<mat-form-field class="w-100">
+  <mat-select appNextfocus placeholder="Medio de pago" [formControl]="_formControlName" [compareWith]="compareMedioPago" (selectionChange)="_onSelectionChange($event)">
+    <mat-option *ngFor="let item of ListMedioPago" [value]="item">
+      {{item.dscMedioPago}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
