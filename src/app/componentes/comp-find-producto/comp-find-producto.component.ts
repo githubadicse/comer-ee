@@ -57,11 +57,11 @@ export class CompFindProductoComponent implements OnInit {
   private _filterProductos(cadenaBuscar: string = ''): void {        
     this.LastCharFind = cadenaBuscar;
     this.indexSelect = 0;
-    //,producto.marca.dscmarca:${cadenaBuscar}:contains,producto.categoria.dsccategoria:${cadenaBuscar}:contains
-    const _filtros = `almacen.idalmacen:${this.Idalmacen}:equals,producto.dscproducto:${cadenaBuscar}:contains`;    
+    //producto.dscproducto:${cadenaBuscar}:contains,producto.marca.dscmarca:${cadenaBuscar}:contains,producto.categoria.dsccategoria:${cadenaBuscar}:contains
+    const _filtros = `almacen.idalmacen:${this.Idalmacen}:equals:and,producto.dscproducto:${cadenaBuscar}:contains:or`;
     const filters = JSON.stringify(this.configService.jsonFilter(_filtros));
     
-    // console.log(filters);
+    console.log('filtro', filters);
     this.crudService.getPagination(this.pageMostar === null ? 0 : this.pageMostar, this.rows === null ? 10 : this.rows, 'asc', 'producto.dscproducto', filters, 'stockactual', 'pagination', null)
       .subscribe(res => {
         this.totalRecords = res.totalCount;
