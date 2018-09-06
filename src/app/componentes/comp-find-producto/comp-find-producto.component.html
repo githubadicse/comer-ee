@@ -30,37 +30,41 @@
       <div class="row">
         <div class="col-md-12">
           <table class="table-producto">
-            <ng-container *ngIf="procesando; then thenTemplate; else elseTemplate"></ng-container>
-            <ng-template #thenTemplate>
-              <tr class="h-100 w-100 animated fadeIn">
-                <td class="text-center" colspan="3">
-                  <i class="fa fa-spinner fa-spin fa-fw fa-2x"></i>
-                </td>
-              </tr>
-            </ng-template>
-            <ng-template #elseTemplate>
-              <tr #rowSelect *ngFor="let row of listProductos; let i=index" [ngClass]="{'selected': indexSelect === i}" (click)="indexSelect=i; resEmit(i)" class="animated fadeIn">
-                <td>
-                  <div>
-                    <p class="titulo">{{row.producto.dscproducto}}</p>
-                    <span class="subtitulo">{{row.almacen.dscalmacen | lowercase}} | categoria: {{row.producto.categoria.dsccategoria |
-                      lowercase}} | marca: {{row.producto.marca.dscmarca | lowercase}}</span>
-                  </div>
-                </td>
-                <td>
-                  <h3>{{ row.stockactual }} {{ row.producto.unidadmedida.abrunidadmedida }}</h3>
-                </td>
-                <td>
-                  <h3> {{ row.producto.precio1 | number:'0.2' }} </h3>
-                </td>
-              </tr>              
-            </ng-template>                                      
+              <ng-container *ngIf="procesando; then thenTemplate; else elseTemplate"></ng-container>
+              <ng-template #thenTemplate>
+                <tr class="h-100 w-100 animated fadeIn">
+                  <td class="text-center" colspan="3">
+                    <i class="fa fa-spinner fa-spin fa-fw fa-2x"></i>
+                  </td>
+                </tr>                
+              </ng-template>
+
+              <ng-template #elseTemplate>
+                <tbody class="animated fadeIn">
+                  <tr #rowSelect *ngFor="let row of listProductos; let i=index" [ngClass]="{'selected': indexSelect === i}" (click)="indexSelect=i; resEmit(i)">
+                    <td>
+                      <div>
+                        <p class="titulo">{{row.producto.dscproducto}}</p>
+                        <span class="subtitulo">{{row.almacen.dscalmacen | lowercase}} | categoria: {{row.producto.categoria.dsccategoria |
+                          lowercase}} | marca: {{row.producto.marca.dscmarca | lowercase}}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <h3>{{ row.stockactual }} {{ row.producto.unidadmedida.abrunidadmedida }}</h3>
+                    </td>
+                    <td>
+                      <h3> {{ row.producto.precio1 | number:'0.2' }} </h3>
+                    </td>
+                  </tr>
+                </tbody>                
+              </ng-template>
+                         
           </table>          
         </div>      
       </div>
     </div>
     <div class="d-inline">                  
-          <span class="float-left p-2 d-inline">Registros: {{totalRecords}}</span>
+          <span class="float-left p-2 d-inline">{{totalRecords}} Registros</span>
           <p-paginator [rows]="10" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]" (onPageChange)="paginate($event)"></p-paginator>                     
     </div>
 </div>
