@@ -1,7 +1,14 @@
+<br>
+<h2>List</h2>
+<app-comp-find-producto-list (getBuscarMasDe)="_getBuscarMasDe($event)"></app-comp-find-producto-list>
+<br>
+
 <app-comp-find-producto
-    [IdalmacenPreSeleccionado]=1
+    [IdalmacenPreSeleccionado]="idalmacen"
+    [parametroBuscar]="parametroBuscar"
     [disabledAlamcen]="disabledAlamcen"
     (getObject)="_getObject($event)"
+    
 >
 </app-comp-find-producto>
 

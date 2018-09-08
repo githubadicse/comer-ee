@@ -15,6 +15,7 @@ import { CompFindProveedorClienteRucComponent } from './comp-find-proveedor-clie
 import { CompFindMedioPagoComponent } from './comp-find-medio-pago/comp-find-medio-pago.component';
 import { CompFindProductoComponent } from './comp-find-producto/comp-find-producto.component';
 import { PaginatorModule } from 'primeng/paginator';
+import { CompFindProductoListComponent } from './comp-find-producto-list/comp-find-producto-list.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,7 @@ import { PaginatorModule } from 'primeng/paginator';
     CompTipoDocumentoIdentidadComponent, 
     CompFindProveedorClienteRucComponent, 
     CompFindMedioPagoComponent, 
-    CompFindProductoComponent
+    CompFindProductoComponent, CompFindProductoListComponent
   ],
   exports: [CompFindAlmacenComponent, CompTipoDocumentoIdentidadComponent, CompFindProveedorClienteRucComponent, CompFindMedioPagoComponent, CompFindProductoComponent]
 })

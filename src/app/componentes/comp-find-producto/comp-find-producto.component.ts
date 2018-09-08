@@ -7,6 +7,8 @@ import { startWith } from 'rxjs/internal/operators/startWith';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { map } from 'rxjs/internal/operators/map';
 import { AlmacenModel } from '../../modulo-almacen/almacen/almacen-model';
+import { Subject } from 'rxjs/internal/Subject';
+import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
 
 @Component({
   selector: 'app-comp-find-producto',
@@ -23,38 +25,42 @@ export class CompFindProductoComponent implements OnInit {
   
   public totalRecords: number = 0;
   public listProductos: any;
-  public listAlmacen: AlmacenModel[];
-  public frmCtrl_textBuscar = new FormControl();
+  public listAlmacen: AlmacenModel[];  
   public procesando: boolean = true;
 
   private indexSelect: number = 0;
   @ViewChildren('rowSelect') rowsProductos: QueryList<any> // para la seccion con las flechas del teclado up down
 
 
+  @Input() _formControlName = new FormControl();
+  @Input() myControl = new FormControl();
   @Input() IdalmacenPreSeleccionado: number = 1;  //idalmacen preseleccionado
+  @Input() parametroBuscar: string = '';  // parametro a buscar preseleccionado
   @Input() disabledAlamcen: boolean = false; //deshabilitar lista de almacen
   @Output() getObject: EventEmitter<ProductoModel> = new EventEmitter();
-
-  
   
   constructor(public crudService: CrudHttpClientServiceShared, private configService: ConfigService ) { }
 
-  ngOnInit() {
+  ngOnInit() {    
     this.Idalmacen = this.IdalmacenPreSeleccionado;
 
-    this.maestros();
-
-    this.frmCtrl_textBuscar.valueChanges      
-        .pipe(
-        startWith(''),
-        //distinctUntilChanged(),
-        debounceTime(500),
-      map(val => val)       
-    ).subscribe(value => this._filterProductos(value));
+    this.maestros(); 
+    
+    if (this._formControlName == undefined) {
+      this._formControlName = this.myControl;
+    }
         
+    this._formControlName!.valueChanges
+        .pipe(
+          startWith(''),
+          distinctUntilChanged(),
+          debounceTime(500),
+          map(val => val)
+        ).subscribe(value => this._filterProductos(value));
+                
   }
 
-  private _filterProductos(cadenaBuscar: string = ''): void {        
+  private _filterProductos(cadenaBuscar: string = ''): void {    
     this.LastCharFind = cadenaBuscar;
     this.indexSelect = 0;
     //producto.dscproducto:${cadenaBuscar}:contains,producto.marca.dscmarca:${cadenaBuscar}:contains,producto.categoria.dsccategoria:${cadenaBuscar}:contains
@@ -73,11 +79,7 @@ export class CompFindProductoComponent implements OnInit {
   private maestros(): void {
     // almacenes
     this.crudService.getall('almacen','getall').subscribe( res => {
-      this.listAlmacen = res
-      // if (!this.IdalmacenPreSeleccionado) { 
-      //   this.IdalmacenPreSeleccionado = this.listAlmacen[0].idalmacen;
-      //   this._filterProductos(this.LastCharFind);
-      // }
+      this.listAlmacen = res      
     });
   }
 
