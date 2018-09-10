@@ -1,14 +1,20 @@
 <br>
-<h2>List</h2>
-<app-comp-find-producto-list (getBuscarMasDe)="_getBuscarMasDe($event)"></app-comp-find-producto-list>
-<br>
+<h2>List | Busqueda sencitiva</h2>
+<span>Busca por parametro o por codigo de barra.<br></span>
+<span>Parametro incluye la busqueda en: descripcion del producto, marca, categoria.<br></span> <br>
+<span>Muestra los 5 primeros registros, si existe mas muestra la opcion de "buscar mas resultados" <br> donde emite un evento con el parametro a buscar, este parametro puede ser enviado al control de "Busqueda y paginacion." </span>
+<br><br>
+<app-comp-find-producto-list (getBuscarMasDe)="_getBuscarMasDe($event)" (getObject)="_getObjectList($event)"    ></app-comp-find-producto-list>
+<br><br>
+<hr>
+<br><br>
 
+<h2>Busqueda y Paginacion</h2>
 <app-comp-find-producto
     [IdalmacenPreSeleccionado]="idalmacen"
     [parametroBuscar]="parametroBuscar"
     [disabledAlamcen]="disabledAlamcen"
-    (getObject)="_getObject($event)"
-    
+    (getObject)="_getObject($event)"    
 >
 </app-comp-find-producto>
 

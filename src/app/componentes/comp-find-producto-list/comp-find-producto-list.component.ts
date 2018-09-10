@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
 import { startWith } from 'rxjs/internal/operators/startWith';
 import { map } from 'rxjs/internal/operators/map';
 import { ProductoService } from '../../modulo-almacen/producto/service/producto.service';
@@ -40,7 +39,7 @@ export class CompFindProductoListComponent implements OnInit {
   @Output()
   getBuscarMasDe: EventEmitter<buscarMasDe> = new EventEmitter();
 
-  @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;
+  @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;  
 
     
   public producto: ProductoModel;
@@ -69,7 +68,7 @@ export class CompFindProductoListComponent implements OnInit {
 
     this.crudServiceProducto.getProductoByParametro(filterValue, this.idalmacen).subscribe(
       (res: any) => {
-        this.data = res;        
+        this.data = res;
 
         this.verFooter = this.data.length > 2 ? true : false;
 
@@ -78,6 +77,7 @@ export class CompFindProductoListComponent implements OnInit {
         if (this.esCodigoBarra && this.data.length === 1) {
           this._onSelectionChange(null, this.data[0].producto)   
           this.autocomplete.closePanel();
+          this._formControlName.setValue('');
         }        
 
         console.log(res);
@@ -94,9 +94,17 @@ export class CompFindProductoListComponent implements OnInit {
     this.esCodigoBarra = true;    
   }  
 
+  public _focus(e){
+    e.target.select();
+    if(this.data) {
+      this.autocomplete.closePanel();
+    }
+  }
+
   public _displayWith(val: any): string {
     return val ? val.producto.dscproducto : '';
   }
+
 
   public _onBuscarMasDe(): void {
     let _buscarMasDe: buscarMasDe = new buscarMasDe();
@@ -109,6 +117,7 @@ export class CompFindProductoListComponent implements OnInit {
 
   public _onSelectionChange(a, b): void {    
     this.getObject.emit(b);    
+    this.data=null;
     console.log(b);
   }
 

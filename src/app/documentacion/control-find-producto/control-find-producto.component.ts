@@ -23,6 +23,11 @@ export class ControlFindProductoComponent implements OnInit {
     console.log("Informacion desde el componente :" + JSON.stringify(e));    
   }
 
+  _getObjectList(e: ProductoModel) {
+    this.producto = e;
+    console.log("Desde buscador list :" + JSON.stringify(e));    
+  }
+
   _getBuscarMasDe(e: any) {
     this.idalmacen = e.idalmacen;
     this.parametroBuscar = e.parametro;

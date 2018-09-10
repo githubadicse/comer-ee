@@ -60,6 +60,11 @@ export class CompFindProductoComponent implements OnInit {
                 
   }
 
+  // preseleccionar busqueda
+  ngOnChanges() {    
+    this._formControlName.setValue(this.parametroBuscar);    
+  }
+
   private _filterProductos(cadenaBuscar: string = ''): void {    
     this.LastCharFind = cadenaBuscar;
     this.indexSelect = 0;
