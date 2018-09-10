@@ -23,6 +23,7 @@ import { CompFindMedioPagoComponent } from '../componentes/comp-find-medio-pago/
 import { ControlFindProductoComponent } from './control-find-producto/control-find-producto.component';
 import { CompFindProductoComponent } from '../componentes/comp-find-producto/comp-find-producto.component';
 import { PaginatorModule } from 'primeng/paginator';
+import { CompFindProductoListModule } from '../componentes/comp-find-producto-list/comp-find-producto-list.module';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { PaginatorModule } from 'primeng/paginator';
     MatSelectModule,
     MatProgressBarModule,
     ComFindTipoDocumentoSunatModule,    
+    CompFindProductoListModule
   ],
   declarations: [
     MainDocumentacionComponent, 
@@ -51,7 +53,7 @@ import { PaginatorModule } from 'primeng/paginator';
     CompFindProductoComponent,
     ControlFindCodigoBarraComponent,
     ControlProveedorClienteComponent,    
-    ControlMedioPagoComponent, ControlFindProductoComponent
+    ControlMedioPagoComponent, ControlFindProductoComponent    
   ]
 })
 

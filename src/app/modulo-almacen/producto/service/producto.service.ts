@@ -40,4 +40,14 @@ export class ProductoService {
     return this.httpClient.get<ProductoModel[]>(url, { params: parm });
   }
 
+  getProductoByParametro(parametro: string, idalmacen: number): Observable<any[]> {
+
+    let url = this.configService.getUrlSecurityRes("stockactual", "getByParametro");
+
+    let parm = new HttpParams().set("parametro", parametro);
+    parm = parm.append("idalmacen", idalmacen.toString());
+
+    return this.httpClient.get<ProductoModel[]>(url, { params: parm });
+  }
+
 }

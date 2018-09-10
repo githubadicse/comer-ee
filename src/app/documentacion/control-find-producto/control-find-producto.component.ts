@@ -10,6 +10,9 @@ export class ControlFindProductoComponent implements OnInit {
   disabledAlamcen: boolean = false;
   producto: ProductoModel;
 
+  idalmacen: number = 1;
+  parametroBuscar: string = '';
+
   constructor() { }
 
   ngOnInit() {
@@ -20,4 +23,8 @@ export class ControlFindProductoComponent implements OnInit {
     console.log("Informacion desde el componente :" + JSON.stringify(e));    
   }
 
+  _getBuscarMasDe(e: any) {
+    this.idalmacen = e.idalmacen;
+    this.parametroBuscar = e.parametro;
+  }
 }
