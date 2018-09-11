@@ -5,7 +5,7 @@ import { MarcaArticuloListaComponent } from './marca-articulo-lista/marca-articu
 import { MarcaArticuloEditarComponent } from './marca-articulo-editar/marca-articulo-editar.component';
 
 const routes: Routes = [{
-  path : 'main' , component : MarcaArticuloMainComponent,
+  path : '' , component : MarcaArticuloMainComponent,
   children : [
     {
       path : '' , redirectTo : 'lista'

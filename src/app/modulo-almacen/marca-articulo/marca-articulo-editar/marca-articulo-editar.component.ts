@@ -18,8 +18,9 @@ import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpCl
 export class MarcaArticuloEditarComponent implements OnInit {
   marcaForm: any;
   flagRefreshReturn: boolean = false;
+  msgPopup: any[];
   id: any;
-  sub: any;
+  sub: any;  
 
   public marcaArticuloModel:MarcaArticuloModel= new MarcaArticuloModel();
 
@@ -79,6 +80,9 @@ export class MarcaArticuloEditarComponent implements OnInit {
         this.marcaArticuloModel = new MarcaArticuloModel(res.idmarca ,res.dscmarca );
         this.buildForm();
         this.flagRefreshReturn = true;
+
+        //para recuperar desde el control que fue llamado        
+        localStorage.setItem('marca', JSON.stringify(this.marcaArticuloModel));
       },
       error=>console.log(error),
       ()=>{
@@ -101,7 +105,7 @@ export class MarcaArticuloEditarComponent implements OnInit {
       res=>{
         this.marcaArticuloModel = new MarcaArticuloModel(res.idmarca ,res.dscmarca);
         this.buildForm();
-        this.flagRefreshReturn = true;
+        this.flagRefreshReturn = true;              
       },
       error=>console.log(error),
       ()=>{

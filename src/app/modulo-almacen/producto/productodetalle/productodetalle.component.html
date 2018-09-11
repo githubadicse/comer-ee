@@ -1,4 +1,4 @@
-<div class="m-contenedor">
+<div class="m-contenedor" [hidden]="showChild">
   <div class="card">
     <div class="card-header">
       {{ nomproducto }}
@@ -37,6 +37,7 @@
                     {{categoria.dsccategoria}}
                   </mat-option>
                 </mat-select>
+                <mat-icon matSuffix matTooltip="Agregar categoria"><i class="fa fa-plus cursor" aria-hidden="true" [routerLink]="['./categoria']"  (click)="showChild = !showChild"></i></mat-icon>
               </mat-form-field>
               
                          
@@ -52,6 +53,8 @@
                   <span>{{marca.dscmarca}}</span>
                 </mat-option>
               </mat-autocomplete>
+              <mat-icon matSuffix matTooltip="Agregar marca"><i class="fa fa-plus cursor" aria-hidden="true" [routerLink]="['./marca']"  (click)="showChild = !showChild"></i></mat-icon>
+
             </mat-form-field>
 
             <mat-form-field class="w-100">
@@ -176,6 +179,10 @@
 
 
   </div>
+</div>
+
+<div>
+  <router-outlet></router-outlet>
 </div>
 <!-- 
 

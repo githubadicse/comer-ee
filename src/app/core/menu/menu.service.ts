@@ -136,7 +136,7 @@ const MENUITEMS = [
       {state: 'menu', name: 'Menus',idmenu:'0601'},
       {state: 'perfiles', name: 'Perfiles',idmenu:'0602' },
       {state: 'usuarios', name: 'Usuarios',idmenu:'0603' },
-  
+      {state: 'tipodocumento', name: 'Tipo documento',idmenu:'0604' },      
     ]
   }
 ,

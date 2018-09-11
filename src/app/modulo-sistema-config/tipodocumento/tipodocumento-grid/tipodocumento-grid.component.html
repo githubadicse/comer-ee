@@ -1,3 +1,64 @@
-<p>
-  tipodocumento-grid works!
-</p>
+<h3>
+  {{titulo}}
+</h3>
+<div [hidden]="showChild" class="m-contenedor">
+  <div style="height: 70%;">
+    <button type="button" class="btn btn-danger btn-circle" [routerLink]="['./edicion']" (click)="showChild=true">
+      <i class="fa fa-plus"></i>
+    </button>    
+    <button type="button" class="btn btn-success btn-circle" (click)="ShowBuqueda = !ShowBuqueda">
+      <i class="fa fa-search"></i>
+    </button>
+    <br>
+    <br>
+
+    <p-table #dt class="f-12" [value]="db_tipoDocumento" selectionMode="single" [paginator]="true" [lazy]="false"
+      [rows]="10" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[10,20,30]" editable="true" editMode="cell">
+      <ng-template pTemplate="header">
+        <tr>
+          <th width="80px">Codigo</th>
+          <th [pSortableColumn]="'dscTipoDocumento'">
+            Tipo Documento
+            <p-sortIcon [field]="'dscTipoDocumento'"></p-sortIcon>
+          </th>
+          <th [pSortableColumn]="'codigoSunat'">
+            Codigo Sunat
+            <p-sortIcon [field]="'codigoSunat'"></p-sortIcon>
+          </th>
+          <th width="80px"></th>
+        </tr>
+        <ng-container *ngIf="ShowBuqueda">
+          <tr>
+            <th>
+              <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'idTipoDocumento','equals'])">
+            </th>
+            <th>
+              <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'dscTipoDocumento','contains'])">
+            </th>
+            <th>
+              <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'codigoSunat','contains'])">
+            </th>
+            <th>-</th>
+          </tr>
+        </ng-container>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr [pSelectableRow]="item">
+          <td>{{item.idTipoDocumento}}</td>
+          <td>{{item.dscTipoDocumento}}</td>
+          <td>{{item.codigoSunat}}</td>
+          <td>
+            <i class="fa fa-trash-o cursor pr-2" aria-hidden="true" title="Eliminar" (click)="borrarRegistro(item)"></i>
+            <i class="fa fa-pencil cursor" aria-hidden="true" title="Editar" [routerLink]="['./edicion', {id: item.idTipoDocumento}]"></i>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+  </div>
+
+</div>
+
+<div>
+  <router-outlet (activate)='onActivateChild()' (deactivate)='onDeactivateChild()'></router-outlet>
+</div>
