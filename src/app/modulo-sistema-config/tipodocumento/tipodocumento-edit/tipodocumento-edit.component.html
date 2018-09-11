@@ -1,3 +1,66 @@
-<p>
-  tipodocumento-edit works!
-</p>
+<div class="m-contenedor">
+  <div class="card">
+    <div class="card-header">
+      DOCUMENTO
+      <div class="float-sm-right">
+        <button type="button" [routerLink]="['../']" class="btn btn-info btn-sm">Atras</button>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row">   
+          <div class="col">
+          <div class="w-50">
+            <form [formGroup]="form">
+              <mat-form-field class="w-100">
+                <input autocomplete="off" autofocus matInput placeholder="Documento" formControlName="dscTipoDocumento">
+              </mat-form-field>
+                  
+              <br>              
+
+              <mat-form-field class="w-100">
+                <input autocomplete="off" autofocus matInput placeholder="Codigo de Sunat" formControlName="codigoSunat">
+              </mat-form-field>
+            </form>
+
+            <br>  
+            <h4>Numerador</h4>
+
+            <form [formGroup]="formSerie">
+              <table>
+                <thead>
+                  <th>
+                    <mat-form-field class="w-100">
+                      <input autocomplete="off" autofocus matInput placeholder="Serie" formControlName="serie">
+                    </mat-form-field>
+                  </th>
+                  <th width="50%" class="w-50">
+                    <mat-form-field class="w-100">
+                      <input autocomplete="off" autofocus matInput placeholder="Ultimo emitido" formControlName="ultimoEmitido">
+                    </mat-form-field>                    
+                  </th>
+                  <th>
+                    <button class="btn btn-success btn-circle-sm float-right" [disabled] = "!formSerie.valid" (click)="addNumerador()">+</button>
+                  </th>
+                </thead>
+                <tr *ngFor="let item of numerador_model; let i=index">
+                  <td>{{item.serie}}</td>
+                  <td>{{item.ultimoEmitido}}</td>
+                  <td><i class="fa fa-trash-o cursor" aria-hidden="true" (click)="removeNumerador(i)"></i></td>
+                </tr>
+              </table>
+            </form>
+          </div>                
+          </div>
+      </div>
+      <br>
+      <hr>
+      <br>
+      <button appNextfocus appKeyClick="F10" type="button" class="btn btn-success btn-sm mr-2" (click)="guardarCambios()" [disabled]="!form.valid">
+        <i *ngIf="procesando" class="fa fa-spinner fa-spin fa-fw"></i>
+        [F10] Guardar
+      </button>
+    
+</div>
+</div>
+</div>

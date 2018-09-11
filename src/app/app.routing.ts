@@ -48,13 +48,7 @@ export const AppRoutes: Routes = [
       {
         path : 'qaliwarma/parametros',
         loadChildren : './qaliwarma/parametros/parametros.module#ParametrosModule'
-      },
-
-      {
-        path: 'configuracion/perfiles',
-        loadChildren: './modulo-sistema-config/perfil/perfil.module#PerfilModule'        
-
-      },
+      },      
       // almacen
       {
         path: 'almacen/catalogo',
@@ -70,6 +64,16 @@ export const AppRoutes: Routes = [
         path : 'configuracion/usuarios',
         loadChildren : './modulo-sistema-config/usuario/usuario.module#UsuarioModule'
       },
+      {
+        path: 'configuracion/perfiles',
+        loadChildren: './modulo-sistema-config/perfil/perfil.module#PerfilModule'        
+
+      },
+      {
+        path: 'configuracion/tipodocumento',
+        loadChildren: './modulo-sistema-config/tipodocumento/tipodocumento.module#TipodocumentoModule'        
+
+      },      
       //DOCUMENTACION
       {
         path: 'documentacion',
