@@ -113,6 +113,7 @@ export class CompFindAlmacenComponent implements OnInit {
   }
 
   _onSelectionChange(a,b){
+    debugger;
     this.getObject.emit(b);
   }
 
