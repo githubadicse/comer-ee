@@ -53,7 +53,9 @@ export class ProductodetalleComponent implements OnInit {
   filesToUpload: Array<File> = [];
   imagenProducto: string = null;
 
-  showChild: boolean = false;
+  showChild: boolean = false;  
+  showMarca: boolean = false;
+  showCategoria: boolean = false;
 
   constructor(
     private crudService: CrudHttpClientServiceShared,
@@ -87,7 +89,7 @@ export class ProductodetalleComponent implements OnInit {
           }
         }
 
-        this.showChild = false;        
+        this.showChild = false; 
 
       }) 
   }  
@@ -97,7 +99,7 @@ export class ProductodetalleComponent implements OnInit {
     this.maestros();
     if (this.id) {
       this.editar();
-    }
+    }    
   }
   
 
@@ -256,6 +258,20 @@ export class ProductodetalleComponent implements OnInit {
   onActivateChild() { this.showChild = true; }
   onDeactivateChild() { 
     this.showChild = false;     
+  }
+
+  _getMarca(event){
+    this.productoModel.marca = event.value;
+    this.marcasModel.push(this.productoModel.marca);
+    this.prepararFormulario();
+    this.showMarca = false;
+  }
+
+  _getCategoria(event){
+    this.productoModel.categoria = event.value;    
+    this.categoriasModel.push(this.productoModel.categoria);
+    this.prepararFormulario();
+    this.showCategoria = false;
   }
 
 }

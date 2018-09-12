@@ -16,7 +16,7 @@
     <br>
     <br>
 
-    <p-table #dt class="f-12" [value]="db_producto" selectionMode="single" [paginator]="true" [lazy]="false" (onLazyLoad)="filter($event)"
+    <p-table #dt class="f-12" [value]="db_producto" selectionMode="single" [paginator]="true" [lazy]="false"
       [rows]="10" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[10,20,30]" editable="true" editMode="cell" [loading]="loading">
       <ng-template pTemplate="header">
         <tr>          
@@ -86,6 +86,6 @@
 
 </div>
 
-<div>
+<div>  
   <router-outlet (activate)='onActivateChild()' (deactivate)='onDeactivateChild()'></router-outlet>
 </div>

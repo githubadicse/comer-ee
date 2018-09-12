@@ -1,15 +1,26 @@
-<h1>Documento de identidad</h1>
+<h1>Proveedor Cliente | Documento de identidad</h1>
 <div class="card border border-primary">
   <div class="card-body">
     <form [formGroup]="dataForm">
       <div class="row">
-        <div class="col-md-6">      
+        <div class="col-md-6">
             <input type="text" formControlName="anno" [hidden]="true">
             <app-comp-tipo-documento-identidad (getObject)="_getObject($event)" [_formControlName]="this.dataForm.get('dni')"></app-comp-tipo-documento-identidad>      
         </div>
 
-        <div class="col-md-6">                
+        <div class="col-md-6">
             <app-comp-find-proveedor-cliente-ruc (getObject)="_getObject($event)" [_formControlName]="this.dataForm.get('ruc')"></app-comp-find-proveedor-cliente-ruc>      
+        </div>
+      </div>
+      <br><br><br>
+      <hr>
+      <br>
+      <div class="row">
+        <div class="col-12">
+          <h2>Busqueda sencitiva de proveedor o cliente</h2>
+          <span> devuele un json = proveedorcliente: ProveedorclienteModel, direccion: ProveedorclientedireccionModel </span>
+          <br><br><br>
+          <app-comp-find-proveedor-cliente-list (getObject)="_getObjectProveedorClienteLis($event)" ></app-comp-find-proveedor-cliente-list>          
         </div>
       </div>
     </form>    

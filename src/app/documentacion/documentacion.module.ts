@@ -23,7 +23,12 @@ import { CompFindMedioPagoComponent } from '../componentes/comp-find-medio-pago/
 import { ControlFindProductoComponent } from './control-find-producto/control-find-producto.component';
 import { CompFindProductoComponent } from '../componentes/comp-find-producto/comp-find-producto.component';
 import { PaginatorModule } from 'primeng/paginator';
-import { CompFindProductoListModule } from '../componentes/comp-find-producto-list/comp-find-producto-list.module';
+// import { CompFindProductoListModule } from '../componentes/comp-find-producto-list/comp-find-producto-list.module';
+import { ControlFindMotivoIsAlmacenComponent } from './control-find-motivo-is-almacen/control-find-motivo-is-almacen.component';
+import { CompFindMotivoIsAlmacenComponent } from '../componentes/comp-find-motivo-is-almacen/comp-find-motivo-is-almacen.component';
+import { CompFindProveedorClienteListComponent } from '../componentes/comp-find-proveedor-cliente-list/comp-find-proveedor-cliente-list.component';
+import { MatIconModule } from '@angular/material/icon';
+import { CompFindProductoListComponent } from '../componentes/comp-find-producto-list/comp-find-producto-list.component';
 
 
 @NgModule({
@@ -39,7 +44,8 @@ import { CompFindProductoListModule } from '../componentes/comp-find-producto-li
     MatSelectModule,
     MatProgressBarModule,
     ComFindTipoDocumentoSunatModule,    
-    CompFindProductoListModule
+    MatIconModule,
+    // CompFindProductoListModule
   ],
   declarations: [
     MainDocumentacionComponent, 
@@ -53,7 +59,10 @@ import { CompFindProductoListModule } from '../componentes/comp-find-producto-li
     CompFindProductoComponent,
     ControlFindCodigoBarraComponent,
     ControlProveedorClienteComponent,    
-    ControlMedioPagoComponent, ControlFindProductoComponent    
+    ControlMedioPagoComponent, ControlFindProductoComponent, ControlFindMotivoIsAlmacenComponent,
+    CompFindMotivoIsAlmacenComponent,
+    CompFindProveedorClienteListComponent, 
+    CompFindProductoListComponent
   ]
 })
 
