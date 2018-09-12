@@ -6,22 +6,7 @@ import { EmpleadoEditComponent } from './empleado-edit/empleado-edit.component';
 
 
 const routes: Routes = [{
-  path : 'main' , component : EmpleadoMainComponent,
-  children : [
-    {
-      path : '', redirectTo : 'lista'
-
-    },
-    {
-      path : 'lista' , component : EmpleadoGridComponent,
-
-      children : [
-        {
-          path : 'edicion' , component : EmpleadoEditComponent
-        }
-      ]
-    }
-  ]
+  path : '' , component : EmpleadoMainComponent
 }];
 
 @NgModule({

@@ -44,6 +44,7 @@
               "src/assets/styles/app.scss",
               "src/style-ui.css",
               "src/style.css"
+
             ],
             "scripts": [
               "node_modules/hammerjs/hammer.min.js",

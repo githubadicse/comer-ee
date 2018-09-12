@@ -64,6 +64,7 @@ export class CrudHttpClientServiceShared {
   
 
       let url = this.configService.getUrlSecurityRes(controller,evento);
+      //return this.httpClient.post(url, objser,{headers:this.configService.getHeaderHttpClientForm() });
       return this.httpClient.post(url, objser,{headers:this.configService.getHeaderHttpClientForm() });
 
    		//return this.http.post(url,objser,this.configService.getHeadersForm())

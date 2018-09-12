@@ -1,1 +1,2 @@
-<router-outlet></router-outlet>
+<ad-empleado-grid [hidden]="!this.flagVisible"  [isVisible]="flagVisible" (out_isVisible)="_accion($event)"></ad-empleado-grid>
+<ad-empleado-edit *ngIf="!this.flagVisible" [isVisible]="flagVisible" [accion]="this.accion" [idElement]="this.idElement" (out_isVisible)="flagVisible = $event"></ad-empleado-edit>

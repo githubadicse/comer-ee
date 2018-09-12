@@ -139,6 +139,25 @@ const MENUITEMS = [
       {state: 'tipodocumento', name: 'Tipo documento',idmenu:'0604' },      
     ]
   }
+  ,
+
+  {
+    state: 'tablas',
+    name: 'TABLAS',
+    type: 'sub',
+    icon: 'apps',
+    idmenu : '07',
+    badge: [
+      {type: 'red', value: '4'}
+    ],
+    children: [
+      {state: 'empleado', name: 'Empleados', idmenu : '0701'},
+      {state: 'producto', name: 'Productos', idmenu : '0702'},
+      {state: 'almacene', name: 'Almacenes', idmenu : '0703'},
+      {state: 'filial', name: 'Filial', idmenu : '0704'}
+  
+    ]
+  }  
 ,
 
 {

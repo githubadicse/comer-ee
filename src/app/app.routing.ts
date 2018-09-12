@@ -79,6 +79,13 @@ export const AppRoutes: Routes = [
         path: 'documentacion',
         loadChildren: './documentacion/documentacion.module#DocumentacionModule'
       }
+      //TABLAS
+      ,
+      {
+        path : 'tablas/empleado',
+        loadChildren : './modulo-cuenta-rr-hh/empleado/empleado.module#EmpleadoModule'
+      }
+
     ]
   }, 
  

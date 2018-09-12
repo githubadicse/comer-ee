@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EmpleadoMainComponent } from './empleado-main.component';
+import { FechaMatComponent } from './fecha-mat.component';
 
-describe('EmpleadoMainComponent', () => {
-  let component: EmpleadoMainComponent;
-  let fixture: ComponentFixture<EmpleadoMainComponent>;
+describe('FechaMatComponent', () => {
+  let component: FechaMatComponent;
+  let fixture: ComponentFixture<FechaMatComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EmpleadoMainComponent ]
+      declarations: [ FechaMatComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EmpleadoMainComponent);
+    fixture = TestBed.createComponent(FechaMatComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

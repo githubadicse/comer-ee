@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ConfigService } from '../shared/config.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -13,18 +13,19 @@ export class SessionService {
     private httpCliente:HttpClient
   ) { }
 
-  sendCredentials(model)  {
-    let tokenUrl= this.configService.getUrlBasic("usuario","login");
+  sendCredentials(model):Observable<HttpResponse<any>>  {
+    let tokenUrl= this.configService.getUrlBasic("usuario","login2");
     
  
     let repuesta;
    
-    let header = this.configService.getHeaderHttpClientGet();
+    let header = this.configService.getHeaderHttpClientFormPostOnlyTypeJson()
  
     let obj = JSON.stringify(model);
     
+    debugger;
     let data;
-    return this.httpCliente.post(tokenUrl,obj ,{headers:this.configService.getHeaderHttpClientFormPostTypeJson() })
+    return this.httpCliente.post<HttpResponse<any>>(tokenUrl,obj)
  
 
   }    
