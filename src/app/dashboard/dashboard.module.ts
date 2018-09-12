@@ -7,11 +7,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutes } from './dashboard.routing';
 
-import { ComFindTipoDocumentoSunatModule } from '../intercambio/com-find-tipo-documento-sunat/com-find-tipo-documento-sunat.module';
-import { ControlesDocumentacionComponent } from '../documentacion/controles-documentacion/controles-documentacion.component';
-
-
-
 
 @NgModule({
   imports: [
@@ -24,11 +19,8 @@ import { ControlesDocumentacionComponent } from '../documentacion/controles-docu
     MatProgressBarModule,
     MatMenuModule,
     FlexLayoutModule,
-    MatSlideToggleModule,
-    ComFindTipoDocumentoSunatModule
-
   ],
-  declarations: [ DashboardComponent, ControlesDocumentacionComponent ]
+  declarations: [ DashboardComponent ]
 })
 
 export class DashboardModule {}

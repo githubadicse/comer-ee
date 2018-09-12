@@ -8,9 +8,5 @@ export const DashboardRoutes: Routes = [
   {
     path: '',
     component: DashboardComponent 
-  },
-  {
-    path: 'documentacion',
-    component: ControlesDocumentacionComponent
   }
 ];

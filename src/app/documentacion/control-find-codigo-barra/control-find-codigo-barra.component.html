@@ -1,0 +1,32 @@
+<h1>Control Buscar producto por codigo barra</h1>
+<div class="card border border-primary">
+  <div class="card-body">
+    <form [formGroup]="dataForm">
+      <input type="text" formControlName="anno" [hidden]="true">
+      <app-comp-find-codigo-barra (getObject)="_getObject($event)" [_formControlName]="this.dataForm.get('codigobarra')"></app-comp-find-codigo-barra>
+    </form>
+  </div>
+</div>
+
+<br>
+<hr>
+<br>
+
+<h2>Propiedades</h2>
+
+<table class="table">
+  <thead>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+  </thead>
+  <tr>
+    <td>
+      <strong>getObject</strong>
+      <p>Evento que emite</p>
+    </td>
+    <td>
+      Devuelve un producto:
+      <span class="text-info">{{producto | json}}</span>
+    </td>
+  </tr>
+</table>

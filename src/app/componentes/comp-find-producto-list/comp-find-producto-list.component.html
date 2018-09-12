@@ -1,0 +1,20 @@
+<form class="example-form">
+  <mat-form-field class="w-100">
+    <input matInput placeholder="Buscar Prodcucto" aria-label="State" [matAutocomplete]="auto" [formControl]="_formControlName" (keydown.enter)="checkCodigoBarra()" (focus)="_focus($event)">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="_displayWith">
+        <mat-option *ngFor="let item of data" [value]="item" (onSelectionChange)="_onSelectionChange($event,item.producto)">
+            <div class="float-left">
+              <p class="titulo">{{item?.producto?.dscproducto}} ({{item.stockactual}} {{item?.producto.unidadmedida.abrunidadmedida}})</p>
+              <span class="subtitulo">categoria: {{item?.producto.categoria.dsccategoria | lowercase}}, marca: {{item?.producto.marca.dscmarca | lowercase}} </span>
+            </div>
+            <div class="float-right">
+              <p class="precio">S/. {{item?.producto.precio1 | number:'0.2'}}</p>
+            </div>        
+        </mat-option>
+        <div class="autocomplete-footer"  [hidden]="!verFooter">
+          <p class="text-info cursor" (click)="_onBuscarMasDe();">Ver más resultados para <strong>{{_formControlName.value}}</strong>.</p>
+        </div>
+      </mat-autocomplete>            
+      <mat-icon matSuffix matTooltip="Descripcion o codigo de barra"><i class="fa fa-keyboard-o" aria-hidden="true"></i></mat-icon>      
+  </mat-form-field>
+</form>

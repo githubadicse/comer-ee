@@ -1,8 +1,14 @@
-<p>
-  Control busca por codigo de barra
-</p>
+<div class="w-100">
+  <mat-form-field class="w-100">  
+    <input autocomplete="off" matInput placeholder="Codigo de Barra" (keyup.enter)="buscarCodigo(txtCodigo.value)" [formControl]="_formControlName" #txtCodigo >        
+    <mat-hint *ngIf="!cargando && _formControlName.invalid"><span class="text-danger">{{_formControlName.errors['msj']}}</span></mat-hint>
+    <mat-error *ngIf="!cargando && _formControlName.invalid">
+      {{ _formControlName.errors['msj'] }}
+    </mat-error>
+  </mat-form-field>
+  <div style="margin-top:-18px; height: 10px;">
+    <mat-progress-bar mode="indeterminate" [hidden]="!cargando"></mat-progress-bar>
+  </div>
+</div>
 
-<mat-form-field>
-  <input matInput placeholder="Codigo de Barra" (keyup.enter)="buscarCodigo(txtCodigo.value)" #txtCodigo>
-</mat-form-field>
 

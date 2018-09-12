@@ -1,6 +1,6 @@
 <p-growl [value]="this.msgPopup" [life]=1500>
 </p-growl>
-<button type="button" [routerLink]="['../']" class="btn btn-success">Atras</button>
+<button type="button" [routerLink]="['../',{flagRefreshReturn:this.flagRefreshReturn}]" class="btn btn-success">Atras</button>
 
 <div class="card">
 
@@ -15,14 +15,14 @@
     <div class="row">
       <label class="col-md-2" for="">Codigo</label>
       <div class="col-md-2">
-        <input formControlName="idcategoria" [(ngModel)]="this.idcategoria" type="text" class="form-control inputfield" readonly>
+        <input formControlName="idcategoria" [(ngModel)]="this.categoriaArticuloModel.idcategoria" type="text" class="form-control inputfield" readonly>
       </div>
     </div>
 
     <div class="row">
       <label class="col-md-2" for="">Descripcion</label>
       <div class="col-md-6">
-        <input formControlName="dsccategoria" [(ngModel)]="this.dsccategoria" type="text" class="form-control inputfield">
+        <input formControlName="dsccategoria" [(ngModel)]="this.categoriaArticuloModel.dsccategoria" type="text" class="form-control inputfield">
       </div>
     </div>
 
@@ -31,8 +31,17 @@
     <div class="row" >
 
       <div class="col-md-4">
-        <button [disabled]="!categoriaForm.valid" type="button" class="btn btn-sm btn-success" (click)="beforeSave()">
-          <span class="fa fa-floppy-o"></span>&nbsp; Grabar</button>
+        <!-- <button [disabled]="!categoriaForm.valid" type="button" class="btn btn-sm btn-success" (click)="">
+          <span class="fa fa-floppy-o"></span>&nbsp; Grabar</button> -->
+
+          <button [disabled]="!categoriaForm.valid" type="button" class="btn btn-sm btn-info" (click)="create()" *ngIf="this.categoriaArticuloModel.idcategoria==0 else elseBlock">
+            <span class="fa fa-floppy-o"></span>&nbsp; Grabar</button>
+  
+          <ng-template #elseBlock>
+            <button [disabled]="!categoriaForm.valid" type="button" class="btn btn-sm btn-info" (click)="update()">
+              <span class="fa fa-floppy-o"></span>&nbsp; Actualizar</button>
+  
+          </ng-template>
 
       </div>
 

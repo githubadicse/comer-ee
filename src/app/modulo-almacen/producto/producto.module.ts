@@ -16,7 +16,9 @@ import { SharedModule } from '../../shared/shared.module';
 import { TableModule } from 'primeng/table';
 
 // material
-import { MatInputModule, MatSelectModule, MatAutocompleteModule, MatExpansionModule, MatSlideToggleModule } from '@angular/material';
+import { MatInputModule, MatSelectModule, MatAutocompleteModule, MatExpansionModule, MatSlideToggleModule, MatIconModule, MatTooltipModule } from '@angular/material';
+import { MarcaArticuloEditarComponent } from '../marca-articulo/marca-articulo-editar/marca-articulo-editar.component';
+import { CategoriaArticuloEditarComponent } from '../categoria-articulo/categoria-articulo-editar/categoria-articulo-editar.component';
 
 // import { HttpModule } from '@angular/http';
 // import { HttpClientModule } from '@angular/common/http';
@@ -37,9 +39,11 @@ import { MatInputModule, MatSelectModule, MatAutocompleteModule, MatExpansionMod
     MatSelectModule,
     MatAutocompleteModule,    
     MatExpansionModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatIconModule,
+    MatTooltipModule
   ],
  
-  declarations: [ProductoComponent, ProductodetalleComponent, MainComponent, AutocompletComponent]
+  declarations: [ProductoComponent, ProductodetalleComponent, MarcaArticuloEditarComponent, CategoriaArticuloEditarComponent, MainComponent, AutocompletComponent]
 })
 export class ProductoModule { }

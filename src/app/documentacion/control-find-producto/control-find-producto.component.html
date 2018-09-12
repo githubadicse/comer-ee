@@ -1,0 +1,51 @@
+<br>
+<h2>List | Busqueda sencitiva</h2>
+<span>Busca por parametro o por codigo de barra.<br></span>
+<span>Parametro incluye la busqueda en: descripcion del producto, marca, categoria.<br></span> <br>
+<span>Muestra los 5 primeros registros, si existe mas muestra la opcion de "buscar mas resultados" <br> donde emite un evento con el parametro a buscar, este parametro puede ser enviado al control de "Busqueda y paginacion." </span>
+<br><br>
+<app-comp-find-producto-list (getBuscarMasDe)="_getBuscarMasDe($event)" (getObject)="_getObjectList($event)"    ></app-comp-find-producto-list>
+<br><br>
+<hr>
+<br><br>
+
+<h2>Busqueda y Paginacion</h2>
+<app-comp-find-producto
+    [IdalmacenPreSeleccionado]="idalmacen"
+    [parametroBuscar]="parametroBuscar"
+    [disabledAlamcen]="disabledAlamcen"
+    (getObject)="_getObject($event)"    
+>
+</app-comp-find-producto>
+
+<br>
+<br>
+
+<h2>Propiedades</h2>
+
+<table class="table">
+    <thead>
+        <th>Nombre</th>
+        <th>Descripcion</th>
+    </thead>
+    <tr>
+        <td>
+            <strong>[disabledAlamcen]</strong>
+            <p>Boolean</p>
+            <mat-slide-toggle [checked]="disabledAlamcen" (change)="disabledAlamcen = $event.checked">Deshabilitar</mat-slide-toggle>
+        </td>
+        <td>
+            Deshabilita la lista de almacenes
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <strong>getObject</strong>
+            <p>Evento que emite</p>
+        </td>
+        <td>
+            Devuelve un producto:
+            <span class="text-info">{{producto | json}}</span>
+        </td>
+    </tr>
+</table>

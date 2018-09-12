@@ -17,7 +17,7 @@ import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpCl
   
 })
 export class CategoriaArticuloEditarComponent implements OnInit {
-  flagRefreshReturn: boolean;
+  flagRefreshReturn: boolean = false;
   msgPopup: any[];
   categoriaForm: any;
   id: number;
@@ -48,7 +48,7 @@ export class CategoriaArticuloEditarComponent implements OnInit {
 
   buildForm() {
     this.categoriaForm = this.formBuilder.group({
-      idcategoria: [this.categoriaArticuloModel.idcategoria, Validators.required],
+      idcategoria: [this.categoriaArticuloModel.idcategoria || 0, Validators.required],
       dsccategoria: [this.categoriaArticuloModel.dsccategoria, Validators.required]
    
     })
@@ -80,6 +80,9 @@ export class CategoriaArticuloEditarComponent implements OnInit {
         this.categoriaArticuloModel = new CategoriaArticuloModel(res.idcategoria,res.dsccategoria );
         this.buildForm();
         this.flagRefreshReturn = true;
+
+        //para recuperar desde el control que fue llamado        
+        localStorage.setItem('categoria', JSON.stringify(this.categoriaArticuloModel));
       },
       error=>console.log(error),
       ()=>{

@@ -136,7 +136,7 @@ const MENUITEMS = [
       {state: 'menu', name: 'Menus',idmenu:'0601'},
       {state: 'perfiles', name: 'Perfiles',idmenu:'0602' },
       {state: 'usuarios', name: 'Usuarios',idmenu:'0603' },
-  
+      {state: 'tipodocumento', name: 'Tipo documento',idmenu:'0604' },      
     ]
   }
   ,
@@ -161,9 +161,11 @@ const MENUITEMS = [
 ,
 
 {
-    state: 'http://primer.nyasha.me/docs',
-    name: 'DOCS',
-    type: 'extTabLink',
+    // state: 'http://primer.nyasha.me/docs',
+    // type: 'extTabLink',
+    state: 'documentacion',
+    name: 'DOCUMENTACION',
+    type: 'link',
     icon: 'local_library',
     idmenu : '07'
   }

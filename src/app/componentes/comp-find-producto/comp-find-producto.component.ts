@@ -1,4 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList, HostListener, Output, EventEmitter } from '@angular/core';
+import { CrudHttpClientServiceShared } from '../../shared/servicio/crudHttpClient.service.shared';
+import { ProductoModel } from '../../modulo-almacen/producto/model/producto.model';
+import { ConfigService } from '../../shared/config.service';
+import { FormControl } from '@angular/forms';
+import { startWith } from 'rxjs/internal/operators/startWith';
+import { debounceTime } from 'rxjs/internal/operators/debounceTime';
+import { map } from 'rxjs/internal/operators/map';
+import { AlmacenModel } from '../../modulo-almacen/almacen/almacen-model';
+import { Subject } from 'rxjs/internal/Subject';
+import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
 
 @Component({
   selector: 'app-comp-find-producto',
@@ -6,10 +16,114 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./comp-find-producto.component.scss']
 })
 export class CompFindProductoComponent implements OnInit {
+  private productoRespuesta: ProductoModel;
+  private LastCharFind: string = ''; // ultimo caracter buscado  
+  private Idalmacen: number = 1;    
 
-  constructor() { }
+  private pageMostar: number = 0;
+  private rows: number = 10;
+  
+  public totalRecords: number = 0;
+  public listProductos: any;
+  public listAlmacen: AlmacenModel[];  
+  public procesando: boolean = true;
 
-  ngOnInit() {
+  private indexSelect: number = 0;
+  @ViewChildren('rowSelect') rowsProductos: QueryList<any> // para la seccion con las flechas del teclado up down
+
+
+  @Input() _formControlName = new FormControl();
+  @Input() myControl = new FormControl();
+  @Input() IdalmacenPreSeleccionado: number = 1;  //idalmacen preseleccionado
+  @Input() parametroBuscar: string = '';  // parametro a buscar preseleccionado
+  @Input() disabledAlamcen: boolean = false; //deshabilitar lista de almacen
+  @Output() getObject: EventEmitter<ProductoModel> = new EventEmitter();
+  
+  constructor(public crudService: CrudHttpClientServiceShared, private configService: ConfigService ) { }
+
+  ngOnInit() {    
+    this.Idalmacen = this.IdalmacenPreSeleccionado;
+
+    this.maestros(); 
+    
+    if (this._formControlName == undefined) {
+      this._formControlName = this.myControl;
+    }
+        
+    this._formControlName!.valueChanges
+        .pipe(
+          startWith(''),
+          distinctUntilChanged(),
+          debounceTime(500),
+          map(val => val)
+        ).subscribe(value => this._filterProductos(value));
+                
   }
 
+  // preseleccionar busqueda
+  ngOnChanges() {    
+    this._formControlName.setValue(this.parametroBuscar);    
+  }
+
+  private _filterProductos(cadenaBuscar: string = ''): void {    
+    this.LastCharFind = cadenaBuscar;
+    this.indexSelect = 0;
+    //producto.dscproducto:${cadenaBuscar}:contains,producto.marca.dscmarca:${cadenaBuscar}:contains,producto.categoria.dsccategoria:${cadenaBuscar}:contains
+    const _filtros = `almacen.idalmacen:${this.Idalmacen}:equals:and,producto.dscproducto:${cadenaBuscar}:contains:or`;
+    const filters = JSON.stringify(this.configService.jsonFilter(_filtros));
+    
+    console.log('filtro', filters);
+    this.crudService.getPagination(this.pageMostar === null ? 0 : this.pageMostar, this.rows === null ? 10 : this.rows, 'asc', 'producto.dscproducto', filters, 'stockactual', 'pagination', null)
+      .subscribe(res => {
+        this.totalRecords = res.totalCount;
+        this.listProductos = res.data;
+        this.procesando = false;
+      });
+  }
+
+  private maestros(): void {
+    // almacenes
+    this.crudService.getall('almacen','getall').subscribe( res => {
+      this.listAlmacen = res      
+    });
+  }
+
+  public paginate(event): void {
+    this.rows = event.rows;
+    this.pageMostar = event.page;
+    this._filterProductos(this.LastCharFind);
+  }
+
+  public compareAlmacen(c1: any, c2: number): boolean { return c1.idalmacen === c2; }
+  
+  public changeSelectAlamcen(value) : void {
+    this.procesando = true;
+    this.Idalmacen = value.idalmacen;
+    this._filterProductos(this.LastCharFind);
+  }
+
+  // emite la respuesta
+  public resEmit(index:number): void {
+    this.productoRespuesta = <ProductoModel>this.listProductos[index].producto;
+    this.getObject.emit(this.productoRespuesta);
+  }
+
+  // seleccion de los items con las flechas del teclado up down
+  @HostListener('keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    
+    if (event.keyCode === 38) { // arriba  
+      this.indexSelect--;
+      this.indexSelect = this.indexSelect < 0 ? 0 : this.indexSelect;
+    }
+    if (event.keyCode === 40) { // abajo
+      this.indexSelect++;
+      this.indexSelect = this.indexSelect >= this.rowsProductos.length ? this.rowsProductos.length - 1 : this.indexSelect;
+    
+    }
+
+    if (event.keyCode === 13) {
+      this.resEmit(this.indexSelect);      
+    }
+  }
 }
