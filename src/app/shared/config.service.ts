@@ -48,7 +48,7 @@ export class ConfigService {
 
   getUrlSecurityRes(controller,evento){
   
-    return this._url+ this._port +"/"+this._rutahostserver+"/"+ this._corsFilter +"/"+  controller+"/"+evento;
+    return this._url+ this._port +"/"+this._rutahostserver+ this._corsFilter +"/"+  controller+"/"+evento;
   }
   getUrlLogin(controller,evento){
   
@@ -126,7 +126,20 @@ getHeaderHttpClientFormPostTypeJson(){
          
           .set("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS, POST, PUT, DELETE")
           .set("Content-Type", "application/json")
+          .set('Accept', 'application/json')
           .set("Access-Control-Allow-Credentials", "true")
+          .set('Access-Control-Allow-Origin', '*');
+
+  return headers;
+}
+getHeaderHttpClientFormPostOnlyTypeJson(){
+  let headers= new HttpHeaders()
+         
+          .set("Access-Control-Allow-Methods", "POST")
+          .set("Content-Type", "application/json")
+          .set("Access-Control-Allow-Credentials", "true")
+          .set('Accept', 'application/json')
+          .set('Access-Control-Allow-Origin', '*')
 
   return headers;
 }
@@ -152,25 +165,13 @@ getHeaderHttpClientGet(){
 }
 
 getHeadersFormBlob() {
-   // let username = this.variables.getUsername();
-   // let password = this.variables.getPassword();
     let username = "username";
     let password = "password";
     let headers =  new Headers();
-    //headers.append("Content-Type", "text/xml");
-    //headers.append("Access-Control-Allow-Origin", "*");
     headers.append("Access-Control-Allow-Credentials", "false"); 
     headers.append("Authorization", 'Bearer '+localStorage.getItem("token"));
-    //headers.append("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS, POST, PUT, DELETE");
-    //headers.append("Content-Type","application/x-www-form-urlencoded");
+    headers.append("responseType","ResponseContentType.Blob") 
 
-      // headers.append('X-Requested-Width','XMLHttpRequest');
-       //headers.append("Cache-Control", "no-cache");   
-       headers.append("responseType","ResponseContentType.Blob") 
-    //headers.append("Access-Control-Request-Headers", "Content-type,X-Requested-With,Origin,accept");
-    //let options = new RequestOptions({headers: headers});
-    //console.log(JSON.stringify(options));
-    //return options;
 }
 
 
@@ -180,7 +181,7 @@ getHeadersFormBlob() {
         for (var key in obj) {
         	
         	if( encodeURIComponent(obj[key]) == "null"){
-        		console.log("null");
+        		//console.log("null");
             	
         	}else{
         		p.push(key + '=' + encodeURIComponent(obj[key]));
@@ -366,8 +367,22 @@ getHeadersFormBlob() {
 
     let decodificado = jwt_decode(idToken);
 
-    return decodificado['idfilial'];
+    return decodificado['filial'];
   }
   
+  getNumeroEntrega(){
+    let idToken = localStorage.getItem("token");
 
+    let decodificado = jwt_decode(idToken);
+
+    return decodificado['numeroEntrega'];
+  }  
+
+  getAnnoQaliwarma(){
+    let idToken = localStorage.getItem("token");
+
+    let decodificado = jwt_decode(idToken);
+
+    return decodificado['annoQaliwarma'];
+  }  
 }

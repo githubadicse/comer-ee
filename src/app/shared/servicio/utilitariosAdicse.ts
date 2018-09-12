@@ -90,20 +90,59 @@ export class UtilitariosAdicse {
                 return now;
     }    
 
+    JSONFilterCustomer(obj){
+      var p = [];
+      for (let index = 0; index < obj.length; index++) {
+        const element = obj[index];
+
+        let ObjItem ={} ;
+        let keyId;
+        let elementId;
+        for (let key in element) {
+          keyId = key;
+          elementId = element;
+        	if( encodeURIComponent(element[key]) == "null"){
+        		console.log("null");
+        	}else{
+            ObjItem[keyId] = {"value": encodeURIComponent(elementId[keyId])};
+          }
+         
+        }        
+        p.push(ObjItem);
+        
+      }
+      return p;
+    }
+
+    //fiters es de tipo JSON.split
+    //para angular material
+    Tablefilter (filters,value, field, matchMode) {
+     
+      if (value) {
+          filters[field] = { value: value, matchMode: matchMode };
+      }
+      else if (filters[field]) {
+          delete filters[field];
+      }
+      return filters;
+    };
+
+    TablefilterReset () {
+      return undefined;
+    };
+
     //Esta funcion funciona para convertir objeto a array de objecto.
     //eje {id=5}  lo convierte a [{"id":{"value";5}}]
     setMapToString(obj){
+
+
         var p = [];
-       
         for (var key in obj) {
-        	
+          debugger;
         	if( encodeURIComponent(obj[key]) == "null"){
         		console.log("null");
-            	
         	}else{
-                
                 //["{'anno':{'value':"+this.anno.toString()+" }}"]
-               
                 p.push("{"+key + ":{'value':" + encodeURIComponent(obj[key])+ "}}");
                 //p.push("{"+key + ":{'value':" + obj[key]+ "}}");
         	}

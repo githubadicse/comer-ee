@@ -20,7 +20,7 @@ export class SharedService {
           ;		     
   }  
 
-  findById(id,controller:string,evento:string){
+  findById(id,controller:string,evento:string):Observable<any>{
     let obj = {'id':id};
     let objser = this.configService.serialize(obj);
 

@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EmpleadoMainComponent implements OnInit {
 
+  flagVisible = true;
+  accion:string;
+  idElement:number;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  _accion(e){
+
+    this.flagVisible = e.isVisible;
+    this.accion = e.accion;
+    this.idElement = e.element==undefined?0:e.element.idempleado;
   }
 
 }

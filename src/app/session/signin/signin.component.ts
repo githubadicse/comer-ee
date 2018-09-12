@@ -3,18 +3,19 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { SessionService } from '../session.service';
 import { MenuService } from '../../core/menu/menu.service';
+import { ConfigService } from '../../shared/config.service';
 
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss'],
-  providers : [SessionService]
+  providers : [SessionService, ConfigService]
 })
 export class SigninComponent implements OnInit {
 
   public model = { 'username': '', 'password': '' };
   public form: FormGroup;
-  constructor(private fb: FormBuilder, private router: Router, private loginService: SessionService) {}
+  constructor(private fb: FormBuilder, private router: Router, private loginService: SessionService, private configService:ConfigService) {}
 
   
   ngOnInit() {
@@ -37,17 +38,24 @@ export class SigninComponent implements OnInit {
     this.loginService.sendCredentials(this.model)
     .subscribe(
     res => {
-  
+
        request = res;
        let x = JSON.stringify(res)
        let y = JSON.parse(x);
-       if (y.sucess == true) {
-         localStorage.setItem("currentUserName", this.model.username);
-         localStorage.setItem("idusuario",y.idusuario)
-         localStorage.setItem("token", y.token);
-         localStorage.setItem("anno",y.anno);
-         localStorage.setItem("numeroEntrega",y.numeroEntrega)
-         localStorage.setItem("filial",y.filial)
+
+
+       if (y.token) {
+         localStorage.setItem("token", y.token );
+         let idfilial = this.configService.getIdFilialToken();
+         let numeroEntrega = this.configService.getNumeroEntrega();
+         let annoQaliwarma = this.configService.getAnnoQaliwarma();
+
+         localStorage.setItem("currentUserName", y.user.username);
+
+         
+         localStorage.setItem("anno",annoQaliwarma);
+         localStorage.setItem("numeroEntrega",numeroEntrega);
+         localStorage.setItem("filial",idfilial)
          this.router.navigate ( [ '/' ] );
 
 

@@ -149,7 +149,7 @@ export class MomentDateAdapter extends DateAdapter<_moment.Moment> {
     
     
     /**  El formato que debe recibir el parametro de debe ser dd/mm/yyyy **/
-    if(date == null){
+    if(date == null || date.trim().length == 0){
       return null;
     }
     let arr = date.split("/");

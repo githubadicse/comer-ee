@@ -1,95 +1,97 @@
-
 <p-growl [value]="this.msgPopup" [life]=1500>
 </p-growl>
-<button type="button" [routerLink]="['../']" class="btn btn-success">Atras</button>
+<button type="button" (click)="_out_isVisible()" class="btn btn-success">Atras</button>
 
-<div class="card">
+<div class="card" class="example-container">
     <div class="card-header">
         DATOS DEL EMPLEADO
     </div>
 
     <form [formGroup]="empleadoForm">
-        <div style="padding:10px;">
+
+        <p>
+            <mat-form-field>
+                <input matInput placeholder="Codigo" formControlName="idempleado" readonly="true">
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field>
+                <input matInput placeholder="NOMBRES" formControlName="nomempleado">
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field>
+                <input matInput placeholder="DNI" formControlName="dni">
+            </mat-form-field>
+        </p>
+        <p>
+            <app-fecha-mat *ngIf="flag" [_formControlName]="this.empleadoForm.get('fechaingreso')" _placeholder="Fecha Ingreso"></app-fecha-mat>
+        </p>
+
+        <p>
+            <app-fecha-mat *ngIf="flag" [_formControlName]="this.empleadoForm.get('fechanacimiento')" _placeholder="Fecha Nacimiento"></app-fecha-mat>
+        </p>
+
+        <p>
+            <mat-form-field>
+                <input matInput placeholder="DIRECCION" formControlName="direccion">
+            </mat-form-field>
+        </p>
+
+        <p>
+            <mat-form-field>
+                <input matInput placeholder="TELEFONOS" formControlName="telefono">
+            </mat-form-field>
+        </p>
+
+        <p>
+            <mat-form-field>
+                <input matInput placeholder="E-MAIL" formControlName="email">
+            </mat-form-field>
+        </p>
 
 
-            <div class="row">
-                <label class="col-md-2" for="">id empleado</label>
-                <div class="col-md-2">
-                    <input formControlName="idempleado" type="text" class="form-control inputfield" readonly>
-                </div>
+        <p>
+            <mat-slide-toggle class="example-margin" formControlName="activo" [color]="color" [disabled]="!this.empleadoForm.get('activo')">
+                Estado
+            </mat-slide-toggle>
+        </p>
+
+        <div *ngIf="this.empleadoForm.get('idempleado')!=0">
+            <p>
+                <mat-form-field>
+                    <input matInput placeholder="Fecha Creacion Registro " formControlName="fechaRegistroSystema" readonly="true">
+                </mat-form-field>&nbsp;
+                <mat-form-field>
+                    <input matInput placeholder="IdUsuario Creacion Registro " formControlName="idusuario" readonly="true">
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field>
+                    <input matInput placeholder="Fecha Modificacion Registro " formControlName="fechaRegistroSystemaModifica" readonly="true">
+                </mat-form-field>&nbsp;
+                <mat-form-field>
+                    <input matInput placeholder="IdUsuario Modificacion Registro " formControlName="idusuarioModifica" readonly="true">
+                </mat-form-field>
+            </p>
+        </div>
+
+
+        <div class="row ">
+
+            <div class="col-md-4 ">
+                <button [disabled]="!empleadoForm.valid" type="button " class="btn btn-sm btn-info" (click)="create()
+            " *ngIf="this.idElement==0 else elseBlock">
+                    <span class="fa fa-floppy-o "></span>&nbsp; Grabar</button>
+
+                <ng-template #elseBlock>
+                    <button [disabled]="!empleadoForm.valid" type="button " class="btn btn-sm btn-info" (click)="update() ">
+                        <span class="fa fa-floppy-o "></span>&nbsp; Actualizar</button>
+
+                </ng-template>
             </div>
 
-            <diV class="row">
-                <label class="col-md-2" for="">Nombres</label>
-                <div class="col-md-4">
-                    <input formControlName="nomempleado" type="text" class="form-control inputfield">
-                </div>
-                <div class="col-md-2">
-                    <span *ngIf="!empleadoForm.get('nomempleado').valid" style="color:red">*</span>
-                </div>
-            </diV>
-
-            <diV class="row">
-                <label class="col-md-2" for="">Fecha Ingreso</label>
-                <div class="col-md-4">
-                    <input formControlName="nomempleado" type="text" class="form-control inputfield">
-                </div>
-                <div class="col-md-2">
-                    <span *ngIf="!empleadoForm.get('nomempleado').valid" style="color:red">*</span>
-                </div>
-            </diV>
-
-            <diV class="row">
-                <label class="col-md-2" for="">Fecha de Nacimiento</label>
-                <div class="col-md-4">
-                    <input formControlName="nomempleado" type="text" class="form-control inputfield">
-                </div>
-                <div class="col-md-2">
-                    <span *ngIf="!empleadoForm.get('nomempleado').valid" style="color:red">*</span>
-                </div>
-            </diV>
-
-            <diV class="row">
-                <label class="col-md-2" for="">direccion</label>
-                <div class="col-md-4">
-                    <input formControlName="nomempleado" type="text" class="form-control inputfield">
-                </div>
-                <div class="col-md-2">
-                    <span *ngIf="!empleadoForm.get('nomempleado').valid" style="color:red">*</span>
-                </div>
-            </diV>
-
-            <diV class="row">
-                <label class="col-md-2" for="">telefono</label>
-                <div class="col-md-4">
-                    <input formControlName="nomempleado" type="text" class="form-control inputfield">
-                </div>
-                <div class="col-md-2">
-                    <span *ngIf="!empleadoForm.get('nomempleado').valid" style="color:red">*</span>
-                </div>
-            </diV>
-
-            <diV class="row">
-                <label class="col-md-2" for="">e-mail</label>
-                <div class="col-md-4">
-                    <input formControlName="nomempleado" type="text" class="form-control inputfield">
-                </div>
-                <div class="col-md-2">
-                    <span *ngIf="!empleadoForm.get('nomempleado').valid" style="color:red">*</span>
-                </div>
-            </diV>
-
-            <diV class="row">
-                <label class="col-md-2" for="">DNI</label>
-                <div class="col-md-4">
-                    <input formControlName="nomempleado" type="text" class="form-control inputfield">
-                </div>
-                <div class="col-md-2">
-                    <span *ngIf="!empleadoForm.get('nomempleado').valid" style="color:red">*</span>
-                </div>
-            </diV>
-
-
         </div>
+
     </form>
 </div>
