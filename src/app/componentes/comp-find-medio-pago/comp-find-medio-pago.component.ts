@@ -36,7 +36,8 @@ export class CompFindMedioPagoComponent implements OnInit {
     this.crudService.getall('mediopago', 'getall').subscribe(res => this.ListMedioPago = res );
   }
   
-  _onSelectionChange(a) {
+  _onSelectionChange(a,b) {
+    debugger;
     this.getObject.emit(a.value);
   }
 

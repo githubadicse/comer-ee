@@ -5,7 +5,7 @@ import { DocumentacionRoutingModule } from './documentacion.routing';
 
 import { MainDocumentacionComponent } from './main-documentacion/main-documentacion.component';
 import { ControlesDocumentacionComponent } from './controles-documentacion/controles-documentacion.component';
-import { ComFindTipoDocumentoSunatModule } from '../intercambio/com-find-tipo-documento-sunat/com-find-tipo-documento-sunat.module';
+
 import { CompFindCodigoBarraComponent } from '../componentes/comp-find-codigo-barra/comp-find-codigo-barra.component';
 
 import { MatSlideToggleModule, MatSelectModule, MatAutocompleteModule } from '@angular/material';
@@ -23,7 +23,8 @@ import { CompFindMedioPagoComponent } from '../componentes/comp-find-medio-pago/
 import { ControlFindProductoComponent } from './control-find-producto/control-find-producto.component';
 import { CompFindProductoComponent } from '../componentes/comp-find-producto/comp-find-producto.component';
 import { PaginatorModule } from 'primeng/paginator';
-import { CompFindProductoListModule } from '../componentes/comp-find-producto-list/comp-find-producto-list.module';
+import { ComponentesModule } from '../componentes/componentes.module';
+
 
 
 @NgModule({
@@ -38,19 +39,16 @@ import { CompFindProductoListModule } from '../componentes/comp-find-producto-li
     MatAutocompleteModule,
     MatSelectModule,
     MatProgressBarModule,
-    ComFindTipoDocumentoSunatModule,    
-    CompFindProductoListModule
+
+    ComponentesModule
+
+
   ],
   declarations: [
     MainDocumentacionComponent, 
     ControlesDocumentacionComponent,
-    CompFindAlmacenComponent,
+
     ControlFindAlmacenComponent,
-    CompFindCodigoBarraComponent,
-    CompTipoDocumentoIdentidadComponent,
-    CompFindProveedorClienteRucComponent,
-    CompFindMedioPagoComponent,
-    CompFindProductoComponent,
     ControlFindCodigoBarraComponent,
     ControlProveedorClienteComponent,    
     ControlMedioPagoComponent, ControlFindProductoComponent    

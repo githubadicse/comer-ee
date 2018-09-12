@@ -1,6 +1,6 @@
 <mat-form-field class="w-100">
-  <mat-select appNextfocus placeholder="Medio de pago" [formControl]="_formControlName" [compareWith]="compareMedioPago" (selectionChange)="_onSelectionChange($event)">
-    <mat-option *ngFor="let item of ListMedioPago" [value]="item">
+  <mat-select appNextfocus placeholder="Medio de pago" [formControl]="_formControlName" [compareWith]="compareMedioPago">
+    <mat-option *ngFor="let item of ListMedioPago" [value]="item" (onSelectionChange)="_onSelectionChange($event,option)">
       {{item.dscMedioPago}}
     </mat-option>
   </mat-select>
