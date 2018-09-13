@@ -1,0 +1,16 @@
+<form class="example-form">
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Buscar Proveedor/cliente" aria-label="State" [matAutocomplete]="auto" [formControl]="_formControlName" (focus)="_focus($event)">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="_displayWith">
+          <div *ngFor="let item of listProveedorCliente">
+          <mat-option *ngFor="let direccion of item.proveedorclientedireccions" [value]="item" (onSelectionChange)="_onSelectionChange($event,item,direccion)">
+              <div>
+                <p class="titulo">{{item?.razonsocial}} ({{item.nrodocumento}})</p>
+                <span class="subtitulo">Direccion: {{ direccion.direccion | lowercase}} </span>
+              </div>
+          </mat-option>          
+        </div>
+        </mat-autocomplete>            
+        <mat-icon matSuffix matTooltip="Descripcion o codigo de barra"><i class="fa fa-user" aria-hidden="true"></i></mat-icon>      
+    </mat-form-field>
+  </form>

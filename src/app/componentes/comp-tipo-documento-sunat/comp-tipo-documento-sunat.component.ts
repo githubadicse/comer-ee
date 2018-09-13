@@ -1,120 +1,116 @@
-// import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-// import { TipodocumentoModel } from '../../modulo-sistema-config/tipodocumento/tipodocumento-model';
-// import { ComTipoDocumentoSunatService } from './comp-tipo-documento-sunat-service';
-
-// @Component({
-//   selector: 'app-comp-tipo-tipo-documento-sunat',
-//   templateUrl: './comp-tipo-tipo-documento-sunat.component.html',
-//   styleUrls: ['./comp-tipo-tipo-documento-sunat.component.scss']
-// })
-
-// export class CompTipoDocumentoSunatComponent implements OnInit, OnDestroy {
-//   @Input('SelectValorInicial') selectedValueInitial: any = null; // valor inicial
-//   @Input() filtros: string = ""; // filtros
-//   @Input() mostrarSeries: boolean = false; // se muestra la serie y el ultimo correlativo
-//   @Input() disabledSerie: boolean = false; // deshabilitar select serie, no modificable
-//   @Input('selectSerie') selectSerie: number = null; // serie seleccioada
-
-//   @Output() onChange = new EventEmitter<any>(null);
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { TipodocumentoModel } from '../../modulo-sistema-config/tipodocumento/tipodocumento-model';
+import { CrudHttpClientServiceShared } from '../../shared/servicio/crudHttpClient.service.shared';
 
 
-//   public listTipoDocumentModel: TipodocumentoModel[] = [];
-//   public listSeries: any[] = [];
-//   public selectedValueTipoDoc: TipodocumentoModel;
-//   public selectedValueSerie: number;
-//   public numeroCorrelativo: number = null;
+@Component({
+  selector: 'app-comp-tipo-documento-sunat',
+  templateUrl: './comp-tipo-documento-sunat.component.html',
+  styleUrls: ['./comp-tipo-documento-sunat.component.scss']  
+})
 
-//   private rpt: ComTipoDocumentoRespuesta = new ComTipoDocumentoRespuesta;
+export class CompTipoDocumentoSunatComponent implements OnInit  {
+  @Input('SelectValorInicial') selectedValueInitial: any = null; // valor inicial
+  @Input() filtros: string = ""; // filtros
+  @Input() mostrarSeries: boolean = false; // se muestra la serie y el ultimo correlativo
+  @Input() disabledSerie: boolean = false; // deshabilitar select serie, no modificable
+  @Input('selectSerie') selectSerie: number = null; // serie seleccioada
 
+  @Output() onChange = new EventEmitter<any>(null);
+  
 
-//   constructor(private comFindTipoDocumentoSunatService: ComTipoDocumentoSunatService) {
-//     this.comFindTipoDocumentoSunatService.filtros = this.filtros;
-//   }
+  public listTipoDocumentModel: TipodocumentoModel[] = [];
+  public listSeries: any[] = [];
+  public selectedValueTipoDoc: TipodocumentoModel;
+  public selectedValueSerie: number;
+  public numeroCorrelativo: number = null;
+    
+  private rpt: ComTipoDocumentoRespuesta = new ComTipoDocumentoRespuesta;
+  
 
-//   ngOnInit() {
+  constructor(private crudService: CrudHttpClientServiceShared ) {    
+  }
+    
+  ngOnInit() {
+    
+  }
 
-//   }
+  // para cuando se requiera cambiar dinamicamente los filtros  
+  ngOnChanges(changes: SimpleChanges): void {    
+    if (changes.hasOwnProperty('filtros')) {
+    //   this.comFindTipoDocumentoSunatService.filtros = changes['filtros'].currentValue;
+      this.filtros = changes['filtros'].currentValue;
+      this.loadData();
+    }
+  }
+  
+  private loadData(): void {
+    this.crudService.getAllByFilter('tipodocumento', 'getByFilter', this.filtros)
+      .subscribe((res: any[]) => {
+        console.log('Documentos', res);                
+        this.selectedValueTipoDoc = this.selectedValueInitial === 1 ? res[0] || null : this.selectedValueInitial;
+        
+        // si es valor inicial es null y en la lista solo existe un elemento muestra, entonces muestra el unico elemento
+        this.selectedValueTipoDoc = (res.length === 1 && !this.selectedValueTipoDoc) ? res[0] : this.selectedValueTipoDoc;               
+        this.listTipoDocumentModel = <TipodocumentoModel[]>res;
+        
+        //Series
+        const tipoDocSelectSerie = res.filter(x => x.numeradors).filter(x => x.idTipoDocumento === this.selectedValueTipoDoc.idTipoDocumento )
+        
+        this.rpt.tipoDocumento = this.selectedValueTipoDoc;        
 
-//   ngOnDestroy(): void {
+        this.changeSelect(tipoDocSelectSerie[0]);                                
+      });
+  }
 
-//   }
+  public changeSelect(tipoDocumento: any): void {
+    console.log(tipoDocumento);    
+    //this.onChange.emit(tipoDocumento);
 
-//   // para cuando se requiera cambiar dinamicamente los filtros  
-//   ngOnChanges(changes: SimpleChanges): void {
-//     if (changes.hasOwnProperty('filtros')) {
-//       this.comFindTipoDocumentoSunatService.filtros = changes['filtros'].currentValue;
-//       this.loadData();
-//     }
-//   }
+    // series numeradores
+    this.numeroCorrelativo = null;
+    this.rpt.numerador = null;
 
-//   private loadData(): void {
-//     this.comFindTipoDocumentoSunatService.getAllFilter()
-//       .subscribe((res: any[]) => {
-//         console.log('Documentos', res);
+    this.listSeries = tipoDocumento.numeradors || null;
+    if (this.listSeries) { //seleccionar la serie si existe numeradores
+      this.selectedValueSerie = !this.selectSerie ? this.listSeries[0].serie : this.selectSerie;
 
-//         this.selectedValueTipoDoc = this.selectedValueInitial === 1 ? res[0] || null : this.selectedValueInitial;
+      this.listSeries.filter(x => x.serie === this.selectedValueSerie).map(x => { 
+        this.rpt.numerador = x;
+        this.numeroCorrelativo = x.ultimoEmitido + 1
+      });
+    }    
+    
+    this.rpt.tipoDocumento = tipoDocumento;    
+    this.rpt.correlativo = this.numeroCorrelativo;
+    this.onChange.emit(this.rpt);
+    ///
+  }
 
-//         // si es valor inicial es null y en la lista solo existe un elemento muestra, entonces muestra el unico elemento
-//         this.selectedValueTipoDoc = (res.length === 1 && !this.selectedValueTipoDoc) ? res[0] : this.selectedValueTipoDoc;
-//         this.listTipoDocumentModel = <TipodocumentoModel[]>res;
+  public changeSelectSerie(Numerador): void {
+    console.log(Numerador);
+    this.numeroCorrelativo = Numerador.ultimoEmitido + 1;
 
-//         //Series
-//         const tipoDocSelectSerie = res.filter(x => x.numeradors).filter(x => x.idTipoDocumento === this.selectedValueTipoDoc.idTipoDocumento)
+    this.rpt.numerador = Numerador;
+    this.rpt.correlativo = this.numeroCorrelativo;
+    this.onChange.emit(this.rpt);
+  }
 
-//         this.rpt.tipoDocumento = this.selectedValueTipoDoc;
+  // compara los valores del select para devolver la primera coicidencia // se usa para valor incial o para mostrar la seleccion recibida
+  compareRow = (val1: TipodocumentoModel, val2: TipodocumentoModel) => { if (val2) { return val1.idTipoDocumento === val2.idTipoDocumento;}}
+  
+  // solo compara el numero de serie
+  compareRowSerie = (val1: any, val2: number ) => { if (val2) { return val1.serie === val2;}} 
+  
 
-//         this.changeSelect(tipoDocSelectSerie[0]);
-//       });
-//   }
+}
 
-//   public changeSelect(tipoDocumento: any): void {
-//     console.log(tipoDocumento);
-//     //this.onChange.emit(tipoDocumento);
-
-//     // series numeradores
-//     this.numeroCorrelativo = null;
-//     this.rpt.numerador = null;
-
-//     this.listSeries = tipoDocumento.numeradors || null;
-//     if (this.listSeries) { //seleccionar la serie si existe numeradores
-//       this.selectedValueSerie = !this.selectSerie ? this.listSeries[0].serie : this.selectSerie;
-
-//       this.listSeries.filter(x => x.serie === this.selectedValueSerie).map(x => {
-//         this.rpt.numerador = x;
-//         this.numeroCorrelativo = x.ultimoEmitido + 1
-//       });
-//     }
-
-//     this.rpt.tipoDocumento = tipoDocumento;
-//     this.rpt.correlativo = this.numeroCorrelativo;
-//     this.onChange.emit(this.rpt);
-//     ///
-//   }
-
-//   public changeSelectSerie(Numerador): void {
-//     console.log(Numerador);
-//     this.numeroCorrelativo = Numerador.ultimoEmitido + 1;
-
-//     this.rpt.numerador = Numerador;
-//     this.rpt.correlativo = this.numeroCorrelativo;
-//     this.onChange.emit(this.rpt);
-//   }
-
-//   // compara los valores del select para devolver la primera coicidencia // se usa para valor incial o para mostrar la seleccion recibida
-//   compareRow = (val1: TipodocumentoModel, val2: TipodocumentoModel) => { if (val2) { return val1.idTipoDocumento === val2.idTipoDocumento; } }
-
-//   // solo compara el numero de serie
-//   compareRowSerie = (val1: any, val2: number) => { if (val2) { return val1.serie === val2; } }
-
-
-// }
-
-// export class ComTipoDocumentoRespuesta {
-//   constructor(
-//     public tipoDocumento: TipodocumentoModel = null,
-//     public numerador: any = null,
-//     public correlativo: number = null
-//   ) {
-
-//   }
-// }
+export class ComTipoDocumentoRespuesta {
+  constructor(
+    public tipoDocumento: TipodocumentoModel = null,
+    public numerador: any = null,
+    public correlativo: number = null
+  ) {
+    
+  }
+}
