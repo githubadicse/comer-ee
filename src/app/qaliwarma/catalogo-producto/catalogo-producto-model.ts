@@ -1,5 +1,6 @@
-import { UnidadmedidaModel } from "../../modulo-almacen/unidadmedida/unidadmedida-model";
-import { ProductopresentacionModel } from "../../modulo-almacen/producto/model/productopresentacion.model";
+import { UnidadmedidaModel } from "../../modulo-sistema-config/tablas/unidadmedida/unidadmedida-model";
+import { ProductopresentacionModel } from "../../modulo-sistema-config/tablas/producto/model/productopresentacion.model";
+
 
 
 export class CatalogoProductoModel {

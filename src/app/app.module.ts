@@ -19,6 +19,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {
   
+  
   MatSidenavModule,
   MatCardModule,
   MatMenuModule,
@@ -67,7 +68,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 @NgModule({
   declarations: [
-    
     AppComponent,
     HeaderComponent,
     SidebarComponent,

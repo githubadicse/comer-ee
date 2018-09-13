@@ -15,8 +15,9 @@ import { MatCheckboxModule } from '@angular/material';
 import {MatListModule} from '@angular/material/list';
 import { PlanRastreabilidadComponent } from './plan-rastreabilidad/plan-rastreabilidad.component';
 import { ComponentesModule } from '../../componentes/componentes.module';
+import { AlmacenService } from '../../modulo-sistema-config/tablas/almacen/almacen.service';
 
-import { AlmacenService } from '../../modulo-almacen/almacen/almacen.service';
+
 
 
 

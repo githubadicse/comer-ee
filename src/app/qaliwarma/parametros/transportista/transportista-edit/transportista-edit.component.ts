@@ -7,8 +7,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import swal from 'sweetalert2';
 
 import { CrudHttpClientServiceShared } from '../../../../shared/servicio/crudHttpClient.service.shared';
-import { ProveedorclienteModel } from '../../../../modulo-almacen/proveedorcliente/proveedorcliente-model';
-import { ProveedorclienteService } from '../../../../modulo-almacen/proveedorcliente/proveedorcliente.service';
+import { ProveedorclienteService } from '../../../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente.service';
+import { ProveedorclienteModel } from '../../../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model';
+
 
 
 @Component({

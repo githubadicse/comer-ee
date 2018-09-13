@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ProveedorclientedireccionModel } from '../../modulo-almacen/proveedorcliente/proveedorclientedireccion-model';
+
 import { CrudHttpClientServiceShared } from '../../shared/servicio/crudHttpClient.service.shared';
+import { ProveedorclientedireccionModel } from '../../modulo-sistema-config/tablas/proveedorcliente/proveedorclientedireccion-model';
 
 @Component({
   selector: 'app-comp-find-proveedor-cliente-ruc',

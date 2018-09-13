@@ -3,12 +3,13 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { tap, distinctUntilChanged, debounceTime, switchMap } from 'rxjs/operators';
-import { ProveedorclienteService } from '../../../modulo-almacen/proveedorcliente/proveedorcliente.service';
+
 import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
 import { TipodocumentoModel } from '../../../modulo-sistema-config/tipodocumento/tipodocumento-model';
 
-import { ProveedorclienteModel } from '../../../modulo-almacen/proveedorcliente/proveedorcliente-model';
 import { MonedaModel } from '../../../modulo-sistema-config/tablas/moneda/moneda-model';
+import { ProveedorclienteModel } from '../../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model';
+import { ProveedorclienteService } from '../../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente.service';
 
 @Component({
   selector: 'ad-venta-edit',

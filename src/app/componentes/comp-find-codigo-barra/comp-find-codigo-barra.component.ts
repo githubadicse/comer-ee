@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ProductoModel } from '../../modulo-almacen/producto/model/producto.model';
-import { ProductoService } from '../../modulo-almacen/producto/service/producto.service';
+import { ProductoService } from '../../modulo-sistema-config/tablas/producto/service/producto.service';
+import { ProductoModel } from '../../modulo-sistema-config/tablas/producto/model/producto.model';
+
 
 
 @Component({

@@ -1,4 +1,5 @@
-import { ProveedorclienteModel } from "../../../modulo-almacen/proveedorcliente/proveedorcliente-model";
+import { ProveedorclienteModel } from "../../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model";
+
 
 export class TransportistaModel {
 

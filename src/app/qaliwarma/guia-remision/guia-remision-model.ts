@@ -6,7 +6,8 @@ import { PuntoLlegadaModel } from "../parametros/punto-llegada/punto-llegada-mod
 import { VehiculoModel } from "../parametros/vehiculo/vehiculo-model";
 import { ChoferModel } from "../parametros/chofer/chofer-model";
 import { TransportistaModel } from "../parametros/transportista/transportista-model";
-import { ProveedorclienteModel } from "../../modulo-almacen/proveedorcliente/proveedorcliente-model";
+import { ProveedorclienteModel } from "../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model";
+
 
 export class GuiaRemisionModel {
 

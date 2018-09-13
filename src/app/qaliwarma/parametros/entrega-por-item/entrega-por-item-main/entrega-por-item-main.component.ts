@@ -16,8 +16,8 @@ import { PuntoPartidaService } from '../../punto-partida/punto-partida.service';
 import { PuntoPartidaModel } from '../../punto-partida/punto-partida-model';
 
 import { CrudHttpClientServiceShared } from '../../../../shared/servicio/crudHttpClient.service.shared';
-import { ProveedorclienteModel } from '../../../../modulo-almacen/proveedorcliente/proveedorcliente-model';
-import { ProveedorclienteService } from '../../../../modulo-almacen/proveedorcliente/proveedorcliente.service';
+import { ProveedorclienteModel } from '../../../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model';
+import { ProveedorclienteService } from '../../../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente.service';
 
 
 @Component({

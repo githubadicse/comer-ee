@@ -1,5 +1,6 @@
 import { AlmacenIngresoModel } from "./almacen-ingreso-model";
-import { ProductoModel } from "../producto/model/producto.model";
+import { ProductoModel } from "../../modulo-sistema-config/tablas/producto/model/producto.model";
+
 
 
 export class AlmacenIngresoDetalleModel {

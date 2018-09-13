@@ -1,12 +1,11 @@
-
-import { AlmacenModel } from "../almacen/almacen-model";
-
-
 import { AlmacenSalidaDetalleModel } from "./almacen-salida-detalle-model";
-import { ProveedorclienteModel } from "../proveedorcliente/proveedorcliente-model";
+
 import { EmpleadoModel } from "../../modulo-cuenta-rr-hh/empleado/empleado-model";
 import { PeriodoalmacenModel } from "../periodoalmacen/periodoalmacen-model";
-import { MotivoSalidaModel } from "../motivo-salida/motivo-salida-model";
+import { ProveedorclienteModel } from "../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model";
+import { AlmacenModel } from "../../modulo-sistema-config/tablas/almacen/almacen-model";
+import { MotivoSalidaModel } from "../../modulo-sistema-config/tablas/motivo-salida/motivo-salida-model";
+
 
 
 export class AlmacenSalidaModel {

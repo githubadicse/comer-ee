@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { PlanRastreabilidadService } from './plan-rastreabilidad.service';
 import swal from 'sweetalert2';
-import { AlmacenModel } from '../../../modulo-almacen/almacen/almacen-model';
+
 import { ConfigService } from '../../../shared/config.service';
+import { AlmacenModel } from '../../../modulo-sistema-config/tablas/almacen/almacen-model';
 
 @Component({
   selector: 'app-plan-rastreabilidad',

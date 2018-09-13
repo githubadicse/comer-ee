@@ -66,12 +66,11 @@ const MENUITEMS = [
       {type: 'red', value: '8'}
     ],
     children: [
-      {state: 'catalogo', name: 'Catalogo de Productos',idmenu:'0301'},
-      {state: 'producto-por-numero-entrega', name: 'Producto Por Nro Entrega',idmenu:'0302'},
-      {state: 'centros-educativos', name: 'Centros Educativos',idmenu:'0303'},
-      {state: 'rutas-distribucion', name: 'Ruta de Distribucion',idmenu:'0304'},
-      {state: 'guia/actualiza' , name: 'Registro Nro Guia',idmenu:'0305'},
-      {state: 'guia/main', name: 'Impresion de Guias',idmenu:'0306'},
+      {state: 'nota-ingreso', name: 'Nota de Ingreso',idmenu:'0301'},
+      {state: 'nota-salida', name: 'Nota de Salida',idmenu:'0302'},
+      {state: 'intercambio-presentacion', name: 'Intercambio de presentacion',idmenu:'0303'},
+      {state: 'Traslado', name: 'Traslado',idmenu:'0304'},
+      {state: 'Guia de Remision' , name: 'Guia de Remision',idmenu:'0305'},
       {state: 'consultas', name: 'Consultas',idmenu:'0307'},
       {state: 'procesos', name: 'Procesos',idmenu:'0308'},
       {state: 'parametros', name: 'Parametros',idmenu:'0309'}

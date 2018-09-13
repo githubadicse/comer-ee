@@ -6,7 +6,7 @@ import swal from 'sweetalert2'
 import { isUndefined } from 'util';
 import { VehiculoModel } from '../vehiculo-model';
 import { CrudHttpClientServiceShared } from '../../../../shared/servicio/crudHttpClient.service.shared';
-import { ProveedorclienteService } from '../../../../modulo-almacen/proveedorcliente/proveedorcliente.service';
+import { ProveedorclienteService } from '../../../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente.service';
 
 
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormBuilder } from '@angular/forms';
-import { AlmacenModel } from '../../modulo-almacen/almacen/almacen-model';
+import { AlmacenModel } from '../../modulo-sistema-config/tablas/almacen/almacen-model';
+
 
 @Component({
   selector: 'app-control-find-almacen',

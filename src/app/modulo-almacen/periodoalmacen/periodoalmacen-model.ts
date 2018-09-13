@@ -1,5 +1,4 @@
-import { AlmacenModel } from "../almacen/almacen-model";
-
+import { AlmacenModel } from "../../modulo-sistema-config/tablas/almacen/almacen-model";
 
 
 export class PeriodoalmacenModel {

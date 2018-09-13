@@ -1,14 +1,16 @@
 import { Component, OnInit, Input, ViewChildren, QueryList, HostListener, Output, EventEmitter } from '@angular/core';
 import { CrudHttpClientServiceShared } from '../../shared/servicio/crudHttpClient.service.shared';
-import { ProductoModel } from '../../modulo-almacen/producto/model/producto.model';
+
 import { ConfigService } from '../../shared/config.service';
 import { FormControl } from '@angular/forms';
 import { startWith } from 'rxjs/internal/operators/startWith';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { map } from 'rxjs/internal/operators/map';
-import { AlmacenModel } from '../../modulo-almacen/almacen/almacen-model';
+
 import { Subject } from 'rxjs/internal/Subject';
 import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
+import { ProductoModel } from '../../modulo-sistema-config/tablas/producto/model/producto.model';
+import { AlmacenModel } from '../../modulo-sistema-config/tablas/almacen/almacen-model';
 
 @Component({
   selector: 'app-comp-find-producto',
