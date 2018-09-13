@@ -37,7 +37,7 @@
                     {{categoria.dsccategoria}}
                   </mat-option>
                 </mat-select>
-                <mat-icon matSuffix matTooltip="Agregar categoria"><i class="fa fa-plus cursor" aria-hidden="true" [routerLink]="['./categoria']"  (click)="showChild = !showChild"></i></mat-icon>
+                <mat-icon matSuffix matTooltip="Agregar categoria"><i class="fa fa-plus cursor" aria-hidden="true" [routerLink]="['./categoria', {id:0}]" (click)="showChild = !showChild"></i></mat-icon>
               </mat-form-field>
               
                          
@@ -53,7 +53,7 @@
                   <span>{{marca.dscmarca}}</span>
                 </mat-option>
               </mat-autocomplete>
-              <mat-icon matSuffix matTooltip="Agregar marca"><i class="fa fa-plus cursor" aria-hidden="true" [routerLink]="['./marca']"  (click)="showChild = !showChild"></i></mat-icon>
+              <mat-icon matSuffix matTooltip="Agregar marca"><i class="fa fa-plus cursor" aria-hidden="true"  [routerLink]="['./marca', {id:0}]" (click)="showChild = !showChild"></i></mat-icon>
 
             </mat-form-field>
 
@@ -181,7 +181,9 @@
   </div>
 </div>
 
-<div>
+<div [hidden]="!showChild">
+  <!-- <app-marca-articulo-editar [hidden]="!showMarca" (getMarca)="_getMarca($event)"></app-marca-articulo-editar>
+  <app-categoria-articulo-editar [hidden]="!showCategorai" (getCategoria)="_getCategoria($evetn)"></app-categoria-articulo-editar> -->
   <router-outlet></router-outlet>
 </div>
 <!-- 

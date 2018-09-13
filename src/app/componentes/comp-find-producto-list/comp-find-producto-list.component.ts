@@ -87,8 +87,7 @@ export class CompFindProductoListComponent implements OnInit {
     )
   }
 
-  ngOnInit() {
-    console.log(this.autocomplete.panelOpen);
+  ngOnInit() {    
   }
 
   public checkCodigoBarra(): void {    

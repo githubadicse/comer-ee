@@ -33,4 +33,9 @@ export class ControlProveedorClienteComponent implements OnInit {
     console.log('formulario:', this.dataForm.value);
   }
 
+  _getObjectProveedorClienteLis(e:ProveedorclienteModel) {
+    this.proveedor_cliente = e;
+    console.log("Informacion desde el componente lista:" + JSON.stringify(e));
+  }
+
 }

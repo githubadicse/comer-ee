@@ -1,26 +1,25 @@
 <!-- TIPO DOCUMENTO -->
 
-<!-- <mat-form-field>
-  <mat-select appNextfocus placeholder="Tipo Documento" [compareWith]="compareRow" [(value)]="selectedValueTipoDoc" (selectionChange)="changeSelect($event.value)">
-    <mat-option *ngFor="let item of listTipoDocumentModel; let i=index;" [value]="item">
-      {{item.dscTipoDocumento}}
-    </mat-option>
-  </mat-select>
-</mat-form-field> -->
-
-<!-- SERIE -->
-
-<!-- <mat-form-field *ngIf="mostrarSeries">
-  <mat-select appNextfocus placeholder="Serie" [compareWith]="compareRowSerie" [(value)]="selectedValueSerie" (selectionChange)="changeSelectSerie($event.value)"
-    [disabled]="disabledSerie">
-    <mat-option *ngFor="let serie of listSeries; let i=index;" [value]="serie">
-      {{serie.serie}}
-    </mat-option>
-  </mat-select>
-</mat-form-field> -->
-
-<!-- CORRELATIVO -->
-
-<!-- <mat-form-field *ngIf="mostrarSeries">
-  <input matInput placeholder="Correlativo" [value]="numeroCorrelativo" disabled>
-</mat-form-field> -->
+ <mat-form-field>
+    <mat-select appNextfocus placeholder="Tipo Documento" [compareWith]="compareRow" [(value)]="selectedValueTipoDoc" (selectionChange)="changeSelect($event.value)">
+      <mat-option *ngFor="let item of listTipoDocumentModel; let i=index;" [value]="item">
+        {{item.dscTipoDocumento}}
+      </mat-option>
+    </mat-select>
+ </mat-form-field>
+  
+  <!-- SERIE -->
+  
+  <mat-form-field *ngIf="mostrarSeries">
+    <mat-select appNextfocus placeholder="Serie" [compareWith]="compareRowSerie" [(value)]="selectedValueSerie" (selectionChange)="changeSelectSerie($event.value)" [disabled]="disabledSerie">
+      <mat-option *ngFor="let serie of listSeries; let i=index;" [value]="serie">
+        {{serie.serie}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  
+  <!-- CORRELATIVO -->
+  
+  <!-- <mat-form-field *ngIf="mostrarSeries"> 
+    <input  matInput placeholder="Correlativo" [value]="numeroCorrelativo" disabled>
+  </mat-form-field> -->

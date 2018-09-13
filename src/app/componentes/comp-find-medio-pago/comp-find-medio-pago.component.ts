@@ -1,6 +1,8 @@
 import { Component,  OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { CrudHttpClientServiceShared } from '../../shared/servicio/crudHttpClient.service.shared';
+import { MedioPagoModel } from '../../modulo-sistema-config/tablas/medio-pago/medio-pago.model';
+import { MedioPagoService } from '../../modulo-sistema-config/tablas/medio-pago/medio-pago.service';
 
 @Component({
   selector: 'app-comp-find-medio-pago',
@@ -16,11 +18,11 @@ export class CompFindMedioPagoComponent implements OnInit {
   _formControlName: FormControl;
   
   @Output()
-  getObject: EventEmitter<any> = new EventEmitter();  
+  getObject: EventEmitter<MedioPagoModel> = new EventEmitter();  
 
-  public ListMedioPago: any;
+  public ListMedioPagos: MedioPagoModel[] = [];
 
-  constructor(private crudService: CrudHttpClientServiceShared) { 
+  constructor(private medioPagoService: MedioPagoService) { 
     
   }
 
@@ -32,8 +34,8 @@ export class CompFindMedioPagoComponent implements OnInit {
     this.loadListMedioPago();
   }
 
-  private loadListMedioPago(): void {
-    this.crudService.getall('mediopago', 'getall').subscribe(res => this.ListMedioPago = res );
+  private loadListMedioPago(): void {    
+    this.medioPagoService.getall().subscribe(res => this.ListMedioPagos = <MedioPagoModel[]>res );
   }
   
   _onSelectionChange(a,b) {

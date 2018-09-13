@@ -1,0 +1,41 @@
+<h1>Control Motivo (Ingreso/Salida) del almacen</h1>
+<div class="card border border-primary">
+  <div class="card-body">
+    <form [formGroup]="dataForm">
+      <input type="text" formControlName="anno" [hidden]="true">
+      <app-comp-find-motivo-is-almacen (getObject)="_getObject($event)" [_formControlName]="this.dataForm.get('motivo')" [tipoMotivo]="motivo"></app-comp-find-motivo-is-almacen>
+    </form>
+  </div>
+</div>
+
+<br>
+<hr>
+<br>
+
+<h2>Propiedades</h2>
+
+<table class="table">
+  <thead>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+  </thead>
+  <tr>
+    <td>
+      <strong>getObject</strong>
+      <p>Evento que emite</p>
+    </td>
+    <td>
+      Devuelve un json mediopago:
+      <span class="text-info">{{mediopago | json}}</span>
+    </td>
+  </tr>
+  <tr>
+    <td>      
+      <p>input Filtro</p>
+      [tipoMotivo] : String      
+    </td>
+    <td>
+      'i' = ingreso ; 's' = salida
+    </td>
+  </tr>
+</table>

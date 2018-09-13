@@ -1,0 +1,7 @@
+<mat-form-field class="w-100">
+    <mat-select appNextfocus placeholder="Motivo" [formControl]="_formControlName" [compareWith]="compareMotivo" (selectionChange)="_onSelectionChange($event)">
+      <mat-option *ngFor="let item of ListMotivos" [value]="item">
+        {{item.dscmotivoingreso || item.dscmotivosalida}}
+      </mat-option>
+    </mat-select>
+</mat-form-field>
