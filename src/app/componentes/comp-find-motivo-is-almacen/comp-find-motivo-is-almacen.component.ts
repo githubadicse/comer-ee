@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { CrudHttpClientServiceShared } from '../../shared/servicio/crudHttpClient.service.shared';
-import { MotivoSalidaModel } from '../../modulo-almacen/motivo-salida/motivo-salida-model';
-import { MotivoIngresoModel } from '../../modulo-almacen/motivo-ingreso/motivo-ingreso-model';
+import { MotivoSalidaModel } from '../../modulo-sistema-config/tablas/motivo-salida/motivo-salida-model';
+import { MotivoIngresoModel } from '../../modulo-sistema-config/tablas/motivo-ingreso/motivo-ingreso-model';
+
 
 @Component({
   selector: 'app-comp-find-motivo-is-almacen',

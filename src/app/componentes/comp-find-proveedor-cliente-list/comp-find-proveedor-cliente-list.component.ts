@@ -1,13 +1,15 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ProveedorclienteModel } from '../../modulo-almacen/proveedorcliente/proveedorcliente-model';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { CrudHttpClientServiceShared } from '../../shared/servicio/crudHttpClient.service.shared';
 import { startWith } from 'rxjs/internal/operators/startWith';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
 import { map } from 'rxjs/internal/operators/map';
-import { ProveedorclientedireccionModel } from '../../modulo-almacen/proveedorcliente/proveedorclientedireccion-model';
+import { ProveedorclienteModel } from '../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model';
+import { ProveedorclientedireccionModel } from '../../modulo-sistema-config/tablas/proveedorcliente/proveedorclientedireccion-model';
+
+
 
 @Component({
   selector: 'app-comp-find-proveedor-cliente-list',

@@ -39,7 +39,6 @@ export class CompFindMedioPagoComponent implements OnInit {
   }
   
   _onSelectionChange(a,b) {
-    debugger;
     this.getObject.emit(a.value);
   }
 
