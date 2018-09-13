@@ -15,7 +15,6 @@ import { MatInputModule, MatNativeDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS,
 import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '../shared/validators/MomentDateAdapter';
 
-import { CompFindCodigoBarraModule } from './comp-find-codigo-barra/comp-find-codigo-barra.module';
 import { CompTipoDocumentoIdentidadComponent } from './comp-tipo-documento-identidad/comp-tipo-documento-identidad.component';
 import { CompFindProveedorClienteRucComponent } from './comp-find-proveedor-cliente-ruc/comp-find-proveedor-cliente-ruc.component';
 import { CompFindMedioPagoComponent } from './comp-find-medio-pago/comp-find-medio-pago.component';
@@ -24,6 +23,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { CompFindProductoListComponent } from './comp-find-producto-list/comp-find-producto-list.component';
 import { CompFindMotivoIsAlmacenComponent } from './comp-find-motivo-is-almacen/comp-find-motivo-is-almacen.component';
 import { CompFindProveedorClienteListComponent } from './comp-find-proveedor-cliente-list/comp-find-proveedor-cliente-list.component';
+import { CompTipoDocumentoSunatComponent } from './comp-tipo-documento-sunat/comp-tipo-documento-sunat.component';
 
 
 @NgModule({
@@ -38,10 +38,9 @@ import { CompFindProveedorClienteListComponent } from './comp-find-proveedor-cli
     MatDatepickerModule,
     MatNativeDateModule,
     PaginatorModule,
-    MatProgressBarModule,    
+    MatProgressBarModule,        
     MatIconModule,
     MatTooltipModule,    
-    CompFindCodigoBarraModule
   ],
   providers : [
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
@@ -49,20 +48,33 @@ import { CompFindProveedorClienteListComponent } from './comp-find-proveedor-cli
     { provide: DateAdapter, useClass: MomentDateAdapter }
   ],
 
-  // exports : [MatDatepickerModule,CompFindAlmacenComponent,FechaMatComponent],
-
   declarations: [
     FechaMatComponent,
     CompFindAlmacenComponent, 
     CompTipoDocumentoIdentidadComponent, 
     CompFindProveedorClienteRucComponent, 
     CompFindMedioPagoComponent, 
-    CompFindProductoComponent, CompFindProductoListComponent, 
-    CompFindMotivoIsAlmacenComponent, CompFindProveedorClienteListComponent,    
+    CompFindProductoComponent, 
+    CompFindProductoListComponent, 
+    CompFindMotivoIsAlmacenComponent, 
+    CompFindProveedorClienteListComponent,
+    CompFindCodigoBarraComponent, 
+    CompTipoDocumentoSunatComponent    
   ],
-  exports: [MatDatepickerModule,FechaMatComponent,CompFindAlmacenComponent, CompTipoDocumentoIdentidadComponent, 
-    CompFindProveedorClienteRucComponent, CompFindMedioPagoComponent, CompFindProductoComponent,CompFindProductoListComponent]
-
+  exports: [
+    MatDatepickerModule,
+    FechaMatComponent,
+    CompFindAlmacenComponent, 
+    CompTipoDocumentoIdentidadComponent, 
+    CompFindProveedorClienteRucComponent, 
+    CompFindMedioPagoComponent, 
+    CompFindProveedorClienteListComponent,
+    CompFindProductoComponent,
+    CompFindProductoListComponent, 
+    CompFindCodigoBarraComponent, 
+    CompFindMotivoIsAlmacenComponent,
+    CompTipoDocumentoSunatComponent
+  ]
 })
 
 export class ComponentesModule { }

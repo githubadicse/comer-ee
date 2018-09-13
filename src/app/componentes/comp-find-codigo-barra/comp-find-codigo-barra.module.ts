@@ -13,7 +13,7 @@ import { CompFindCodigoBarraComponent } from './comp-find-codigo-barra.component
     MatInputModule,
     MatProgressBarModule,    
   ],
-  declarations: [CompFindCodigoBarraComponent],
-  exports: [CompFindCodigoBarraComponent]
+  declarations: [],
+  exports: []
 })
 export class CompFindCodigoBarraModule { }
