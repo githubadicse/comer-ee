@@ -8,19 +8,22 @@ import { AlmacenIngresoService } from '../almacen-ingreso.service';
 
 import { AlmacenIngresoModel } from '../almacen-ingreso-model';
 import { AlmacenIngresoDetalleModel } from '../almacen-ingreso-detalle-model';
-import { AlmacenModel } from '../../almacen/almacen-model';
-import { CodigobarraService } from '../../codigobarra/codigobarra.service';
-import { ProveedorclienteService } from '../../proveedorcliente/proveedorcliente.service';
-import { ConfigService } from '../../../shared/config.service';
+
 import { PeriodoalmacenService } from '../../periodoalmacen/periodoalmacen.service';
 import { SharedService } from '../../../shared/servicio/shared.service';
-import { ProductoModel } from '../../producto/model/producto.model';
-import { CodigobarraModel } from '../../codigobarra/codigobarra-model';
+
 import { EmpleadoModel } from '../../../modulo-cuenta-rr-hh/empleado/empleado-model';
-import { MotivoIngresoModel } from '../../motivo-ingreso/motivo-ingreso-model';
-import { ProveedorclienteModel } from '../../proveedorcliente/proveedorcliente-model';
+
 import { TipodocumentoModel } from '../../../modulo-sistema-config/tipodocumento/tipodocumento-model';
 import { PeriodoalmacenModel } from '../../periodoalmacen/periodoalmacen-model';
+import { CodigobarraService } from '../../../modulo-sistema-config/tablas/codigobarra/codigobarra.service';
+import { ProveedorclienteService } from '../../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente.service';
+import { ConfigService } from '../../../shared/config.service';
+import { ProductoModel } from '../../../modulo-sistema-config/tablas/producto/model/producto.model';
+import { CodigobarraModel } from '../../../modulo-sistema-config/tablas/codigobarra/codigobarra-model';
+import { AlmacenModel } from '../../../modulo-sistema-config/tablas/almacen/almacen-model';
+import { MotivoIngresoModel } from '../../../modulo-sistema-config/tablas/motivo-ingreso/motivo-ingreso-model';
+import { ProveedorclienteModel } from '../../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model';
 
 
 

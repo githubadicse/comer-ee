@@ -1,12 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { AlmacenService } from '../../modulo-almacen/almacen/almacen.service';
-import { AlmacenModel } from '../../modulo-almacen/almacen/almacen-model';
+
 import { Observable } from 'rxjs';
 import { startWith, map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { element } from 'protractor';
 import { Subject, of } from 'rxjs';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
+import { AlmacenService } from '../../modulo-sistema-config/tablas/almacen/almacen.service';
+import { AlmacenModel } from '../../modulo-sistema-config/tablas/almacen/almacen-model';
 
 export interface State {
   flag: string;

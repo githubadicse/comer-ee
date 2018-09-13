@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ProductoModel } from '../producto/model/producto.model';
+
 import { ConfigService } from '../../shared/config.service';
+import { ProductoModel } from '../../modulo-sistema-config/tablas/producto/model/producto.model';
 
 
 

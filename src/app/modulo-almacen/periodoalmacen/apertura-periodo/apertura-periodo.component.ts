@@ -6,7 +6,7 @@ import { PeriodoalmacenService } from '../periodoalmacen.service';
 
 import { PeriodoalmacenModel } from '../periodoalmacen-model';
 import { SharedService } from '../../../shared/servicio/shared.service';
-import { AlmacenModel } from '../../almacen/almacen-model';
+import { AlmacenModel } from '../../../modulo-sistema-config/tablas/almacen/almacen-model';
 
 
 

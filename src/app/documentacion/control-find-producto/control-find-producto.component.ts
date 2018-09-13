@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductoModel } from '../../modulo-almacen/producto/model/producto.model';
+import { ProductoModel } from '../../modulo-sistema-config/tablas/producto/model/producto.model';
+
 
 @Component({
   selector: 'app-control-find-producto',

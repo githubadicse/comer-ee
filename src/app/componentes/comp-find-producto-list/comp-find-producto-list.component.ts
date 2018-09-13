@@ -2,12 +2,13 @@ import { Component, OnInit, Input, EventEmitter, Output, ViewChild } from '@angu
 import { FormControl } from '@angular/forms';
 import { startWith } from 'rxjs/internal/operators/startWith';
 import { map } from 'rxjs/internal/operators/map';
-import { ProductoService } from '../../modulo-almacen/producto/service/producto.service';
-import { ProductoModel } from '../../modulo-almacen/producto/model/producto.model';
+
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { MatAutocompleteTrigger } from '@angular/material';
 
 import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
+import { ProductoService } from '../../modulo-sistema-config/tablas/producto/service/producto.service';
+import { ProductoModel } from '../../modulo-sistema-config/tablas/producto/model/producto.model';
 
 export class buscarMasDe {
   public parametro: string = null;

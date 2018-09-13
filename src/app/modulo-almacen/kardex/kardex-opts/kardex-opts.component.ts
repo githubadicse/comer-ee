@@ -2,19 +2,23 @@ import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ProductoModel } from '../../producto/model/producto.model';
-import { CodigobarraModel } from '../../codigobarra/codigobarra-model';
+
 
 import { PeriodoalmacenModel } from '../../periodoalmacen/periodoalmacen-model';
 import { PeriodoalmacenService } from '../../periodoalmacen/periodoalmacen.service';
 
-import { CodigobarraService } from '../../codigobarra/codigobarra.service';
+
 
 import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
-import { AlmacenService } from '../../almacen/almacen.service';
+
 import { AlmacenIngresoService } from '../../almacen-ingreso/almacen-ingreso.service';
 import { AlmacenSalidaService } from '../../almacen-salida/almacen-salida.service';
-import { AlmacenModel } from '../../almacen/almacen-model';
+import { CodigobarraService } from '../../../modulo-sistema-config/tablas/codigobarra/codigobarra.service';
+import { AlmacenService } from '../../../modulo-sistema-config/tablas/almacen/almacen.service';
+import { ProductoModel } from '../../../modulo-sistema-config/tablas/producto/model/producto.model';
+import { CodigobarraModel } from '../../../modulo-sistema-config/tablas/codigobarra/codigobarra-model';
+import { AlmacenModel } from '../../../modulo-sistema-config/tablas/almacen/almacen-model';
+
 
 
 @Component({

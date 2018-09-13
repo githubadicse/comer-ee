@@ -10,20 +10,23 @@ import { AlmacenSalidaService } from '../almacen-salida.service';
 
 import { AlmacenSalidaModel } from '../almacen-salida-model';
 import { AlmacenSalidaDetalleModel } from '../almacen-salida-detalle-model';
-import { AlmacenModel } from '../../almacen/almacen-model';
+
 import { SharedService } from '../../../shared/servicio/shared.service';
-import { CodigobarraService } from '../../codigobarra/codigobarra.service';
-import { ProveedorclienteService } from '../../proveedorcliente/proveedorcliente.service';
+
 import { ConfigService } from '../../../shared/config.service';
 import { PeriodoalmacenService } from '../../periodoalmacen/periodoalmacen.service';
-import { ProductoModel } from '../../producto/model/producto.model';
-import { CodigobarraModel } from '../../codigobarra/codigobarra-model';
+
 import { EmpleadoModel } from '../../../modulo-cuenta-rr-hh/empleado/empleado-model';
-import { MotivoSalidaModel } from '../../motivo-salida/motivo-salida-model';
-import { ProveedorclienteModel } from '../../proveedorcliente/proveedorcliente-model';
+
 import { TipodocumentoModel } from '../../../modulo-sistema-config/tipodocumento/tipodocumento-model';
 import { PeriodoalmacenModel } from '../../periodoalmacen/periodoalmacen-model';
-
+import { CodigobarraService } from '../../../modulo-sistema-config/tablas/codigobarra/codigobarra.service';
+import { ProveedorclienteService } from '../../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente.service';
+import { ProductoModel } from '../../../modulo-sistema-config/tablas/producto/model/producto.model';
+import { CodigobarraModel } from '../../../modulo-sistema-config/tablas/codigobarra/codigobarra-model';
+import { AlmacenModel } from '../../../modulo-sistema-config/tablas/almacen/almacen-model';
+import { MotivoSalidaModel } from '../../../modulo-sistema-config/tablas/motivo-salida/motivo-salida-model';
+import { ProveedorclienteModel } from '../../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model';
 
 
 @Component({

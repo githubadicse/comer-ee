@@ -16,8 +16,9 @@ import { PikingService } from '../../piking/piking.service';
 import { RequerimientoVolumen001Model } from '../../requerimiento-volumen-001/requerimiento-volumen-001-model';
 import { VolumenConvertidoEnvaceModel } from '../../volumen-convertido-envase/volumen-convertido-envase-model';
 import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
-import { MarcaArticuloService } from '../../../modulo-almacen/marca-articulo/marca-articulo.service';
-import { MarcaArticuloModel } from '../../../modulo-almacen/marca-articulo/marca-articulo-model';
+import { MarcaArticuloService } from '../../../modulo-sistema-config/tablas/marca-articulo/marca-articulo.service';
+import { MarcaArticuloModel } from '../../../modulo-sistema-config/tablas/marca-articulo/marca-articulo-model';
+
 
 
 @Component({

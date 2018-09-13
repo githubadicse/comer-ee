@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, Validators } from '@angular/forms';
-import { ProveedorclienteModel } from '../../modulo-almacen/proveedorcliente/proveedorcliente-model';
+import { ProveedorclienteModel } from '../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model';
+
 
 @Component({
   selector: 'app-control-proveedor-cliente',

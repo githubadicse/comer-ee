@@ -5,7 +5,8 @@ import { ChoferModel } from "../chofer/chofer-model";
 import { TransportistaModel } from "../transportista/transportista-model";
 import { ItemEntregaModel } from "../../item-entrega/item-entrega-model";
 import { NumeroEntregaModel } from "../../numero-entrega/numero-entrega-model";
-import { ProveedorclienteModel } from "../../../modulo-almacen/proveedorcliente/proveedorcliente-model";
+import { ProveedorclienteModel } from "../../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model";
+
 
 
 export class EntregaPorItemModel {
