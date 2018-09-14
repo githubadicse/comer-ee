@@ -2,7 +2,9 @@
     <div class="col-md-6">
 
         <div class="example-container">
+            <!-- Motivo por la que ingresa la mercaderia -->
             <app-comp-find-motivo-is-almacen tipoMotivo="i"></app-comp-find-motivo-is-almacen>
+
             <br>
             <mat-form-field>
                 <input matInput placeholder="PROVEEDOR">
@@ -17,13 +19,13 @@
     </div>
     <div class="col-md-6">
         <div class="example-container">
-            <mat-form-field>
-                <input matInput placeholder="EMPLEADO RECEP.">
-            </mat-form-field>
+
+            <!-- empleado que recibe la mercaderia -->
+            <app-comp-find-empleado [idfilial]="this.idFilial" ></app-comp-find-empleado>
             <br>
-            <mat-form-field>
-                <input matInput placeholder="ALMACEN">
-            </mat-form-field>
+
+            <app-comp-find-almacen [idFilial]="this.idFilial"></app-comp-find-almacen>
+
             <br>
             <mat-form-field>
                 <input matInput placeholder="REF.COMPRA">

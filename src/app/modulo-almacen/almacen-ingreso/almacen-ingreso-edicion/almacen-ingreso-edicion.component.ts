@@ -38,6 +38,8 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
   msgPopup: any[];
   id: number;
   sub: any;
+
+  public idFilial:number=1;
   
   public ingresoForm: any;
   public productosModel: ProductoModel[] = [];
@@ -125,6 +127,8 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.idFilial = this.configService.getIdFilialToken();
 
     this.sub = this.route.params.subscribe(
       params => {
