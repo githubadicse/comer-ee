@@ -95,6 +95,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         deps: [HttpClient]
       }
     }),
+    
     LoadingBarRouterModule,
     MatFormFieldModule,
     MatInputModule,
