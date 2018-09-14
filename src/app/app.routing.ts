@@ -49,10 +49,10 @@ export const AppRoutes: Routes = [
         path : 'qaliwarma/parametros',
         loadChildren : './qaliwarma/parametros/parametros.module#ParametrosModule'
       },      
-      // almacen
+      // ALMACEN
       {
-        path: 'almacen/catalogo',
-        loadChildren: './modulo-almacen/producto/producto.module#ProductoModule'
+        path: 'almacen/nota-ingreso',
+        loadChildren: './modulo-almacen/almacen-ingreso/almacen-ingreso.module#AlmacenIngresoModule'
       },
 
       //CONFIGURACION

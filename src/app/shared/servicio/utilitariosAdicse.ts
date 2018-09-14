@@ -114,9 +114,20 @@ export class UtilitariosAdicse {
       return p;
     }
 
-    //fiters es de tipo JSON.split
+
+    //------- Table Filter   para crear filtros para materialize -----//
+    //fiters es de tipo JSON.split 
     //para angular material
-    Tablefilter (filters,value, field, matchMode) {
+    //Ejemplo de un filtro desde la llmada
+    //this._filter es de tipo objecto {}
+    //ejemplo declaracion _filter = {}
+    
+    //this._filterPage = JSON.stringify( this.utilitariosAdicse.Tablefilter(this._filter,idAlmacen,'almacen.idalmacen','equals'  ));
+
+    //value es el valor a buscar en el caso del ejemplo es la variable idAlmacen
+    //field es el campo que se quiere buscar en el modelo de objectos del lado servidor. en nuestrocaso el objeto almacen y su propiedad idalmacen
+    //y el operador es equal (=) puede ser tambien contains (like)
+    Tablefilter (filters:Object,value, field:string, matchMode:string) {
      
       if (value) {
           filters[field] = { value: value, matchMode: matchMode };

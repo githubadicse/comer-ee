@@ -15,8 +15,12 @@ import { ControlMedioPagoComponent } from './control-medio-pago/control-medio-pa
 import { ControlFindProductoComponent } from './control-find-producto/control-find-producto.component';
 import { ComponentesModule } from '../componentes/componentes.module';
 import { ControlFindMotivoIsAlmacenComponent } from './control-find-motivo-is-almacen/control-find-motivo-is-almacen.component';
+
+import { ControlFindFechaComponent } from './control-find-fecha/control-find-fecha.component';
+
 import { ControlFindEmpleadoComponent } from './control-find-empleado/control-find-empleado.component';
 import { ControlFindFilialComponent } from './control-find-filial/control-find-filial.component';
+
 
 
 @NgModule({
@@ -39,6 +43,8 @@ import { ControlFindFilialComponent } from './control-find-filial/control-find-f
     ControlFindMotivoIsAlmacenComponent,
     ControlFindEmpleadoComponent,
     ControlFindFilialComponent    
+    ControlFindFechaComponent    
+    ControlFindEmpleadoComponent    
   ]
 })
 

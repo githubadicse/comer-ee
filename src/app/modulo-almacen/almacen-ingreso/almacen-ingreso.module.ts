@@ -11,6 +11,9 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { KardexModule } from '../kardex/kardex.module';
 import { SharedModule } from '../../shared/shared.module';
+import { MatSortModule, MatTableModule, MatPaginatorModule, MatIconModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSlideToggleModule } from '@angular/material';
+import { ComponentesModule } from '../../componentes/componentes.module';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -25,7 +28,11 @@ import { SharedModule } from '../../shared/shared.module';
     AutoCompleteModule,
     CalendarModule,
     MessagesModule,
-    KardexModule
+    KardexModule,
+    ComponentesModule,
+    MatSortModule, MatTableModule, MatPaginatorModule, MatIconModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSlideToggleModule ,
+    MatSelectModule
+
   ],
   declarations: [AlmacenIngresoMainComponent, AlmacenIngresoEdicionComponent, AlmacenIngresoListaComponent]
 })

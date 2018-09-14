@@ -25,29 +25,7 @@
     <br>
     <br>
 
-    <!--  <p-dataTable emptyMessage=" " [value]="empleadosModel" [filterDelay]=500 [lazy]="true" (onFilter)="filter($event)"
-        selectionMode="single" [responsive]="true">
   
-        <p-column field="idempleado" #idcategoria header="Codigo" [style]="{'width':'90px'}" [filter]="showPanelBuscarFlag"> </p-column>
-        
-        <p-column field="nomempleado" header="Nombres" [style]="{'width':'350px'}" [filter]="showPanelBuscarFlag"> </p-column>
-      
-        <p-column field="telefono" header="Telefono" [style]="{'width':'150px'}" [filter]="showPanelBuscarFlag"> </p-column>
-        
-        <p-column>
-          <ng-template let-data="rowData" pTemplate type="body">
-            <i [routerLink]="['edicion', {id:data.idempleado}]" (click)="ocultarLista()" style="cursor: pointer;" class="fa fa-pencil fa-1x" aria-hidden="true"
-              data-toggle="tooltip" title="Editar"></i>&nbsp;
-  
-          
-                <i style="cursor: pointer;" class="fa fa-trash-o fa-1x" aria-hidden="true" data-toggle="tooltip" title="Eliminar" (click)="confirm(data)"></i>
-            
-            
-  
-          </ng-template>
-        </p-column>
-  
-      </p-dataTable> -->
 
     <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
       <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
