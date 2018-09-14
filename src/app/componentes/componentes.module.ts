@@ -25,6 +25,7 @@ import { CompFindMotivoIsAlmacenComponent } from './comp-find-motivo-is-almacen/
 import { CompFindProveedorClienteListComponent } from './comp-find-proveedor-cliente-list/comp-find-proveedor-cliente-list.component';
 import { CompTipoDocumentoSunatComponent } from './comp-tipo-documento-sunat/comp-tipo-documento-sunat.component';
 import { CompFindEmpleadoComponent } from './comp-find-empleado/comp-find-empleado.component';
+import { CompFindFilialComponent } from './comp-find-filial/comp-find-filial.component';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { CompFindEmpleadoComponent } from './comp-find-empleado/comp-find-emplea
     CompFindProveedorClienteListComponent,
     CompFindCodigoBarraComponent, 
     CompTipoDocumentoSunatComponent,
-    CompFindEmpleadoComponent,    
+    CompFindEmpleadoComponent,
+    CompFindFilialComponent,    
   ],
   exports: [
     MatDatepickerModule,
@@ -77,7 +79,8 @@ import { CompFindEmpleadoComponent } from './comp-find-empleado/comp-find-emplea
     CompFindCodigoBarraComponent, 
     CompFindMotivoIsAlmacenComponent,
     CompTipoDocumentoSunatComponent,
-    CompFindEmpleadoComponent
+    CompFindEmpleadoComponent,
+    CompFindFilialComponent
   ]
 })
 

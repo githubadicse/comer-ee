@@ -81,13 +81,19 @@ export class CompFindProveedorClienteListComponent implements OnInit {
     }
   }
 
-  public _displayWith(val: ProveedorclienteModel): string {    
+  public _displayWith(val: ProveedorclienteModel): string { 
     return val ? val.razonsocial : '';
   }
   
 
-  public _onSelectionChange(event, proveedorCliente:ProveedorclienteModel, direccion: ProveedorclientedireccionModel=null): void {    
-    this.getObject.emit({'proveedorcliente': proveedorCliente, 'direccion': direccion});
+  public _onSelectionChange(event, proveedorCliente:ProveedorclienteModel, direccion: ProveedorclientedireccionModel=null): void {
+    const resAgrupado = {'proveedorcliente': proveedorCliente, 'direccion': direccion}
+    if (this.agruparPorDireccion) {
+      this.getObject.emit(resAgrupado);
+    } else {
+      // devuele un ProveedorclienteModel
+      this.getObject.emit(proveedorCliente);
+    }
     this.listProveedorCliente=null;
   }  
 

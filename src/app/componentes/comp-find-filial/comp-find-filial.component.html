@@ -1,0 +1,7 @@
+<mat-form-field class="w-100">
+    <mat-select appNextfocus placeholder="Filial" [formControl]="_formControlName" [compareWith]="compareFilial" (selectionChange)="_onSelectionChange($event)" [disabled]="_disabled">
+      <mat-option *ngFor="let item of ListFilial" [value]="item">
+        {{item.dscfilial | uppercase}}
+      </mat-option>
+    </mat-select>
+</mat-form-field>
