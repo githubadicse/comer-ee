@@ -49,14 +49,26 @@
       <span class="text-info">{{proveedor_cliente | json}}</span>
     </td>
   </tr>
-
+  
   <tr>
+    <td colspan="2"><h3><strong>Valido solo para Busqueda sencitiva</strong></h3></td>
+  </tr>
+  <tr>    
+      <td>        
+          <strong>[tipodocfilter]</strong>
+          <p>Input: number</p>
+        </td>
+        <td>          
+            Especifique el iddocumentoidentificacion <br>
+            ej: 1=DNI (muestra solo Persona natural) o 2: RUC (Muestra solo Personas Jurdicas)
+        </td>
+      </tr>
+      <tr>
       <td>        
         <strong>[agruparPorDireccion]</strong>
         <p>Input: boolean</p>
       </td>
-      <td>
-          <h3><strong>Valido solo para Busqueda sencitiva</strong></h3>
+      <td>          
           <p>Valor default = true</p>
           <br>
           <p>true = muestra el proveedorcliente agrupados por sus direcciones, es decir se mostrar la cantidad de veces segun la cantidad de direcciones, si no tiene direccion mostrara: direccion no asignada</p>
