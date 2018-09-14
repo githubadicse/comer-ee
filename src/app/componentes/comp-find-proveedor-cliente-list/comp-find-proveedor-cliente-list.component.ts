@@ -28,6 +28,12 @@ export class CompFindProveedorClienteListComponent implements OnInit {
   @Input() 
   tipodocfilter: number = 2; // tipo documetno filtrar; buscar PN o PJ
 
+  @Input()
+  agruparPorDireccion: boolean = true;
+  //true = muestra el proveedorcliente agrupados por sus direcciones, es decir se mostrar la cantidad de veces segun la cantidad de direcciones, si no tiene direccion mostrara: direccion no asignada
+  //false = muestra todos los proveedores agrupados por proveedorcliente
+
+  
   @Output()
   getObject: EventEmitter<any> = new EventEmitter();
 
@@ -80,7 +86,7 @@ export class CompFindProveedorClienteListComponent implements OnInit {
   }
   
 
-  public _onSelectionChange(event, proveedorCliente:ProveedorclienteModel, direccion: ProveedorclientedireccionModel): void {    
+  public _onSelectionChange(event, proveedorCliente:ProveedorclienteModel, direccion: ProveedorclientedireccionModel=null): void {    
     this.getObject.emit({'proveedorcliente': proveedorCliente, 'direccion': direccion});
     this.listProveedorCliente=null;
   }  

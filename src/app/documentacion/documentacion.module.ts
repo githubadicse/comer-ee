@@ -15,6 +15,7 @@ import { ControlMedioPagoComponent } from './control-medio-pago/control-medio-pa
 import { ControlFindProductoComponent } from './control-find-producto/control-find-producto.component';
 import { ComponentesModule } from '../componentes/componentes.module';
 import { ControlFindMotivoIsAlmacenComponent } from './control-find-motivo-is-almacen/control-find-motivo-is-almacen.component';
+import { ControlFindEmpleadoComponent } from './control-find-empleado/control-find-empleado.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { ControlFindMotivoIsAlmacenComponent } from './control-find-motivo-is-al
     ControlProveedorClienteComponent,    
     ControlMedioPagoComponent, 
     ControlFindProductoComponent,
-    ControlFindMotivoIsAlmacenComponent    
+    ControlFindMotivoIsAlmacenComponent,
+    ControlFindEmpleadoComponent    
   ]
 })
 
