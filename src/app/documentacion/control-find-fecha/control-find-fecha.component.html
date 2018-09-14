@@ -1,0 +1,20 @@
+<h1>Control Fecha</h1>
+<p>
+    <app-fecha-mat *ngIf="flag" [_formControlName]="this.dataForm.get('fecha')" (getObject)="_getObject($event)" _placeholder="Fecha"></app-fecha-mat>
+</p>
+<p>
+  Valor devuelto : {{this.valorDevuelto}}
+</p>
+
+<p>
+    [_formControlName] : pasa como parametro el control del formulario reactivo. <br>
+    (getObject) : OutPut de funcion, devuelve un string con fecha dd/mm/yyyy <br><br>
+
+    flag : si el componente se usa con formulario reactivo y se crea un registro nuevo se puede usar flag a true por defecto es true
+
+
+</p>
+
+
+
+
