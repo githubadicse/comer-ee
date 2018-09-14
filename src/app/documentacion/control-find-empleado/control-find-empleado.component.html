@@ -1,0 +1,41 @@
+<h1>Control Buscar empleado (todos o por filial)</h1>
+<div class="card border border-primary">
+  <div class="card-body">
+    <form [formGroup]="dataForm">
+      <input type="text" formControlName="anno" [hidden]="true">      
+      <app-comp-find-empleado (getObject)="_getObject($event)" [idfilial]="" [_formControlName]="this.dataForm.get('empleado')"></app-comp-find-empleado>
+    </form>
+  </div>
+</div>
+
+<br>
+<hr>
+<br>
+
+<h2>Propiedades</h2>
+
+<table class="table">
+  <thead>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+  </thead>
+  <tr>
+      <td>
+        <strong>[idfilial]</strong>
+        <p>Input opcional</p>        
+      </td>
+      <td>
+          <p>Especifique una filial para filtrar solo los empleados de esa filial</p>
+      </td>
+    </tr>
+  <tr>
+    <td>
+      <strong>getObject</strong>
+      <p>Evento que emite</p>
+    </td>
+    <td>
+      Devuelve un model Empleado:
+      <span class="text-info">{{empleado | json}}</span>
+    </td>
+  </tr>
+</table>

@@ -64,13 +64,14 @@ export class CompTipoDocumentoSunatComponent implements OnInit  {
   }
 
   public changeSelect(tipoDocumento: any): void {
-    console.log(tipoDocumento);    
+    console.log(tipoDocumento);  
+    if (!tipoDocumento) {return;}
     //this.onChange.emit(tipoDocumento);
 
     // series numeradores
     this.numeroCorrelativo = null;
     this.rpt.numerador = null;
-
+    
     this.listSeries = tipoDocumento.numeradors || null;
     if (this.listSeries) { //seleccionar la serie si existe numeradores
       this.selectedValueSerie = !this.selectSerie ? this.listSeries[0].serie : this.selectSerie;
