@@ -1,9 +1,9 @@
-<h1>Control Buscar producto por codigo barra</h1>
+<h1>Control Motivo (Ingreso/Salida) del almacen</h1>
 <div class="card border border-primary">
   <div class="card-body">
     <form [formGroup]="dataForm">
       <input type="text" formControlName="anno" [hidden]="true">
-      <app-comp-find-codigo-barra (getObject)="_getObject($event)" [_formControlName]="this.dataForm.get('codigobarra')"></app-comp-find-codigo-barra>
+      <app-comp-find-filial (getObject)="_getObject($event)" [_formControlName]="this.dataForm.get('filial')" [_disabled]="_disabled"></app-comp-find-filial>
     </form>
   </div>
 </div>
@@ -25,8 +25,18 @@
       <p>Evento que emite</p>
     </td>
     <td>
-      Devuelve un producto:
-      <span class="text-info">{{producto | json}}</span>
+      Devuelve un json filialModel:
+      <span class="text-info">{{filial | json}}</span>
+    </td>
+  </tr>
+  <tr>
+    <td>      
+      <strong>[_disabled]</strong>
+      input: boolean
+      <mat-slide-toggle [checked]="_disabled" (change)="_disabled = $event.checked">Deshabilitar</mat-slide-toggle>
+    </td>
+    <td>
+      habilita o deshabilita el componente
     </td>
   </tr>
   <tr>
