@@ -14,6 +14,8 @@ import { InterceptorAutorizationService } from './interceptor-autorization.servi
 import {TableModule} from 'primeng/table';
 import { AutocompleteSelectionValidatorDirective } from './validators/autocomplete-selection-validator.directive';
 
+import { ComponentesModule } from '../componentes/componentes.module';
+
 
 
 
@@ -26,6 +28,7 @@ import { AutocompleteSelectionValidatorDirective } from './validators/autocomple
     CommonModule,
     BlockUIModule,
     TableModule
+
    
   ],
   declarations: [PaginationComponent, DecimalDirective, CurrencyPipePipe, HighlightDirective, CtrlAutocompleteDirective, AutocompleteSelectionValidatorDirective],

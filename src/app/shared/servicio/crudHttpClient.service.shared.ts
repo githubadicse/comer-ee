@@ -19,6 +19,7 @@ export class CrudHttpClientServiceShared {
     return this.httpClient.get<any[]>(url);
   }
 
+  //este evento retorna un solo elemento, para modificar o mostrar.
   edit(id: any, controller: string, evento: string):Observable<any>{
     //let url = urlBasic ? this.configService.getUrlBasic(controller, evento) : this.configService.getUrlSecurityRes(controller, evento);    
     let url = this.configService.getUrlSecurityRes(controller,evento);

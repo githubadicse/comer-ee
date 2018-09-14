@@ -25,12 +25,6 @@ import { AlmacenModel } from '../../../modulo-sistema-config/tablas/almacen/alma
 import { MotivoIngresoModel } from '../../../modulo-sistema-config/tablas/motivo-ingreso/motivo-ingreso-model';
 import { ProveedorclienteModel } from '../../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model';
 
-
-
-
-
-
-
 @Component({
   selector: 'ad-almacen-ingreso-edicion',
   templateUrl: './almacen-ingreso-edicion.component.html',
@@ -44,6 +38,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
   msgPopup: any[];
   id: number;
   sub: any;
+  
   public ingresoForm: any;
   public productosModel: ProductoModel[] = [];
   public productoModel: ProductoModel;
@@ -189,11 +184,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
       tipodocumento: ['', Validators.required],
       seriedocproveedor: [''],
       nrodocproveedor: [''],
-      //condicionrelacioncompra:[''],
-      //fechahorasys:[''],
-      //com001 : [''],
-      //traslado : [''],
-      //ing002s : ['']
+
 
     });
 
@@ -206,58 +197,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
   }
 
 
-  searchProducto(event) {
 
-    let query = event.query;
-
-    if (query == undefined) {
-      query = "";
-    }
-
-    this.almacenIngresoService.getProductosFilter(query)
-      .subscribe(
-      res => {
-        this.productosModel = res;
-      }
-      )
-  }
-
-
-  searchCodigoBarra(event) {
-    let cantidadControl = this.cantidadControl;
-    if (event.key != "Enter") {
-      return;
-    }
-
-    let query = event.target.value;
-
-    if (query == undefined) {
-      query = "";
-    }
-
-    if (query == "")
-      return;
-
-
-    this.codigobarraService.getAllByCodigoEquals(query)
-      .subscribe(
-      res => {
-      /*   if (res.data.length > 0) {
-          this.codigobarraModel = res.data[0];
-          this.productoModel = this.codigobarraModel.producto;
-
-          setTimeout(() => {
-            cantidadControl.nativeElement.focus();
-            cantidadControl.nativeElement.select();
-          }, 500);
-
-
-        } */
-
-      }
-      )
-
-  }
 
   addCarrito() {
 

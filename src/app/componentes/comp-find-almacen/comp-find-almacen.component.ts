@@ -35,8 +35,6 @@ export class CompFindAlmacenComponent implements OnInit {
   @Output()
   getObject:EventEmitter<AlmacenModel> = new EventEmitter();
 
-
-
   public almacensModel: AlmacenModel[] = [];
   public almacensModelOption: Observable<AlmacenModel[]>;
   public almacenModel: AlmacenModel;
@@ -114,7 +112,7 @@ export class CompFindAlmacenComponent implements OnInit {
   }
 
   _onSelectionChange(a,b){
-    debugger;
+    
     this.getObject.emit(b);
   }
 

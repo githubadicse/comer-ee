@@ -1,230 +1,39 @@
-<p-growl [value]="this.msgPopup" [life]=1500>
-</p-growl>
+<div class="row">
+    <div class="col-md-6">
 
-<div class="container-fluid"  [hidden]="!this.showEdicion" >
-    <div>
-        <button  type="button" class="btn btn-success" style="cursor:pointer;"
-        [routerLink]= "['../../lista']">Registro de ingresos</button>
+        <div class="example-container">
+            <mat-form-field>
+                <input matInput placeholder="MOTIVO">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input matInput placeholder="PROVEEDOR">
+            </mat-form-field>     <br>
+            <mat-form-field>
+                <input matInput placeholder="FECHA">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input matInput placeholder="HORA">
+            </mat-form-field>
+        </div>
 
-        <button  type="button" class="btn btn-success" style="cursor:pointer;"
-        [routerLink]="['../']">Imprimir Nota de Ingreso</button>        
     </div>
-    <hr>
-    <div class="row">
-        <div class="col-md-7 col-sm-6">
-            <div class="form-group row">
-                <label class="control-label col-md-3">Codigo barra</label>
-                <div class="col-md-4">
-                    <input #codigobarra type="text" class="form-control inputfield" (keyup)="searchCodigoBarra($event)" placeholder="Codigo de barra">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-md-3">Producto</label>
-
-                <div class="col-md-9">
-
-                    <div class="col-12" style="margin:0; padding:0;">
-                        <p-autoComplete [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" inputStyleClass="inputfield" minLength=3 field="dscproducto"
-                            [suggestions]="productosModel" (completeMethod)="searchProducto($event)" [delay]="700" placeholder="Producto"
-                            [(ngModel)]="productoModel">
-
-                        </p-autoComplete>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="control-label col-md-3">Cantidad</label>
-                <div class="col-md-3">
-                    <input #cantidad_ type="number" class="form-control inputfield" [(ngModel)]="cantidad">
-                </div>
-
-
-                <label class="control-label col-md-1">Lote</label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control inputfield" [(ngModel)]="nrolote">
-                </div>
-
-            </div>
-            <div class="form-group row">
-                <label class="control-label col-md-3">Fecha Vcmto.</label>
-                <div class="col-md-6">
-                    <!-- <input type="text" class="form-control inputfield" [(ngModel)]="fechaVencimiento"> -->
-                    <p-calendar  [locale]="es" [(ngModel)]="fechaVencimiento" [showIcon]="true" dateFormat="dd/mm/yy" inputStyleClass="inputfield"></p-calendar>
-                    <span style="margin-left:80px;"></span>
-                    <button class="col-2" (click)="addCarrito()" type="button" class="btn btn-success btn-sm" style="height: 22px; padding:0; margin:0px; width:50px;"><i class="fa fa-shopping-cart fa-5x"></i></button>
-                </div>
-
-
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <p-messages [(value)]="msgs"></p-messages>
-                </div>
-            </div>
-
-            <div row>
-
-                <p-dataTable [immutable]="false" [value]="this.almacenIngresoModel.ing002s" [responsive]="true">
-
-                    <p-column field="producto.idproducto" header="Codigo" [style]="{'width':'10%'}"></p-column>
-                    <p-column field="producto.dscproducto" header="Descripcion" [style]="{'width':'40%'}"></p-column>
-                    <p-column field="cantidad" header="Cant" [style]="{'width':'10%'}"></p-column>
-
-                    <p-column field="nrolote" header="Nro Lote" [style]="{'width':'10%'}"></p-column>
-                    <!-- <p-column field="fechavencimiento" header="Fecha Vcmto" [style]="{'width':'10%'}"></p-column> -->
-                    <p-column header="Fecha Vcmto">
-                        <ng-template let-det="rowData" pTemplate="body">
-                            <span>{{det.fechavencimiento | date:'dd/MM/yyyy' }} </span>
-                        </ng-template>
-                    </p-column>
-                    <p-column [style]="{'width':'5%'}">
-                        <ng-template let-data="rowData" pTemplate type="body">
-                            <i style="cursor: pointer;" class="fa fa-trash-o fa-1x" aria-hidden="true" data-toggle="tooltip" title="Eliminar"></i>
-                        </ng-template>
-                    </p-column>
-
-                    <p-column [style]="{'width':'5%'}">
-                        <ng-template let-data="rowData" pTemplate type="body">
-                            <i style="cursor: pointer;" class="fa fa-outdent fa-1x" aria-hidden="true" data-toggle="tooltip" title="kardex" 
-                        
-                            (click)="this.getKardex(data)"
-                            ></i>
-                        </ng-template>
-                    </p-column>
-
-                </p-dataTable>
-            </div>
+    <div class="col-md-6">
+        <div class="example-container">
+            <mat-form-field>
+                <input matInput placeholder="EMPLEADO RECEP.">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input matInput placeholder="ALMACEN">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input matInput placeholder="REF.COMPRA">
+            </mat-form-field>
 
         </div>
-
-
-        <div class="col-md-5 col-sm-6">
-            <div style="background: gray; color:white; padding:3px; ">
-                DATOS DEL PROVEEDOR
-            </div>
-            <form action="" [formGroup]="ingresoForm">
-                <div id="datos">
-                    <div class="form-group row">
-                        <label class="control-label col-3">Nro Ingreso</label>
-                        <div class="col-4">
-                            <input readonly formControlName="nrodoc" type="text" class="form-control inputfield">
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="control-label col-3">Fecha Ing.:<span *ngIf="!ingresoForm.get('fecha').valid" style="color:red">*</span></label>
-                        <div class="col-6">
-                            <p-calendar formControlName="fecha" [locale]="es" [showIcon]="true" dateFormat="dd/mm/yy" inputStyleClass="inputfield"></p-calendar>
-
-                        </div>
-
-
-                    </div>
-                    <div class="form-group row">
-                        <label class="control-label col-3">Hora:<span *ngIf="!ingresoForm.get('hora').valid" style="color:red">*</span></label>
-                        <div class="col-6">
-                            <p-calendar formControlName="hora" [timeOnly]="true" inputStyleClass="inputfield"></p-calendar>
-
-                        </div>
-
-                    </div>
-                    <div class="form-group row">
-                        <label class="control-label col-3">Almacen <span *ngIf="!ingresoForm.get('almacen').valid" style="color:red">*</span></label>
-                        <div class="col-9">
-
-                            <select class="form-control inputselect" formControlName="almacen">
-                                        <option *ngFor="let almacen of almacensModel" 
-                                        [selected]="almacen.idalmacen == (this.ingresoForm.controls['almacen'].value==null?'':this.ingresoForm.controls['almacen'].value.idalmacen)"
-                                        [ngValue]="almacen"
-                                          >{{almacen.dscalmacen}}</option>
-                            </select>
-
-
-                        </div>
-
-
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="control-label col-3">Trab. Rec.<span *ngIf="!ingresoForm.get('empleado').valid" style="color:red">*</span></label>
-                        <div class="col-9">
-                            <select class="form-control inputselect" formControlName="empleado">
-                                <option *ngFor="let empleado of empleadosModel" 
-                                [selected]="empleado.idempleado == (this.ingresoForm.controls['empleado'].value==null?'':this.ingresoForm.controls['empleado'].value.idempleado)"
-                                [ngValue]="empleado"
-                                  >{{empleado.nomempleado}}</option>  
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="control-label col-3">Motivo<span *ngIf="!ingresoForm.get('motivoingreso').valid" style="color:red">*</span></label>
-                        <div class="col-9">
-                            <select class="form-control inputselect" formControlName="motivoingreso">
-                                <option *ngFor="let motivo of motivoIngresosModel" 
-                                [selected]="motivo.idmotivoingreso == (this.ingresoForm.controls['motivoingreso'].value==null?'':this.ingresoForm.controls['motivoingreso'].value.idmotivoingreso)"
-                                [ngValue]="motivo"                                
-                                  >{{motivo.dscmotivoingreso}}</option>  
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <th>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="control-label col-3">Proveedor<span *ngIf="!ingresoForm.get('proveedorcliente').valid" style="color:red">*</span></label>
-                        <div class="col-9">
-                            <p-autoComplete [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" inputStyleClass="inputfield" minLength=3 field="razonsocial"
-                                [suggestions]="proveedorclientesModel" (completeMethod)="searchProveedorCliente($event)" [delay]="700"
-                                placeholder="Digite el nombre de proveedor" formControlName="proveedorcliente">
-
-                            </p-autoComplete>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="control-label col-3">Direccion</label>
-                        <div class="col-9">
-                            <input type="text" class="form-control inputfield">
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="control-label col-3">Doc.Prov<span *ngIf="!ingresoForm.get('tipodocumento').valid" style="color:red">*</span></label>
-                        <div class="col-9">
-                            <select class="form-control inputselect" formControlName="tipodocumento">
-                                <option *ngFor="let tipodocumento of tipodocumentosModel" 
-                                [selected]="tipodocumento.idtipodocumento == (this.ingresoForm.controls['tipodocumento'].value==null?'':this.ingresoForm.controls['tipodocumento'].value.idtipodocumento)"
-                                [ngValue]="tipodocumento"                                  
-                                  >{{tipodocumento.dsctipodocumento}}</option>  
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="control-label col-3">Serie</label>
-                        <div class="col-3">
-                            <input formControlName="seriedocproveedor" type="text" class="form-control inputfield">
-                        </div>
-
-                        <label class="control-label col-2">Nro</label>
-                        <div class="col-4">
-                            <input formControlName="nrodocproveedor" type="text" class="form-control inputfield">
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <div>
-                <button [disabled]="!ingresoForm.valid || this.almacenIngresoModel.ing002s.length == 0" type="button" class="btn btn-primary" style="cursor:pointer;"
-                    (click)="beforeSave()">Grabar</button>
-            </div>
-        </div>
-
-
     </div>
 
 </div>
-
-<router-outlet (activate)='onActivate($event)' (deactivate)='onDeactivate($event)' ></router-outlet>
