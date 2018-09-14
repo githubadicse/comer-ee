@@ -20,7 +20,7 @@
           <h2>Busqueda sencitiva de proveedor o cliente</h2>
           <span> devuele un json = proveedorcliente: ProveedorclienteModel, direccion: ProveedorclientedireccionModel </span>
           <br><br><br>
-          <app-comp-find-proveedor-cliente-list (getObject)="_getObjectProveedorClienteLis($event)" ></app-comp-find-proveedor-cliente-list>          
+          <app-comp-find-proveedor-cliente-list (getObject)="_getObjectProveedorClienteLis($event)" [agruparPorDireccion]="true"></app-comp-find-proveedor-cliente-list>          
         </div>
       </div>
     </form>    
@@ -49,4 +49,18 @@
       <span class="text-info">{{proveedor_cliente | json}}</span>
     </td>
   </tr>
+
+  <tr>
+      <td>        
+        <strong>[agruparPorDireccion]</strong>
+        <p>Input: boolean</p>
+      </td>
+      <td>
+          <h3><strong>Valido solo para Busqueda sencitiva</strong></h3>
+          <p>Valor default = true</p>
+          <br>
+          <p>true = muestra el proveedorcliente agrupados por sus direcciones, es decir se mostrar la cantidad de veces segun la cantidad de direcciones, si no tiene direccion mostrara: direccion no asignada</p>
+          <p>false = muestra todos los proveedores agrupados por proveedorcliente</p>        
+      </td>
+    </tr>
 </table>

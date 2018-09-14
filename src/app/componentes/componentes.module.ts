@@ -62,7 +62,7 @@ import { CompFindEmpleadoComponent } from './comp-find-empleado/comp-find-emplea
     CompFindProveedorClienteListComponent,
     CompFindCodigoBarraComponent, 
     CompTipoDocumentoSunatComponent,
-    CompFindEmpleadoComponent
+    CompFindEmpleadoComponent,    
   ],
   exports: [
     MatDatepickerModule,

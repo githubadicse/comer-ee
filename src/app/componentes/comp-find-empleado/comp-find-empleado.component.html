@@ -1,3 +1,7 @@
-<p>
-  comp-find-empleado works!
-</p>
+<mat-form-field class="w-100">
+    <mat-select appNextfocus placeholder="Empleado" [formControl]="_formControlName" [compareWith]="comparEmpleado" (selectionChange)="_onSelectionChange($event)">
+      <mat-option *ngFor="let item of ListEmpleados" [value]="item">
+        {{item.nomempleado}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>

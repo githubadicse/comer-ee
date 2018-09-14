@@ -42,6 +42,6 @@ export class CompFindMedioPagoComponent implements OnInit {
     this.getObject.emit(a.value);
   }
 
-  compareMedioPago = (val1: any, val2: any) => val1.serie === val2;
+  compareMedioPago = (val1: any, val2: any) => val1 === val2;
 
 }
