@@ -161,7 +161,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     )
 
     setTimeout(() => {
-      this.codigobarraControl.nativeElement.focus();
+      //this.codigobarraControl.nativeElement.focus();
 
     }, 500);
 

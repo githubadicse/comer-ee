@@ -31,7 +31,8 @@ import {MatSelectModule} from '@angular/material/select';
     KardexModule,
     ComponentesModule,
     MatSortModule, MatTableModule, MatPaginatorModule, MatIconModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSlideToggleModule ,
-    MatSelectModule   
+    MatSelectModule
+
   ],
   declarations: [AlmacenIngresoMainComponent, AlmacenIngresoEdicionComponent, AlmacenIngresoListaComponent]
 })

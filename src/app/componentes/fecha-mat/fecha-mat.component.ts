@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MomentDateAdapter } from '../../shared/validators/MomentDateAdapter';
 import * as moment from 'moment';
+import { getQueryValue } from '@angular/core/src/view/query';
 
 @Component({
   selector: 'app-fecha-mat',
@@ -24,12 +25,15 @@ export class FechaMatComponent implements OnInit {
   @Input()
   _valueInicial:any
 
+  @Output()
+  getObject: EventEmitter<String> = new EventEmitter();  
+
   
   
   constructor(private DateAdapter:MomentDateAdapter) { }
 
   ngOnInit() {
-    debugger;
+
     if(this._formControlName == undefined){
       this._formControlName = this.myControl;
 
@@ -46,7 +50,14 @@ export class FechaMatComponent implements OnInit {
     }   
   }
 
+  dateChange(event){
+    let _moment:moment.Moment;
+    _moment = event.value;
+    let someDateString = _moment.format("DD/MM/YYYY");
+    this.getObject.emit(someDateString); 
+  }
   updateDateToString(event) {
+    debugger;
     let newDate = new Date(event)
     
     let dd: number | string = newDate.getDate();
@@ -59,12 +70,14 @@ export class FechaMatComponent implements OnInit {
     }
 
     const yy: number = newDate.getFullYear();
-    //this.myModel.MyDateString = `${yy}-${mm}-${dd}`;    
+    //this.myModel.MyDateString = `${yy}-${mm}-${dd}`;   
+    debugger;
+    this.getObject.emit(dd+"/"+mm+"/"+yy);         
   }
 
   
   _keyPress(event: any) {
-    debugger;
+    
     const pattern = /^[0-9]*$/;
     let inputChar = String.fromCharCode(event.charCode);
 
