@@ -16,9 +16,8 @@ import { ControlFindProductoComponent } from './control-find-producto/control-fi
 import { ComponentesModule } from '../componentes/componentes.module';
 import { ControlFindMotivoIsAlmacenComponent } from './control-find-motivo-is-almacen/control-find-motivo-is-almacen.component';
 
-import { ControlFindFechaComponent } from './control-find-fecha/control-find-fecha.component';
-
 import { ControlFindEmpleadoComponent } from './control-find-empleado/control-find-empleado.component';
+import { ControlFindFechaComponent } from './control-find-fecha/control-find-fecha.component';
 
 
 
@@ -40,7 +39,7 @@ import { ControlFindEmpleadoComponent } from './control-find-empleado/control-fi
     ControlMedioPagoComponent, 
     ControlFindProductoComponent,
     ControlFindMotivoIsAlmacenComponent,
-    ControlFindFechaComponent    
+    ControlFindFechaComponent ,   
     ControlFindEmpleadoComponent    
 
   ]
