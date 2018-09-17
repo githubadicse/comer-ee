@@ -50,6 +50,7 @@ export class CompFindMotivoIsAlmacenComponent implements OnInit {
     this.getObject.emit(a.value);
   }
 
-  compareMotivo = (val1: any, val2: any) => val1.dscmotivoingreso === val2;
+  compareMotivo = (val1: any, val2: any):boolean => val1.dscmotivoingreso === val2;
+  
 
 }
