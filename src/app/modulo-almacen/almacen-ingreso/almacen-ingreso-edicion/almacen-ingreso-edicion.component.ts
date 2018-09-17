@@ -24,6 +24,8 @@ import { CodigobarraModel } from '../../../modulo-sistema-config/tablas/codigoba
 import { AlmacenModel } from '../../../modulo-sistema-config/tablas/almacen/almacen-model';
 import { MotivoIngresoModel } from '../../../modulo-sistema-config/tablas/motivo-ingreso/motivo-ingreso-model';
 import { ProveedorclienteModel } from '../../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model';
+import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'ad-almacen-ingreso-edicion',
@@ -91,10 +93,14 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     private proveedorclienteService: ProveedorclienteService,
     private periodoalmacenService: PeriodoalmacenService,
     private configService: ConfigService,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private crudHttpClientServiceShared:CrudHttpClientServiceShared
 
 
-  ) { }
+  ) { 
+
+    this.buildForm();
+  }
 
   ngAfterViewChecked() {
     this.changeDetectorRef.detectChanges();
@@ -130,6 +136,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
     this.idFilial = this.configService.getIdFilialToken();
 
+
     this.sub = this.route.params.subscribe(
       params => {
         this.id = +params['id'];
@@ -147,7 +154,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
       clear: 'Borrar'
     }
 
-    this.buildForm();
+    
     if (this.id == 0) {
       this.newIngreso();
 
@@ -187,7 +194,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
       motivoingreso: ['', Validators.required],
       tipodocumento: ['', Validators.required],
       seriedocproveedor: [''],
-      nrodocproveedor: [''],
+      nrodocproveedor: ['']
 
 
     });
@@ -201,7 +208,29 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
   }
 
 
+  create(){
+    
+    let fecha:string = (this.ingresoForm.controls['fecha'].value).format("DD/MM/YYYY");
+    this.ingresoForm.controls['fecha'].setValue(fecha);
 
+    let data = JSON.stringify(this.ingresoForm.value);
+    this.crudHttpClientServiceShared.create(data, "ing001", "create").subscribe(
+
+      res => {
+
+      },
+      error => console.log(error),
+      () => {
+        swal({
+          position: 'top-end',
+          type: 'success',
+          title: 'Registro Creado',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    )    
+  }
 
   addCarrito() {
 

@@ -20,14 +20,13 @@ export class CompFindEmpleadoComponent implements OnInit {
   // Pre asignar un idfilial
   // no es obligatorio, si su valor es '' , muestra todos los usarios de todas las filiales
   @Input()
-  idfilial: string = ""; 
+  idFilial:number=1; 
   
   @Output()
   getObject: EventEmitter<EmpleadoModel> = new EventEmitter();  
 
-  public ListEmpleados: EmpleadoModel[] = [];
+  public listEmpleados: EmpleadoModel[] = [];
 
-  
   constructor(private empleadoService: EmpleadoService) { }
 
   ngOnInit() {
@@ -36,14 +35,16 @@ export class CompFindEmpleadoComponent implements OnInit {
       this._formControlName = this.myControl;
     }
     
-    this.LoadEmpleados();
+    this.loadEmpleados(this.idFilial);
   }
 
-  private LoadEmpleados(): void {
-    this.empleadoService.getByCondicionFilial(this.idfilial).
-      subscribe((res: any) => {
+  private loadEmpleados(idFilial): void {
+    this.empleadoService.getByCondicionFilial(idFilial).
+      subscribe( res => {
         // si no hay filtro filial (idfilial) utiliza el evento "getall" donde los datos vienen en "data"
-        this.ListEmpleados = this.idfilial==="" ? <EmpleadoModel[]>res.data : <EmpleadoModel[]>res} );
+        this.listEmpleados = res;
+      }
+      )
   }
   
   _onSelectionChange(a,b) {

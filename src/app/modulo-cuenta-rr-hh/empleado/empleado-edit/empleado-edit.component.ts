@@ -45,12 +45,12 @@ export class EmpleadoEditComponent implements OnInit {
     private crudHttpClientServiceShared: CrudHttpClientServiceShared,
     private DateAdapter: MomentDateAdapter
   ) {
-
+    this.buildForm();
 
   }
 
   ngOnInit() {
-    this.buildForm();
+    
     //this.setModel(this.empleadoModel,this.empleadoForm);
     
     if (this.idElement != 0) {
@@ -76,6 +76,7 @@ export class EmpleadoEditComponent implements OnInit {
       direccion: [''],
       telefono: [''],
       email: [''],
+      filial : [''],
       usuarioempleados: [''],
       activo: [false],
       fechaRegistroSystema: [''],
@@ -92,10 +93,12 @@ export class EmpleadoEditComponent implements OnInit {
       .subscribe(
         res => {
           let usuarioempleados = [];
-          let empleado = new EmpleadoModel(res.idempleado, res.nomempleado, res.dni, res.fechaingreso, res.fechanacimiento, res.direccion, res.telefono, res.email, 
+          let empleado = new EmpleadoModel(res.idempleado, res.nomempleado, res.dni, res.fechaingreso, res.fechanacimiento, res.direccion, res.telefono, res.email,res.filial==undefined?'':res.filial,
+          
             res.usuarioempleados==undefined? usuarioempleados:res.usuarioempleados, 
-            res.activo, 
+            res.activo,
             res.fechaRegistroSystema, res.fechaRegistroSystemaModifica, res.idusuario, res.idusuarioModifica);
+
 
           this.empleadoForm.setValue(empleado);
           this.flag = true;

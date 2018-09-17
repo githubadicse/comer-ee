@@ -1,37 +1,42 @@
-<div class="row">
-    <div class="col-md-6">
+<form [formGroup]="ingresoForm">
 
-        <div class="example-container">
-            <!-- Motivo por la que ingresa la mercaderia -->
-            <app-comp-find-motivo-is-almacen tipoMotivo="i"></app-comp-find-motivo-is-almacen>
+    <div class="row">
+        <div class="col-md-6">
 
-            <br>
-            <mat-form-field>
-                <input matInput placeholder="PROVEEDOR">
-            </mat-form-field>     <br>
-            <app-fecha-mat></app-fecha-mat>
-            <br>
-            <mat-form-field>
-                <input matInput placeholder="HORA">
-            </mat-form-field>
+            <div class="example-container">
+                <!-- Motivo por la que ingresa la mercaderia -->
+                <app-comp-find-motivo-is-almacen [_formControlName]="this.ingresoForm.get('motivoingreso')" tipoMotivo="i"></app-comp-find-motivo-is-almacen>
+
+                <br>
+                <app-comp-find-proveedor-cliente-list agruparPorDireccion="false" [_formControlName]="this.ingresoForm.get('proveedorcliente')"></app-comp-find-proveedor-cliente-list>
+
+
+                <app-fecha-mat _placeholder="FECHA INGRESO" [_formControlName]="this.ingresoForm.get('fecha')"></app-fecha-mat>
+
+                <mat-form-field>
+                    <input style="margin-top:-150px;" formControlName="hora" matInput placeholder="HORA">
+                </mat-form-field>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="example-container">
+
+                <!-- empleado que recibe la mercaderia -->
+                <app-comp-find-empleado [idFilial]="this.idFilial" [_formControlName]="this.ingresoForm.get('empleado')"></app-comp-find-empleado>
+                <br>
+
+                <!-- almacen donde ingresara la mercaderia -->
+                <app-comp-find-almacen [idFilial]="this.idFilial" [_formControlName]="this.ingresoForm.get('almacen')"></app-comp-find-almacen>
+
+                <br>
+                <mat-form-field>
+                    <input matInput placeholder="REF.COMPRA">
+                </mat-form-field>
+
+            </div>
         </div>
 
     </div>
-    <div class="col-md-6">
-        <div class="example-container">
-
-            <!-- empleado que recibe la mercaderia -->
-            <app-comp-find-empleado [idfilial]="this.idFilial" ></app-comp-find-empleado>
-            <br>
-
-            <app-comp-find-almacen [idFilial]="this.idFilial"></app-comp-find-almacen>
-
-            <br>
-            <mat-form-field>
-                <input matInput placeholder="REF.COMPRA">
-            </mat-form-field>
-
-        </div>
-    </div>
-
-</div>
+</form>
+<button mat-raised-button color="primary" (click)="create()">Primary</button>

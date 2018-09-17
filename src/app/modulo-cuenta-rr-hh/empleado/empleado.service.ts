@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ConfigService } from '../../shared/config.service';
+import { Observable } from 'rxjs';
+import { EmpleadoModel } from './empleado-model';
 
 @Injectable()
 export class EmpleadoService {
@@ -23,13 +25,14 @@ export class EmpleadoService {
 
 
   // muestra todos los empleados o filtra por filial si se especifica idfilial
-  getByCondicionFilial(idfilial: string ) {    
-    const eventoController: string = idfilial === '' ? 'getall' : 'findByCondicionFilial';
+  getByCondicionFilial(idfilial: number ):Observable<EmpleadoModel[]> {    
+    debugger;
+    const eventoController: string = idfilial === undefined ? 'getall' : 'findByCondicionFilial';
     let url = this.configService.getUrlSecurityRes("empleado", eventoController);
-    let header = this.configService.getHeaderHttpClientGet();
-    let parametros = new HttpParams().set("condicion",idfilial);    
+    //let header = this.configService.getHeaderHttpClientGet();
+    let parametros = new HttpParams().set("condicion",idfilial.toString());    
     
-    return this.http.get(url,{params:parametros, headers:header});    
+    return this.http.get<EmpleadoModel[]>(url,{params:parametros });    
   }
 
 }

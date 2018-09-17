@@ -40,7 +40,7 @@ export class AlmacenIngresoListaComponent implements OnInit {
   displayedColumns = ['fecha','nrodoc', 'proveedorcliente.razonsocial', 'nrodocproveedor',  'action'];
 
   // MatPaginator Inputs
-  resultsLength = 100;
+  resultsLength = 0;
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
@@ -82,7 +82,10 @@ export class AlmacenIngresoListaComponent implements OnInit {
   ngOnInit() {
 
     this.Typeahead.pipe(
-    ).subscribe();
+      map( dato=>{
+        console.log("Dato " + dato);
+      })
+     ).subscribe();
 
 
     this.idFilial = this.configService.getIdFilialToken();

@@ -8,7 +8,7 @@ import { PeriodoalmacenMainComponent } from './periodoalmacen-main/periodoalmace
 
 
 const routes: Routes = [{
-  path: 'main', component: PeriodoalmacenMainComponent,
+  path: '', component: PeriodoalmacenMainComponent,
   children: [{
     path: '', component: PeriodoalmacenOpcionesComponent,
     

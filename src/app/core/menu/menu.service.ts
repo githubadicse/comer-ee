@@ -72,8 +72,9 @@ const MENUITEMS = [
       {state: 'Traslado', name: 'Traslado',idmenu:'0304'},
       {state: 'Guia de Remision' , name: 'Guia de Remision',idmenu:'0305'},
       {state: 'consultas', name: 'Consultas',idmenu:'0307'},
+      //apertura, cierre de periodos.
       {state: 'procesos', name: 'Procesos',idmenu:'0308'},
-      {state: 'parametros', name: 'Parametros',idmenu:'0309'}
+
   
     ]
   },

@@ -51,6 +51,7 @@ export class CompFindProveedorClienteListComponent implements OnInit {
 
   public listProveedorCliente: ProveedorclienteModel[] = [];    
 
+
   constructor(private crudService: CrudHttpClientServiceShared, private configService: ConfigService) {
     if (this._formControlName == undefined) {
       this._formControlName = this.myControl;
@@ -72,6 +73,7 @@ export class CompFindProveedorClienteListComponent implements OnInit {
       this.filtrar(res);
     });
     
+
   }
 
 
@@ -95,8 +97,11 @@ export class CompFindProveedorClienteListComponent implements OnInit {
 
         console.log(this.listProveedorCliente);
       }
-    )
+
+    )    
   }
+
+
 
   public _focus(e){
     e.target.select();

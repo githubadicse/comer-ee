@@ -3,7 +3,7 @@
   <div class="card-body">
     <form [formGroup]="dataForm">
       <input type="text" formControlName="anno" [hidden]="true">      
-      <app-comp-find-empleado (getObject)="_getObject($event)" [idfilial]="" [_formControlName]="this.dataForm.get('empleado')"></app-comp-find-empleado>
+      <app-comp-find-empleado (getObject)="_getObject($event)" [idFilial]="" [_formControlName]="this.dataForm.get('empleado')"></app-comp-find-empleado>
     </form>
   </div>
 </div>

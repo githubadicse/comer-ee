@@ -1,5 +1,4 @@
-<p-growl [value]="this.msgPopup" [life]=1500>
-</p-growl>
+
 <button type="button" (click)="_out_isVisible()" class="btn btn-success">Atras</button>
 
 <div class="card" class="example-container">
@@ -56,6 +55,7 @@
                 Estado
             </mat-slide-toggle>
         </p>
+        <app-comp-find-filial [_formControlName]="this.empleadoForm.get('filial')"></app-comp-find-filial>
 
         <div *ngIf="this.empleadoForm.get('idempleado')!=0">
             <p>
