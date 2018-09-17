@@ -8,6 +8,8 @@ import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChang
 import { map } from 'rxjs/internal/operators/map';
 import { ProveedorclienteModel } from '../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model';
 import { ProveedorclientedireccionModel } from '../../modulo-sistema-config/tablas/proveedorcliente/proveedorclientedireccion-model';
+import { ConfigService } from '../../shared/config.service';
+
 
 
 
@@ -37,57 +39,69 @@ export class CompFindProveedorClienteListComponent implements OnInit {
   @Output()
   getObject: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;  
+  @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;    
   
+  public verFooter: boolean = false;
 
-  public listProveedorCliente: ProveedorclienteModel[] = [];  
-
-  constructor(private crudService: CrudHttpClientServiceShared) {
-
-    // if (this._formControlName == undefined) {
-    //   this._formControlName = this.myControl;
-    // }
-    
-    // this._formControlName!.valueChanges
-    //   .pipe(
-    //     startWith(''),
-    //     debounceTime(500),
-    //     distinctUntilChanged(),
-    //     map(value => value)
-    // ).subscribe(res => this.filtrar(res));
-        
-  }
+  private pageMostar: number = 0;
+  private rows: number = 5;    
+  public totalRecords: number = 0;  
+  private ultimoParametroBuscado: string = '';
 
 
-  private filtrar(filterValue): void {    
-    if (typeof filterValue !== 'string') {return;}
-    if (filterValue === '') { this.autocomplete.closePanel(); return; }
+  public listProveedorCliente: ProveedorclienteModel[] = [];    
 
-    const filtros = `documentoidentificacion.iddocumentoidentificacion:${this.tipodocfilter}:equals,razonsocial:${filterValue}:contains`;
-    this.crudService.getAllByFilter('proveedorcliente', 'getByFilter', filtros).subscribe(
-      (res: any) => {
-        this.listProveedorCliente = <ProveedorclienteModel[]>res || null;
-        console.log(this.listProveedorCliente);
-      }
-    )    
+
+  constructor(private crudService: CrudHttpClientServiceShared, private configService: ConfigService) {
+    if (this._formControlName == undefined) {
+      this._formControlName = this.myControl;
+    }      
   }
 
   ngOnInit() {
 
-    if (this._formControlName == undefined) {
-      this._formControlName = this.myControl;
-    }
-    
     this._formControlName!.valueChanges
       .pipe(
         startWith(''),
         debounceTime(500),
         distinctUntilChanged(),
         map(value => value)
-    ).subscribe(res => this.filtrar(res));
-
+    ).subscribe(res => {
+      this.pageMostar = 0;      
+      this.rows = 5;            
+      this.ultimoParametroBuscado = res;       
+      this.filtrar(res);
+    });
+    
 
   }
+
+
+  private filtrar(filterValue): void {
+    if (typeof filterValue !== 'string') {return;}
+    if (filterValue === '') { this.autocomplete.closePanel(); return; }
+
+    const _filtros = `documentoidentificacion.iddocumentoidentificacion:${this.tipodocfilter}:equals,razonsocial:${filterValue}:contains`;
+    const filtros = JSON.stringify(this.configService.jsonFilter(_filtros));
+    
+    this.pageMostar = null ? 0 : this.pageMostar;
+    this.rows = null ? 5 : this.rows;
+  
+    this.crudService.getPagination(this.pageMostar, this.rows, 'asc', 'razonsocial', filtros, 'proveedorcliente', 'pagination', null)
+    .subscribe((res: any) => {
+        this.listProveedorCliente = <ProveedorclienteModel[]>res.data || null;
+        this.totalRecords = res.totalCount;
+
+        this.verFooter = this.totalRecords > 4 ? true : false;
+        
+
+        console.log(this.listProveedorCliente);
+      }
+
+    )    
+  }
+
+
 
   public _focus(e){
     e.target.select();
@@ -111,5 +125,11 @@ export class CompFindProveedorClienteListComponent implements OnInit {
     }
     this.listProveedorCliente=null;
   }  
+
+  public paginate(event): void {
+    this.rows = event.rows;
+    this.pageMostar = event.page;
+    this.filtrar(this.ultimoParametroBuscado);
+  }
 
 }

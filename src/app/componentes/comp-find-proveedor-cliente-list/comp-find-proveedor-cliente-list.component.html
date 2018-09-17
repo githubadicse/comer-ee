@@ -35,11 +35,19 @@
                     <span class="subtitulo">Telefono: {{item?.telefono}} | Representante: {{item?.representante | lowercase}}  </span>
                   </div>
               </mat-option> 
-
-          </ng-template>
+            
+          </ng-template>          
                                                
         </div>
+        <div class="autocomplete-footer"  [hidden]="!verFooter">                              
+                <!-- <span class="float-left p-2 d-inline">{{totalRecords}} Registros</span> -->
+                <!-- <div class="h-1"> -->
+                    <p-paginator [rows]="5" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"></p-paginator>                    
+                <!-- </div> -->
+        </div>
+
         </mat-autocomplete>            
         <mat-icon matSuffix matTooltip="Descripcion o codigo de barra"><i class="fa fa-user" aria-hidden="true"></i></mat-icon>      
     </mat-form-field>
+    {{_first}}
   </form>
