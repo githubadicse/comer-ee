@@ -55,6 +55,12 @@ export const AppRoutes: Routes = [
         loadChildren: './modulo-almacen/almacen-ingreso/almacen-ingreso.module#AlmacenIngresoModule'
       },
 
+      /* almacen proceso de inicio de operaciones cierre y apertura */
+      {
+        path: 'almacen/procesos',
+        loadChildren: './modulo-almacen/periodoalmacen/periodoalmacen.module#PeriodoalmacenModule'
+      },      
+
       //CONFIGURACION
       {
         path : 'configuracion/menu',

@@ -1,4 +1,5 @@
 import { UsuarioEmpleadoModel } from "../../modulo-sistema-config/usuario/usuario-empleado-model";
+import { FilialModel } from "../../modulo-sistema-config/filial/filial-model";
 
 
 
@@ -13,6 +14,7 @@ export class EmpleadoModel {
         public direccion:string=null,
         public telefono:string=null,
         public email:string=null,
+        public filial:FilialModel=null,
         
         public usuarioempleados:UsuarioEmpleadoModel[] = [],
         public activo:boolean=null,

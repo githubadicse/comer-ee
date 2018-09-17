@@ -28,6 +28,7 @@ export class CompFindFilialComponent implements OnInit {
   constructor(private crudService: CrudHttpClientServiceShared) { }
 
   ngOnInit() {
+
     if (this._formControlName == undefined) {
       this._formControlName = this.myControl;
     }
@@ -44,6 +45,12 @@ export class CompFindFilialComponent implements OnInit {
     this.getObject.emit(a.value);
   }
 
-  compareFilial = (val1: any, val2: any) => val1.idfilial === val2;
+  compareFilial = (val1: any, val2: any) => {
+    
+    if(val1.idfilial === val2.idfilial){
+      return true;
+    }
+    return false;
+  }
 
 }

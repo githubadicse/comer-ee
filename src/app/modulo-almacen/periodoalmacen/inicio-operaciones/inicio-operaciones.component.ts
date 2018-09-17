@@ -5,6 +5,7 @@ import { PeriodoalmacenService } from '../periodoalmacen.service';
 import { PeriodoalmacenModel } from '../periodoalmacen-model';
 import { SharedService } from '../../../shared/servicio/shared.service';
 import { AlmacenModel } from '../../../modulo-sistema-config/tablas/almacen/almacen-model';
+import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
 
 
 
@@ -29,7 +30,7 @@ export class InicioOperacionesComponent implements OnInit {
   public msg:string="";
   public idalmcen:number = 0;
 
-  constructor(private sharedService: SharedService,private periodoalmacenService:PeriodoalmacenService) { }
+  constructor(private sharedService: SharedService,private crudHttpClientServiceShared: CrudHttpClientServiceShared,private periodoalmacenService:PeriodoalmacenService) { }
 
   ngOnInit() {
     this.getAllAlmacen();
@@ -45,10 +46,10 @@ export class InicioOperacionesComponent implements OnInit {
 
   getAllAlmacen() {
 
-    this.sharedService.getAll("almacen", "getall")
+    this.crudHttpClientServiceShared.getall("almacen", "getall")
       .subscribe(
       result => {
-        //this.almacensModel = result.data;
+        this.almacensModel = result;
       }
       )
 

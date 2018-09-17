@@ -7,6 +7,7 @@ import { PeriodoalmacenService } from '../periodoalmacen.service';
 import { PeriodoalmacenModel } from '../periodoalmacen-model';
 import { SharedService } from '../../../shared/servicio/shared.service';
 import { AlmacenModel } from '../../../modulo-sistema-config/tablas/almacen/almacen-model';
+import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
 
 
 
@@ -15,7 +16,7 @@ import { AlmacenModel } from '../../../modulo-sistema-config/tablas/almacen/alma
   selector: 'ad-apertura-periodo',
   templateUrl: './apertura-periodo.component.html',
   styleUrls: ['./apertura-periodo.component.css'],
-  providers: [SharedService, PeriodoalmacenService]
+  providers: [ PeriodoalmacenService, CrudHttpClientServiceShared]
 })
 export class AperturaPeriodoComponent implements OnInit {
 
@@ -45,13 +46,14 @@ export class AperturaPeriodoComponent implements OnInit {
   public pageCount = 10;
   //-----------------------------------------// 
 
-  constructor(private sharedService: SharedService, private periodoalmacenService:PeriodoalmacenService
+  constructor(private crudHttpClientServiceShared: CrudHttpClientServiceShared, private periodoalmacenService:PeriodoalmacenService
 
   ) { }
 
 
   ngOnInit() {
     this.idalmacen = ""
+    debugger;
     this.getAllAlmacen();
     
   }
@@ -65,11 +67,13 @@ export class AperturaPeriodoComponent implements OnInit {
 
 
   getAllAlmacen() {
-
-    this.sharedService.getAll("almacen", "getall")
+    debugger;
+    this.crudHttpClientServiceShared.getall("almacen", "getall")
       .subscribe(
       result => {
-        //this.almacensModel = result.data;
+        debugger;
+        this.almacensModel = result;
+       
       }
       )
 

@@ -43,17 +43,18 @@ export class CompFindProveedorClienteListComponent implements OnInit {
   public listProveedorCliente: ProveedorclienteModel[] = [];  
 
   constructor(private crudService: CrudHttpClientServiceShared) {
-    if (this._formControlName == undefined) {
-      this._formControlName = this.myControl;
-    }
+
+    // if (this._formControlName == undefined) {
+    //   this._formControlName = this.myControl;
+    // }
     
-    this._formControlName!.valueChanges
-      .pipe(
-        startWith(''),
-        debounceTime(500),
-        distinctUntilChanged(),
-        map(value => value)
-    ).subscribe(res => this.filtrar(res));
+    // this._formControlName!.valueChanges
+    //   .pipe(
+    //     startWith(''),
+    //     debounceTime(500),
+    //     distinctUntilChanged(),
+    //     map(value => value)
+    // ).subscribe(res => this.filtrar(res));
         
   }
 
@@ -72,6 +73,20 @@ export class CompFindProveedorClienteListComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    if (this._formControlName == undefined) {
+      this._formControlName = this.myControl;
+    }
+    
+    this._formControlName!.valueChanges
+      .pipe(
+        startWith(''),
+        debounceTime(500),
+        distinctUntilChanged(),
+        map(value => value)
+    ).subscribe(res => this.filtrar(res));
+
+
   }
 
   public _focus(e){
