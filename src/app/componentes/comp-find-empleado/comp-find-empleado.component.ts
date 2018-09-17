@@ -50,6 +50,9 @@ export class CompFindEmpleadoComponent implements OnInit {
     this.getObject.emit(a.value);
   }
 
-  comparEmpleado = (val1: any, val2: any) => val1 === val2;
+  // comparEmpleado = (c1: any, c2: any):boolean => c1 && c2 ? c1.id === c2.id : c1 === c2;
+  comparEmpleado(c1: EmpleadoModel, c2: EmpleadoModel): boolean {
+    return c1 && c2 ? c1.idempleado === c2.idempleado : c1 === c2;
+  }
 
 }

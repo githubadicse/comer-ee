@@ -43,7 +43,9 @@ export class CompFindFilialComponent implements OnInit {
   _onSelectionChange(a) {
     this.getObject.emit(a.value);
   }
-
-  compareFilial = (val1: any, val2: any) => val1.idfilial === val2;
+  
+  compareFilial(c1: FilialModel, c2: FilialModel): boolean {
+    return c1 && c2 ? c1.idfilial === c2.idfilial : c1 === c2;
+  }
 
 }
