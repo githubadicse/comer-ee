@@ -1,0 +1,10 @@
+<mat-form-field class="w-100">
+  <mat-select appNextfocus placeholder="Periodo Almacen" [formControl]="_formControlName" [compareWith]="comparePeriodoAlmacen" (selectionChange)="_onSelectionChange($event)" [disabled]="_disabled">
+    <mat-option *ngFor="let item of ListPeriodoAlmacen" [value]="item">
+      <span >
+        <i class="fa" [ngClass]="[item.estado==='A' ? 'fa-unlock-alt text-success' : 'fa-lock text-danger']" aria-hidden="true"></i> 
+        {{item.nommes | uppercase}} {{item.anno}} 
+      </span>
+    </mat-option>
+  </mat-select>
+</mat-form-field>
