@@ -1,0 +1,51 @@
+<h1>Control Periodo Almacen</h1>
+<div class="card border border-primary">
+  <div class="card-body">
+    <form [formGroup]="dataForm">
+      <input type="text" formControlName="anno" [hidden]="true">
+      <app-comp-find-periodo-almacen (getObject)="_getObject($event)" [_formControlName]="this.dataForm.get('periodoalmacen')" [_disabled]="_disabled"></app-comp-find-periodo-almacen>
+    </form>
+  </div>
+</div>
+
+<br>
+<hr>
+<br>
+
+<h2>Propiedades</h2>
+
+<table class="table">
+  <thead>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+  </thead>
+  <tr>
+    <td>
+      <strong>getObject</strong>
+      <p>Evento que emite</p>
+    </td>
+    <td>
+      Devuelve un json PeriodoAlmacenModel:
+      <span class="text-info">{{periodoAlmacen | json}}</span>
+    </td>
+  </tr>
+  <tr>
+    <td>      
+      <strong>[_disabled]</strong>
+      input: boolean
+      <mat-slide-toggle [checked]="_disabled" (change)="_disabled = $event.checked">Deshabilitar</mat-slide-toggle>
+    </td>
+    <td>
+      habilita o deshabilita el componente
+    </td>
+  </tr>
+  <tr>
+      <td>      
+        <strong>[_formControlName]</strong>
+        FormControl        
+      </td>
+      <td>
+        Asigna formControl al componente
+      </td>
+    </tr>
+</table>

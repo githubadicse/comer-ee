@@ -27,6 +27,7 @@ import { CompTipoDocumentoSunatComponent } from './comp-tipo-documento-sunat/com
 import { CompFindEmpleadoComponent } from './comp-find-empleado/comp-find-empleado.component';
 import { CompFindFilialComponent } from './comp-find-filial/comp-find-filial.component';
 import { CompFindTipoDocumentoSunatSoloComponent } from './comp-find-tipo-documento-sunat-solo/comp-find-tipo-documento-sunat-solo.component';
+import { CompFindPeriodoAlmacenComponent } from './comp-find-periodo-almacen/comp-find-periodo-almacen.component';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { CompFindTipoDocumentoSunatSoloComponent } from './comp-find-tipo-docume
     CompTipoDocumentoSunatComponent,
     CompFindEmpleadoComponent,
     CompFindFilialComponent,
-    CompFindTipoDocumentoSunatSoloComponent,    
+    CompFindTipoDocumentoSunatSoloComponent,
+    CompFindPeriodoAlmacenComponent,    
   ],
   exports: [
     MatDatepickerModule,
@@ -84,7 +86,8 @@ import { CompFindTipoDocumentoSunatSoloComponent } from './comp-find-tipo-docume
     CompTipoDocumentoSunatComponent,
     CompFindEmpleadoComponent,
     CompFindFilialComponent,
-    CompFindTipoDocumentoSunatSoloComponent
+    CompFindTipoDocumentoSunatSoloComponent,
+    CompFindPeriodoAlmacenComponent
   ]
 })
 
