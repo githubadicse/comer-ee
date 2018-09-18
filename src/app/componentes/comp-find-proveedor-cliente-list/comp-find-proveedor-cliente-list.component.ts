@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatAutocompleteTrigger } from '@angular/material';
+import { MatAutocompleteTrigger, PageEvent, MatPaginator } from '@angular/material';
 import { CrudHttpClientServiceShared } from '../../shared/servicio/crudHttpClient.service.shared';
 import { startWith } from 'rxjs/internal/operators/startWith';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
@@ -9,8 +9,7 @@ import { map } from 'rxjs/internal/operators/map';
 import { ProveedorclienteModel } from '../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model';
 import { ProveedorclientedireccionModel } from '../../modulo-sistema-config/tablas/proveedorcliente/proveedorclientedireccion-model';
 import { ConfigService } from '../../shared/config.service';
-
-
+import { of } from 'rxjs';
 
 
 @Component({
@@ -40,26 +39,23 @@ export class CompFindProveedorClienteListComponent implements OnInit {
   getObject: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;    
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   
   public verFooter: boolean = false;
 
   private pageMostar: number = 0;
-  private rows: number = 5;    
+  public rows: number = 5;    
   public totalRecords: number = 0;  
   private ultimoParametroBuscado: string = '';
 
 
-  public listProveedorCliente: ProveedorclienteModel[] = [];    
-
+  public listProveedorCliente: ProveedorclienteModel[] = [];      
 
   constructor(private crudService: CrudHttpClientServiceShared, private configService: ConfigService) {
     if (this._formControlName == undefined) {
       this._formControlName = this.myControl;
-    }      
-  }
-
-  ngOnInit() {
-
+    }
+    
     this._formControlName!.valueChanges
       .pipe(
         startWith(''),
@@ -69,10 +65,20 @@ export class CompFindProveedorClienteListComponent implements OnInit {
     ).subscribe(res => {
       this.pageMostar = 0;      
       this.rows = 5;            
-      this.ultimoParametroBuscado = res;       
+      this.ultimoParametroBuscado = res;
+      this.paginator.pageIndex=0;
       this.filtrar(res);
     });
-    
+
+  }
+
+  ngOnInit() {
+
+    this.paginator._intl.itemsPerPageLabel = '';
+    this.paginator._intl.nextPageLabel = '';
+    this.paginator._intl.previousPageLabel = '';    
+    this.paginator._intl.firstPageLabel = '';    
+    this.paginator.hidePageSize=true; 
 
   }
 
@@ -84,9 +90,10 @@ export class CompFindProveedorClienteListComponent implements OnInit {
     const _filtros = `documentoidentificacion.iddocumentoidentificacion:${this.tipodocfilter}:equals,razonsocial:${filterValue}:contains`;
     const filtros = JSON.stringify(this.configService.jsonFilter(_filtros));
     
-    this.pageMostar = null ? 0 : this.pageMostar;
-    this.rows = null ? 5 : this.rows;
-  
+    
+    // this.rows = null ? 5 : this.rows;
+    // this.pageMostar = null ? 0 : (this.rows/5)-1;
+
     this.crudService.getPagination(this.pageMostar, this.rows, 'asc', 'razonsocial', filtros, 'proveedorcliente', 'pagination', null)
     .subscribe((res: any) => {
         this.listProveedorCliente = <ProveedorclienteModel[]>res.data || null;
@@ -126,9 +133,15 @@ export class CompFindProveedorClienteListComponent implements OnInit {
     this.listProveedorCliente=null;
   }  
 
-  public paginate(event): void {
-    this.rows = event.rows;
-    this.pageMostar = event.page;
+  // public paginate(event): void {
+  //   this.rows = event.rows;
+  //   this.pageMostar = event.page;
+  //   this.filtrar(this.ultimoParametroBuscado);
+  // }
+
+  public page(event: PageEvent): void {
+    this.rows = event.pageSize;    
+    this.pageMostar = event.pageIndex;
     this.filtrar(this.ultimoParametroBuscado);
   }
 
