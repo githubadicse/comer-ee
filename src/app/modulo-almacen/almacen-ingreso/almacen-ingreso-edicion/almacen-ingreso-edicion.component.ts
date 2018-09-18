@@ -26,6 +26,7 @@ import { MotivoIngresoModel } from '../../../modulo-sistema-config/tablas/motivo
 import { ProveedorclienteModel } from '../../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model';
 import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
 import swal from 'sweetalert2';
+import { NumeradorModel } from '../../../modulo-sistema-config/tipodocumento/numerador.model';
 
 @Component({
   selector: 'ad-almacen-ingreso-edicion',
@@ -207,12 +208,28 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
   }
 
+  getPeriodoAlmacen(){
+    let almacen =  this.ingresoForm.get('almacen').value;
+    let periodoalmacenModel = new PeriodoalmacenModel(1,9,2018,"A",1, almacen);
+    return periodoalmacenModel;
+  }
+
 
   create(){
-    
+    let periodo = this.getPeriodoAlmacen();
+
+    //tipo documento provisional
+    let numeradors = [new NumeradorModel(1,1,1,null)]
+    let tipodocumento = new TipodocumentoModel(1,"FACTURA","01", numeradors )
+
     let fecha:string = (this.ingresoForm.controls['fecha'].value).format("DD/MM/YYYY");
     this.ingresoForm.controls['fecha'].setValue(fecha);
+    this.ingresoForm.controls['periodoalmacen'].setValue(periodo);
+    this.ingresoForm.controls['tipodocumento'].setValue(tipodocumento);
 
+    let hora = this.ingresoForm.controls['hora'].value + ":00";
+    this.ingresoForm.controls['hora'].setValue(hora);
+    debugger;
     let data = JSON.stringify(this.ingresoForm.value);
     this.crudHttpClientServiceShared.create(data, "ing001", "create").subscribe(
 
