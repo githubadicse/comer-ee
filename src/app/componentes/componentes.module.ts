@@ -8,7 +8,7 @@ import { MatProgressBarModule, MatProgressBar } from '@angular/material/progress
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatSelectModule } from '@angular/material';
+import { MatSelectModule, MatPaginatorModule } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 import { FechaMatComponent } from './fecha-mat/fecha-mat.component';
 import { MatInputModule, MatNativeDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
@@ -42,6 +42,7 @@ import { CompFindFilialComponent } from './comp-find-filial/comp-find-filial.com
     MatNativeDateModule,
     MatIconModule,
     PaginatorModule,
+    MatPaginatorModule,
     MatProgressBarModule
   ],
   providers : [
