@@ -26,6 +26,7 @@ import { CompFindProveedorClienteListComponent } from './comp-find-proveedor-cli
 import { CompTipoDocumentoSunatComponent } from './comp-tipo-documento-sunat/comp-tipo-documento-sunat.component';
 import { CompFindEmpleadoComponent } from './comp-find-empleado/comp-find-empleado.component';
 import { CompFindFilialComponent } from './comp-find-filial/comp-find-filial.component';
+import { CompFindTipoDocumentoSunatSoloComponent } from './comp-find-tipo-documento-sunat-solo/comp-find-tipo-documento-sunat-solo.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { CompFindFilialComponent } from './comp-find-filial/comp-find-filial.com
     CompFindCodigoBarraComponent, 
     CompTipoDocumentoSunatComponent,
     CompFindEmpleadoComponent,
-    CompFindFilialComponent,    
+    CompFindFilialComponent,
+    CompFindTipoDocumentoSunatSoloComponent,    
   ],
   exports: [
     MatDatepickerModule,
@@ -81,7 +83,8 @@ import { CompFindFilialComponent } from './comp-find-filial/comp-find-filial.com
     CompFindMotivoIsAlmacenComponent,
     CompTipoDocumentoSunatComponent,
     CompFindEmpleadoComponent,
-    CompFindFilialComponent
+    CompFindFilialComponent,
+    CompFindTipoDocumentoSunatSoloComponent
   ]
 })
 

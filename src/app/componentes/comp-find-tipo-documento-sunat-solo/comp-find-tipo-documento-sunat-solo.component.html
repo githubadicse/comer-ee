@@ -1,0 +1,7 @@
+<mat-form-field class="w-100">
+  <mat-select appNextfocus placeholder="Tipo Documento Sunat" [formControl]="_formControlName" [compareWith]="compareTipoDocumentoSunat" (selectionChange)="_onSelectionChange($event)">
+    <mat-option *ngFor="let item of ListTipoDocumentoSunat" [value]="item">
+      {{item.dscTipoDocumento | uppercase}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

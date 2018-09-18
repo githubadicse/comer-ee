@@ -11,6 +11,7 @@ export class ControlesDocumentacionComponent implements OnInit {
   filtroro: string = "";
   _disabledSerie: boolean = false;
   _mostrarSerie: boolean = true;
+  tipoDocumento: TipodocumentoModel;  
   documentoInit: any = <TipodocumentoModel>JSON.parse('{"idTipoDocumento": 122, "codigoSunat": "0002", "dscTipoDocumento": "FACTURA" }');
 
   valorRecibido: any;
@@ -26,4 +27,9 @@ export class ControlesDocumentacionComponent implements OnInit {
   setFiltro(value: string) {
     this.filtroro = value;
   }
+
+  _getObject(e: any) {
+    this.tipoDocumento = e;
+    console.log("Informacion desde el componente :" + JSON.stringify(e));    
+  }  
 }
