@@ -79,7 +79,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
   es: any;
 
-
+  
 
   @ViewChild('codigobarra') codigobarraControl: ElementRef;
   @ViewChild('cantidad_') cantidadControl: ElementRef;
