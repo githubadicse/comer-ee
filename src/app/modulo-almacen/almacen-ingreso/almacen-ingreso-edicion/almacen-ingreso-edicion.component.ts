@@ -197,7 +197,6 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
       seriedocproveedor: [''],
       nrodocproveedor: ['']
 
-
     });
 
   }
