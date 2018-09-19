@@ -41,14 +41,25 @@ export class ProductoService {
     return this.httpClient.get<ProductoModel[]>(url, { params: parm });
   }
 
-  getProductoByParametro(parametro: string, idalmacen: number): Observable<any[]> {
+  getProductoByParametro(evento:string, parametro: string, idalmacen: number): Observable<any[]> {
 
-    let url = this.configService.getUrlSecurityRes("stockactual", "getByParametro");
+    let url = this.configService.getUrlSecurityRes('stockactual', "getByParametroList");
 
     let parm = new HttpParams().set("parametro", parametro);
     parm = parm.append("idalmacen", idalmacen.toString());
+    parm = parm.append("evento", evento.toString());
 
     return this.httpClient.get<ProductoModel[]>(url, { params: parm });
+  }
+
+  getProductoByParametroPageable(evento:string, pagenumber,rows,parametro: string, idalmacen: number): Observable<any[]> {
+
+    let url = this.configService.getUrlSecurityRes('stockactual', "getByParametroPageable");
+    
+    let obj = {'evento':evento, 'pagenumber':pagenumber,'rows':rows,'idalmacen':idalmacen, 'parametro': parametro};
+    let objser = this.configService.serialize(obj);    
+
+    return this.httpClient.post<ProductoModel[]>(url, objser,{headers:this.configService.getHeaderHttpClientForm() });
   }
 
 }

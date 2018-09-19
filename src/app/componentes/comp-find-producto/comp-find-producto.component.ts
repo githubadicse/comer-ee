@@ -11,11 +11,13 @@ import { Subject } from 'rxjs/internal/Subject';
 import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
 import { ProductoModel } from '../../modulo-sistema-config/tablas/producto/model/producto.model';
 import { AlmacenModel } from '../../modulo-sistema-config/tablas/almacen/almacen-model';
+import { ProductoService } from '../../modulo-sistema-config/tablas/producto/service/producto.service';
 
 @Component({
   selector: 'app-comp-find-producto',
   templateUrl: './comp-find-producto.component.html',
-  styleUrls: ['./comp-find-producto.component.scss']
+  styleUrls: ['./comp-find-producto.component.scss'],
+  providers: [ProductoService]
 })
 export class CompFindProductoComponent implements OnInit {
   private productoRespuesta: ProductoModel;
@@ -28,11 +30,13 @@ export class CompFindProductoComponent implements OnInit {
   public totalRecords: number = 0;
   public listProductos: any;
   public listAlmacen: AlmacenModel[];  
-  public procesando: boolean = true;
-
+  public procesando: boolean = true;  
   private indexSelect: number = 0;
   @ViewChildren('rowSelect') rowsProductos: QueryList<any> // para la seccion con las flechas del teclado up down
 
+
+  private eventoController: string = 'findByParametroPageable';
+  @Input() mostrarStockPrecio: boolean = true; //deshabilitar lista de almacen
 
   @Input() _formControlName = new FormControl();
   @Input() myControl = new FormControl();
@@ -41,9 +45,12 @@ export class CompFindProductoComponent implements OnInit {
   @Input() disabledAlamcen: boolean = false; //deshabilitar lista de almacen
   @Output() getObject: EventEmitter<ProductoModel> = new EventEmitter();
   
-  constructor(public crudService: CrudHttpClientServiceShared, private configService: ConfigService ) { }
+  constructor(private productoService: ProductoService, public crudService: CrudHttpClientServiceShared, private configService: ConfigService ) { }
 
   ngOnInit() {    
+    // define controlador, segun tipo de requerimiento : mostrarStockPrecio
+    this.eventoController = this.mostrarStockPrecio ? 'findByParametroPageable': 'findByParametroPageableSoloProducto';
+
     this.Idalmacen = this.IdalmacenPreSeleccionado;
 
     this.maestros(); 
@@ -67,7 +74,7 @@ export class CompFindProductoComponent implements OnInit {
     this._formControlName.setValue(this.parametroBuscar);    
   }
 
-  private _filterProductos(cadenaBuscar: string = ''): void {    
+  private _filterProductos(cadenaBuscar: string = ''): void {
     this.LastCharFind = cadenaBuscar;
     this.indexSelect = 0;
     //producto.dscproducto:${cadenaBuscar}:contains,producto.marca.dscmarca:${cadenaBuscar}:contains,producto.categoria.dsccategoria:${cadenaBuscar}:contains
@@ -75,8 +82,11 @@ export class CompFindProductoComponent implements OnInit {
     const filters = JSON.stringify(this.configService.jsonFilter(_filtros));
     
     console.log('filtro', filters);
-    this.crudService.getPagination(this.pageMostar === null ? 0 : this.pageMostar, this.rows === null ? 10 : this.rows, 'asc', 'producto.dscproducto', filters, 'stockactual', 'pagination', null)
-      .subscribe(res => {
+    this.pageMostar === null ? 0 : this.pageMostar;
+    this.rows === null ? 10 : this.rows;
+
+    this.productoService.getProductoByParametroPageable(this.eventoController, this.pageMostar, this.rows, cadenaBuscar,this.Idalmacen)
+      .subscribe((res: any) => {
         this.totalRecords = res.totalCount;
         this.listProductos = res.data;
         this.procesando = false;

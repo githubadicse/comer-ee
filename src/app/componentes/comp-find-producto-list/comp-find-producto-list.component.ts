@@ -25,6 +25,9 @@ export class buscarMasDe {
 
 
 export class CompFindProductoListComponent implements OnInit {
+  private eventoController: string = 'findByParametro';
+  @Input() mostrarStockPrecio: boolean = false; // Muestra stock y precio o solo productos sin referencia de almacen o precio
+
   @Input()
   myControl = new FormControl();
 
@@ -50,6 +53,8 @@ export class CompFindProductoListComponent implements OnInit {
   
 
   constructor( private crudServiceProducto: ProductoService  ) {
+    this.eventoController = this.mostrarStockPrecio ? "findByParametro": "findByParametroSoloProducto";
+
     if (this._formControlName == undefined) {
       this._formControlName = this.myControl;
     }
@@ -67,7 +72,7 @@ export class CompFindProductoListComponent implements OnInit {
     if (typeof filterValue !== 'string') {return;}   
     if (filterValue === '') { this.autocomplete.closePanel(); return; }
 
-    this.crudServiceProducto.getProductoByParametro(filterValue, this.idalmacen).subscribe(
+    this.crudServiceProducto.getProductoByParametro(this.eventoController, filterValue, this.idalmacen).subscribe(
       (res: any) => {
         this.data = res;
 
@@ -88,6 +93,8 @@ export class CompFindProductoListComponent implements OnInit {
   }
 
   ngOnInit() {    
+    // define controlador, segun tipo de requerimiento : mostrarStockPrecio
+    
   }
 
   public checkCodigoBarra(): void {    
