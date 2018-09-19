@@ -52,6 +52,17 @@ export class CompFindProveedorClienteListComponent implements OnInit {
   public listProveedorCliente: ProveedorclienteModel[] = [];      
 
   constructor(private crudService: CrudHttpClientServiceShared, private configService: ConfigService) {
+    
+  }
+
+  ngOnInit() {
+
+    this.paginator._intl.itemsPerPageLabel = '';
+    this.paginator._intl.nextPageLabel = '';
+    this.paginator._intl.previousPageLabel = '';    
+    this.paginator._intl.firstPageLabel = '';    
+    this.paginator.hidePageSize=true; 
+
     if (this._formControlName == undefined) {
       this._formControlName = this.myControl;
     }
@@ -72,16 +83,6 @@ export class CompFindProveedorClienteListComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-
-    this.paginator._intl.itemsPerPageLabel = '';
-    this.paginator._intl.nextPageLabel = '';
-    this.paginator._intl.previousPageLabel = '';    
-    this.paginator._intl.firstPageLabel = '';    
-    this.paginator.hidePageSize=true; 
-
-  }
-
 
   private filtrar(filterValue): void {
     if (typeof filterValue !== 'string') {return;}
@@ -90,9 +91,6 @@ export class CompFindProveedorClienteListComponent implements OnInit {
     const _filtros = `documentoidentificacion.iddocumentoidentificacion:${this.tipodocfilter}:equals,razonsocial:${filterValue}:contains`;
     const filtros = JSON.stringify(this.configService.jsonFilter(_filtros));
     
-    
-    // this.rows = null ? 5 : this.rows;
-    // this.pageMostar = null ? 0 : (this.rows/5)-1;
 
     this.crudService.getPagination(this.pageMostar, this.rows, 'asc', 'razonsocial', filtros, 'proveedorcliente', 'pagination', null)
     .subscribe((res: any) => {
@@ -100,9 +98,7 @@ export class CompFindProveedorClienteListComponent implements OnInit {
         this.totalRecords = res.totalCount;
 
         this.verFooter = this.totalRecords > 4 ? true : false;
-        
-
-        console.log(this.listProveedorCliente);
+                
       }
 
     )    
@@ -132,12 +128,6 @@ export class CompFindProveedorClienteListComponent implements OnInit {
     }
     this.listProveedorCliente=null;
   }  
-
-  // public paginate(event): void {
-  //   this.rows = event.rows;
-  //   this.pageMostar = event.page;
-  //   this.filtrar(this.ultimoParametroBuscado);
-  // }
 
   public page(event: PageEvent): void {
     this.rows = event.pageSize;    

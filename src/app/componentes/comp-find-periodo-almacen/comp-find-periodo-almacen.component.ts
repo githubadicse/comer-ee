@@ -22,7 +22,7 @@ export class CompFindPeriodoAlmacenComponent implements OnInit {
   @Output()
   getObject: EventEmitter<PeriodoalmacenModel> = new EventEmitter();  
 
-  public ListPeriodoAlmacen: PeriodoalmacenModel[] = [];
+  public ListPeriodoAlmacen: PeriodoalmacenModel[] = [];  
 
   constructor(private crudService: CrudHttpClientServiceShared) { }
 
@@ -36,11 +36,18 @@ export class CompFindPeriodoAlmacenComponent implements OnInit {
 
   private loadListPeriodoAlmacen(): void {    
     this.crudService.getall('periodoalmacen', 'getall').subscribe((res: any) => {
-      this.ListPeriodoAlmacen = <PeriodoalmacenModel[]>res
-      this.ListPeriodoAlmacen.map((x: any) => {
-        x.nommes = this.getNameMonth(x.mes);
+      this.ListPeriodoAlmacen = <PeriodoalmacenModel[]>res      
+
+      // si no se asigna a _formControlName selecciona la primera opcion
+      if (!this._formControlName.value){
+        this._formControlName.setValue(this.ListPeriodoAlmacen[0]);
+      }
+
+      this.ListPeriodoAlmacen.map((x: any) => {        
+        x.nommes = this.getNameMonth(x.mes);        
       })
-    } );
+            
+    });
     
   }
 
