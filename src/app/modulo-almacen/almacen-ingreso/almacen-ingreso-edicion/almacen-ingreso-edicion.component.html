@@ -10,9 +10,12 @@
                 <br>
                 <app-comp-find-proveedor-cliente-list agruparPorDireccion="true" [_formControlName]="this.ingresoForm.get('proveedorcliente')"></app-comp-find-proveedor-cliente-list>
 
+                <app-comp-find-periodo-almacen></app-comp-find-periodo-almacen>
 
                 <app-fecha-mat _placeholder="FECHA INGRESO" [_formControlName]="this.ingresoForm.get('fecha')"></app-fecha-mat>
+
                 &nbsp;&nbsp;
+
                 <mat-form-field>
                     <input style="margin-top:-150px;" type="time" formControlName="hora" matInput placeholder="HORA">
                 </mat-form-field>
@@ -29,7 +32,9 @@
                 <!-- almacen donde ingresara la mercaderia -->
                 <app-comp-find-almacen [idFilial]="this.idFilial" [_formControlName]="this.ingresoForm.get('almacen')"></app-comp-find-almacen>
 
-
+                <!-- tipo de documento solo -->
+                <app-comp-find-tipo-documento-sunat-solo></app-comp-find-tipo-documento-sunat-solo>
+                
                 <mat-form-field>
                     <input tyle="margin-top:-150px;" matInput placeholder="REF.COMPRA">
                 </mat-form-field>
