@@ -7,7 +7,7 @@ import { ProveedorclienteEdicionComponent } from './proveedorcliente-edicion/pro
 const routes: Routes = [
   {
 
-    path: 'main',
+    path: '',
     component: ProveedorclienteMainComponent,
     children: [
       {
