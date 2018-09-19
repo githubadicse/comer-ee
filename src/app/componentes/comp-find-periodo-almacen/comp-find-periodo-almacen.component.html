@@ -3,7 +3,7 @@
     <mat-option *ngFor="let item of ListPeriodoAlmacen" [value]="item">
       <span >
         <i class="fa" [ngClass]="[item.estado==='A' ? 'fa-unlock-alt text-success' : 'fa-lock text-danger']" aria-hidden="true"></i> 
-        {{item.nommes | uppercase}} {{item.anno}} 
+        {{item['nommes'] | uppercase}} {{item.anno}} 
       </span>
     </mat-option>
   </mat-select>
