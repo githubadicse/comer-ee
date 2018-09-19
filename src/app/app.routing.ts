@@ -90,7 +90,15 @@ export const AppRoutes: Routes = [
       {
         path : 'tablas/empleado',
         loadChildren : './modulo-cuenta-rr-hh/empleado/empleado.module#EmpleadoModule'
-      }
+      },
+      {
+        path : 'tablas/producto',
+        loadChildren : './modulo-sistema-config/tablas/producto/producto.module#ProductoModule'
+      },
+      {
+        path : 'tablas/proveedorcliente',
+        loadChildren : './modulo-sistema-config/tablas/proveedorcliente/proveedorcliente.module#ProveedorclienteModule'
+      }            
 
     ]
   }, 
