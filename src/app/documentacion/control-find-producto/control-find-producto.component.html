@@ -14,6 +14,7 @@
     [IdalmacenPreSeleccionado]="idalmacen"
     [parametroBuscar]="parametroBuscar"
     [disabledAlamcen]="disabledAlamcen"
+    [pageSizeInit]=5
     (getObject)="_getObject($event)"    
 >
 </app-comp-find-producto>
@@ -28,6 +29,15 @@
         <th>Nombre</th>
         <th>Descripcion</th>
     </thead>
+    <tr>
+        <td>      
+          <strong>[pageSizeInit]</strong>
+          Number        
+        </td>
+        <td>
+          Numero filas que se mostrar inicialmente. Default 5
+        </td>
+      </tr>
     <tr>
         <td>
             <strong>[disabledAlamcen]</strong>
@@ -58,3 +68,4 @@
       </td>
     </tr>
 </table>
+

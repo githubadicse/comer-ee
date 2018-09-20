@@ -25,6 +25,7 @@ export class buscarMasDe {
 
 
 export class CompFindProductoListComponent implements OnInit {
+
   @Input()
   myControl = new FormControl();
 
@@ -50,6 +51,7 @@ export class CompFindProductoListComponent implements OnInit {
   
 
   constructor( private crudServiceProducto: ProductoService  ) {
+
     if (this._formControlName == undefined) {
       this._formControlName = this.myControl;
     }
@@ -88,6 +90,8 @@ export class CompFindProductoListComponent implements OnInit {
   }
 
   ngOnInit() {    
+    // define controlador, segun tipo de requerimiento : mostrarStockPrecio
+    
   }
 
   public checkCodigoBarra(): void {    
