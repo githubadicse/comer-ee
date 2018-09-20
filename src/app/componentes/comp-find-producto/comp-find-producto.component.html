@@ -26,10 +26,10 @@
       </div>
     </div>
 
-    <div class="card-body">
+    <div class="card-body" #cardBody>
       <div class="row">
         <div class="col-md-12">
-          <table class="table-producto">
+          <table class="table-producto" #tablaContent>
               <ng-container *ngIf="procesando; then thenTemplate; else elseTemplate"></ng-container>
               <ng-template #thenTemplate>
                 <tr class="h-100 w-100 animated fadeIn">
@@ -63,8 +63,14 @@
         </div>      
       </div>
     </div>
-    <div class="d-inline">                  
-          <span class="float-left p-2 d-inline">{{totalRecords}} Registros</span>
-          <p-paginator [rows]="10" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]" (onPageChange)="paginate($event)"></p-paginator>                     
+    <div class="footer">                  
+          <!-- <span class="float-left p-2 d-inline">{{totalRecords}} Registros</span> -->
+          <mat-paginator #paginatorProducto
+            [length]="totalRecords"
+            [pageSize]="rows"
+            (page)="page($event)">
+          </mat-paginator>
+
+          <!-- <p-paginator [rows]="10" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]" (onPageChange)="paginate($event)"></p-paginator>                      -->
     </div>
 </div>
