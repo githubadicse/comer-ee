@@ -4,7 +4,7 @@
 <span>Parametro incluye la busqueda en: descripcion del producto, marca, categoria.<br></span> <br>
 <span>Muestra los 5 primeros registros, si existe mas muestra la opcion de "buscar mas resultados" <br> donde emite un evento con el parametro a buscar, este parametro puede ser enviado al control de "Busqueda y paginacion." </span>
 <br><br>
-<app-comp-find-producto-list (getBuscarMasDe)="_getBuscarMasDe($event)" (getObject)="_getObjectList($event)"    ></app-comp-find-producto-list>
+<app-comp-find-producto-list (getBuscarMasDe)="_getBuscarMasDe($event)" (getObject)="_getObjectList($event)"></app-comp-find-producto-list>
 <br><br>
 <hr>
 <br><br>
@@ -69,3 +69,45 @@
     </tr>
 </table>
 
+<br><br><br>
+<hr>
+<br><br><br>
+
+<h2>Busqueda y Paginacion SOLO PRODUCTOS</h2>
+<app-comp-find-producto-almacen
+    [parametroBuscar]="parametroBuscar"    
+    [pageSizeInit]=5
+    (getObject)="_getObject($event)"    
+>
+</app-comp-find-producto-almacen>
+
+<br>
+<br>
+
+<h2>Propiedades</h2>
+
+<table class="table">
+    <thead>
+        <th>Nombre</th>
+        <th>Descripcion</th>
+    </thead>        
+    <tr>
+        <td>
+            <strong>getObject</strong>
+            <p>Evento que emite</p>
+        </td>
+        <td>
+            Devuelve un producto:
+            <span class="text-info">{{producto | json}}</span>
+        </td>
+    </tr>
+    <tr>
+      <td>      
+        <strong>[_formControlName]</strong>
+        FormControl        
+      </td>
+      <td>
+        Asigna formControl al componente
+      </td>
+    </tr>
+</table>

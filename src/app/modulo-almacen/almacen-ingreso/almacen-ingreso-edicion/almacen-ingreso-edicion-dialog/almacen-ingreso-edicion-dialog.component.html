@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Detalle del producto</h2>
+
+<mat-dialog-content [formGroup]="form">
+      <h5>
+        {{producto.dscproducto}} ({{producto.unidadmedida.abrunidadmedida}})
+      </h5>
+      <br>
+      
+      <mat-form-field class="w-100">
+        <input matInput autocomplete="off"
+            placeholder="Cantidad"
+            formControlName="cantidad">
+      </mat-form-field>      
+      <mat-form-field class="w-100">
+        <input matInput autocomplete="off"
+            placeholder="Lote"
+            formControlName="lote">
+      </mat-form-field>      
+      <app-fecha-mat (getObject)="_getObjectFecha($event)" _placeholder="Fecha de Vencimiento"></app-fecha-mat>      
+ 
+</mat-dialog-content>
+
+<mat-dialog-actions>  
+    <button class="mat-raised-button mat-warn"(click)="close()">Close</button>
+    <button class="mat-raised-button mat-primary"(click)="save()" [disabled]="!form.valid">Save</button>
+</mat-dialog-actions>

@@ -1,0 +1,49 @@
+.table-producto {
+    width: 100%;
+}
+
+.table-producto tr {    
+    border-bottom: 1px solid #b6b6b6;     
+    cursor: pointer;
+}
+
+.table-producto tr:hover {
+    background-color: #a3a3fd63;    
+}
+
+.table-producto tr.selected {
+    background-color: #a3a3fd63;    
+}
+
+.table-producto tr td {    
+    vertical-align: middle;    
+}
+
+.table-producto tr td:first-child {    
+    padding-left: 25px;
+}
+
+.table-producto tr td:last-child {
+    text-align: right;
+    padding-right: 35px;
+}
+
+.table-producto tr td .titulo { font-size: 14px; font-weight: 700; margin: 0;}
+.table-producto tr td .subtitulo { font-size: 12px; font-weight: 400; color: grey; margin: 0;}
+
+.card-body {
+    margin: 0; padding: 0;    
+}
+
+.footer {
+    border-top: #dddddd solid 1px;    
+}
+
+.card {min-height: 70vh;}
+
+
+.mat-paginator {
+    background: linear-gradient(to bottom, #f6f7f9 0%, #ebedf0 100%);
+}
+
+// ::ng-deep .mat-paginator-range-actions { align-items: normal !important;}

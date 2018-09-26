@@ -2,7 +2,7 @@
   <mat-form-field class="w-100">
     <input matInput placeholder="Buscar Prodcucto" aria-label="State" [matAutocomplete]="auto" [formControl]="_formControlName" (keydown.enter)="checkCodigoBarra()" (focus)="_focus($event)">
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="_displayWith">
-        <mat-option *ngFor="let item of data" [value]="item" (onSelectionChange)="_onSelectionChange($event,item.producto)">
+        <mat-option *ngFor="let item of data" [value]="item.producto" (onSelectionChange)="_onSelectionChange($event,item.producto)">
             <div class="float-left">
               <p class="titulo">{{item?.producto?.dscproducto}} ({{item.stockactual}} {{item?.producto.unidadmedida.abrunidadmedida}})</p>
               <span class="subtitulo">categoria: {{item?.producto.categoria.dsccategoria | lowercase}}, marca: {{item?.producto.marca.dscmarca | lowercase}} </span>
