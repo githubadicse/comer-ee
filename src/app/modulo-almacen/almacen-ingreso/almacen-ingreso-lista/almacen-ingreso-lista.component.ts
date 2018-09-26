@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Input, Output, ViewEncapsulation, ViewChildren, QueryList } from '@angular/core';
 
 import { Message } from 'primeng/primeng';
 
@@ -17,6 +17,7 @@ import { UtilitariosAdicse } from '../../../shared/servicio/utilitariosAdicse';
   templateUrl: './almacen-ingreso-lista.component.html',
   styleUrls: ['./almacen-ingreso-lista.component.css'],
   providers : [CrudHttpClientServiceShared,UtilitariosAdicse]
+  
 })
 export class AlmacenIngresoListaComponent implements OnInit {
   showLista: boolean = true;
@@ -60,7 +61,8 @@ export class AlmacenIngresoListaComponent implements OnInit {
     this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
   }
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) matPaginatorIngreso: MatPaginator;
+  //@ViewChildren(MatPaginator) paginators: QueryList<MatPaginator>
   @ViewChild(MatSort) sort: MatSort;
 
   //filter
@@ -79,8 +81,10 @@ export class AlmacenIngresoListaComponent implements OnInit {
     
   }
 
-  ngOnInit() {
 
+  ngOnInit() {
+    //this.paginatorLista._intl.itemsPerPageLabel="Reg Por Pag.x"
+    this.matPaginatorIngreso._intl.itemsPerPageLabel="Reg Por Pag."
     this.Typeahead.pipe(
       map( dato=>{
         console.log("Dato " + dato);
@@ -92,18 +96,18 @@ export class AlmacenIngresoListaComponent implements OnInit {
     this._filter;
 
     
-    this.sort.sortChange.subscribe( ()=> this.paginator.pageIndex = 0 );
+    this.sort.sortChange.subscribe( ()=> this.matPaginatorIngreso.pageIndex = 0 );
 
     this.sort.active = "fecha";
     this.sort.direction = "asc";
 
 
-   this._merge = merge(this.sort.sortChange, this.paginator.page, this.Typeahead)
+   this._merge = merge(this.sort.sortChange, this.matPaginatorIngreso.page, this.Typeahead)
     .pipe(
       startWith({}),
       switchMap( () => {
         this.isLoadingResults = true;
-        return this.crudHttpClientServiceShared.getPagination(this.paginator.pageIndex, this.pageSize ,this.sort.direction,this.sort.active,this._filterPage,"ing001","pagination",null)
+        return this.crudHttpClientServiceShared.getPagination(this.matPaginatorIngreso.pageIndex, this.pageSize ,this.sort.direction,this.sort.active,this._filterPage,"ing001","pagination",null)
         
       }),
       map(

@@ -77,6 +77,8 @@ export class EmpleadoGridComponent implements OnInit {
     private utilitariosAdicse: UtilitariosAdicse ) { }
 
   ngOnInit() {
+
+    this.paginator._intl.itemsPerPageLabel="Reg Por Pag Emp";
    
     this.sort.sortChange.subscribe( ()=> this.paginator.pageIndex = 0 );
 

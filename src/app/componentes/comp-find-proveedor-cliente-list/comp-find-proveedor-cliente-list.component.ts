@@ -39,7 +39,7 @@ export class CompFindProveedorClienteListComponent implements OnInit {
   getObject: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) matPaginatorProveedorCliente: MatPaginator;
 
   public verFooter: boolean = false;
 
@@ -56,11 +56,9 @@ export class CompFindProveedorClienteListComponent implements OnInit {
 
   ngOnInit() {
 
-    this.paginator._intl.itemsPerPageLabel = '';
-    this.paginator._intl.nextPageLabel = '';
-    this.paginator._intl.previousPageLabel = '';    
-    this.paginator._intl.firstPageLabel = '';    
-    this.paginator.hidePageSize=true; 
+     this.matPaginatorProveedorCliente._intl.nextPageLabel = '';
+     this.matPaginatorProveedorCliente._intl.previousPageLabel = '';    
+    this.matPaginatorProveedorCliente.hidePageSize=true; 
 
 
     if (this._formControlName == undefined) {
@@ -79,7 +77,7 @@ export class CompFindProveedorClienteListComponent implements OnInit {
         this.pageMostar = 0;
         this.rows = 5;
         this.ultimoParametroBuscado = res;
-        this.paginator.pageIndex = 0;
+        this.matPaginatorProveedorCliente.pageIndex = 0;
         this.filtrar(res);
       });
 

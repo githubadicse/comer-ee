@@ -42,7 +42,7 @@
         <div class="autocomplete-footer"  [hidden]="!verFooter">                              
                 <!-- <span class="float-left p-2 d-inline">{{totalRecords}} Registros</span> -->
                 <!-- <div class="h-1"> -->
-                    <mat-paginator
+                    <mat-paginator #matPaginatorProveedorCliente
                         [length]="totalRecords"
                         [pageSize]="rows"                        
                         (page)="page($event)">

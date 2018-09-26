@@ -89,7 +89,7 @@ const MENUITEMS = [
       {type: 'red', value: '8'}
     ],
     children: [
-      {state: 'catalogo', name: 'Catalogo de Productos',idmenu:'0401'},
+      {state: 'registro', name: 'Registrar Compra',idmenu:'0401'},
       {state: 'producto-por-numero-entrega', name: 'Producto Por Nro Entrega',idmenu:'0402'},
       {state: 'centros-educativos', name: 'Centros Educativos',idmenu:'0403'},
       {state: 'rutas-distribucion', name: 'Ruta de Distribucion',idmenu:'0404'},
