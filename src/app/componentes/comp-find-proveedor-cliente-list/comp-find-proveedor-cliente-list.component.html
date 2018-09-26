@@ -14,7 +14,7 @@
                         <p class="titulo">{{item?.razonsocial}} ({{item.nrodocumento}})</p>
                         <span class="subtitulo">Direccion: {{ direccion.direccion | lowercase}} </span>
                       </div>
-                  </mat-option> 
+                  </mat-option>
               </ng-template>
               <ng-template #noTieneDireccion>
                   <mat-option [value]="item" (onSelectionChange)="_onSelectionChange($event,item)">
@@ -42,7 +42,8 @@
         <div class="autocomplete-footer"  [hidden]="!verFooter">                              
                 <!-- <span class="float-left p-2 d-inline">{{totalRecords}} Registros</span> -->
                 <!-- <div class="h-1"> -->
-                    <mat-paginator #matPaginatorProveedorCliente
+                    <mat-paginator #paginadorHost
+
                         [length]="totalRecords"
                         [pageSize]="rows"                        
                         (page)="page($event)">

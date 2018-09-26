@@ -11,16 +11,21 @@ import { ConfigService } from '../../../shared/config.service';
 import { FormControl } from '@angular/forms';
 import { AlmacenModel } from '../../../modulo-sistema-config/tablas/almacen/almacen-model';
 import { UtilitariosAdicse } from '../../../shared/servicio/utilitariosAdicse';
+import { SharedService } from '../../../shared/servicio/shared.service';
 
 @Component({
   selector: 'ad-almacen-ingreso-lista',
   templateUrl: './almacen-ingreso-lista.component.html',
   styleUrls: ['./almacen-ingreso-lista.component.css'],
-  providers : [CrudHttpClientServiceShared,UtilitariosAdicse]
-  
+  providers : [
+    CrudHttpClientServiceShared,
+    SharedService,
+    UtilitariosAdicse]
+
 })
 export class AlmacenIngresoListaComponent implements OnInit {
-  showLista: boolean = true;
+  showLista: boolean = false;
+  showChild: boolean = false;
 
   public almacenIngresosModel:AlmacenIngresoModel[]=[];
 
@@ -77,7 +82,11 @@ export class AlmacenIngresoListaComponent implements OnInit {
 
   myControl = new FormControl();
 
-  constructor(private crudHttpClientServiceShared:CrudHttpClientServiceShared, private configService:ConfigService, private utilitariosAdicse:UtilitariosAdicse) { 
+  constructor(
+    private crudHttpClientServiceShared:CrudHttpClientServiceShared, 
+    private configService:ConfigService,   
+    private sharedService: SharedService,  
+    private utilitariosAdicse:UtilitariosAdicse) { 
     
   }
 
@@ -173,4 +182,11 @@ export class AlmacenIngresoListaComponent implements OnInit {
   }
 
 
+  onActivateChild() { this.showChild = true; }
+  onDeactivateChild() {
+    this.showChild = false;
+    if (this.sharedService.refreshByStorage('')) {
+      // cargar del storage this.maestros()
+    }
+  }
 }

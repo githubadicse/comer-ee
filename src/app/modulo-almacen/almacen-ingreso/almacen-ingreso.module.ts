@@ -11,9 +11,11 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { KardexModule } from '../kardex/kardex.module';
 import { SharedModule } from '../../shared/shared.module';
-import { MatSortModule, MatTableModule, MatPaginatorModule, MatIconModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSlideToggleModule } from '@angular/material';
+import { MatSortModule, MatTableModule, MatPaginatorModule, MatIconModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSlideToggleModule, MatDialogModule } from '@angular/material';
 import { ComponentesModule } from '../../componentes/componentes.module';
 import {MatSelectModule} from '@angular/material/select';
+import { CompFindProductoAlmacenComponent } from '../../componentes/comp-find-producto-almacen/comp-find-producto-almacen.component';
+import { AlmacenIngresoEdicionDialogComponent } from './almacen-ingreso-edicion/almacen-ingreso-edicion-dialog/almacen-ingreso-edicion-dialog.component';
 
 
 @NgModule({
@@ -31,9 +33,15 @@ import {MatSelectModule} from '@angular/material/select';
     KardexModule,
     ComponentesModule,
     MatSortModule, MatTableModule, MatPaginatorModule, MatIconModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSlideToggleModule ,
-    MatSelectModule
-
+    MatSelectModule,
+    MatDialogModule 
   ],
-  declarations: [AlmacenIngresoMainComponent, AlmacenIngresoEdicionComponent, AlmacenIngresoListaComponent]
+  declarations: [
+    AlmacenIngresoMainComponent, 
+    AlmacenIngresoEdicionComponent, 
+    AlmacenIngresoListaComponent, 
+    AlmacenIngresoEdicionDialogComponent    
+  ],
+  entryComponents: [AlmacenIngresoEdicionDialogComponent]
 })
 export class AlmacenIngresoModule { }

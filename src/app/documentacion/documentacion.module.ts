@@ -22,6 +22,7 @@ import {ControlFindFechaComponent} from './control-find-fecha/control-find-fecha
 
 import { ControlFindFilialComponent } from './control-find-filial/control-find-filial.component';
 import { ControlFindPeriodoAlmacenComponent } from './control-find-periodo-almacen/control-find-periodo-almacen.component';
+import { ControlProductoCarritoComponent } from './control-producto-carrito/control-producto-carrito.component';
 
 
 
@@ -48,7 +49,8 @@ import { ControlFindPeriodoAlmacenComponent } from './control-find-periodo-almac
     ControlFindEmpleadoComponent,
     ControlFindFilialComponent    ,
     ControlFindEmpleadoComponent,
-    ControlFindPeriodoAlmacenComponent    
+    ControlFindPeriodoAlmacenComponent,
+    ControlProductoCarritoComponent    
   ]
 })
 

@@ -10,6 +10,14 @@ export const MSJ_SUCCESS: any = {
     timer: 1000
 };
 
+export const MSJ_SUCCESS_TOP_END: any = {
+    position: 'top-end',
+    type: 'success',
+    title: 'Se realizo con exito.',
+    showConfirmButton: false,
+    timer: 1500
+};
+
 export const MSJ_ALERT_BORRAR: any = {
     title: 'Esta seguro?',
     text: "Borrar registro seleccionado",
