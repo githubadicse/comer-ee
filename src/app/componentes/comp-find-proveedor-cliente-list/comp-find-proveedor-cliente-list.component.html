@@ -43,6 +43,7 @@
                 <!-- <span class="float-left p-2 d-inline">{{totalRecords}} Registros</span> -->
                 <!-- <div class="h-1"> -->
                     <mat-paginator #paginadorHost
+
                         [length]="totalRecords"
                         [pageSize]="rows"                        
                         (page)="page($event)">

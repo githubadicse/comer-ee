@@ -1,11 +1,12 @@
 import { Component, ElementRef, NgZone, OnInit, OnDestroy, ViewChild, HostListener } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 import { TranslateService } from '@ngx-translate/core';
 
 import { PerfectScrollbarConfigInterface, PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
+import { Title } from '@angular/platform-browser';
 
 const SMALL_WIDTH_BREAKPOINT = 960;
 
@@ -31,12 +32,24 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   @ViewChild('sidemenu') sidemenu;
   @ViewChild(PerfectScrollbarDirective) directiveScroll: PerfectScrollbarDirective;
 
+  titulo:string;
   public config: PerfectScrollbarConfigInterface = {};
 
   constructor(
+    private title:Title,
     private _element: ElementRef,
     private router: Router,
     zone: NgZone) {
+  
+      this.getDataRoute()
+      .subscribe(
+        data => {
+          console.log(data);
+          this.titulo = data.tituloModulo;
+          this.title.setTitle(this.titulo);
+        }
+      )
+      
     this.mediaMatcher.addListener(mql => zone.run(() => {
       this.mediaMatcher = mql;
     }));
@@ -51,6 +64,16 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
       this.url = event.url;
       this.runOnRouteChange();
     });
+  }
+
+  getDataRoute(){
+
+    return this.router.events.pipe(
+      filter( evento => evento instanceof ActivationEnd ),
+      filter( (evento:ActivationEnd) => evento.snapshot.component === undefined ),
+      map( (evento:ActivationEnd) => evento.snapshot.data )
+    )    
+
   }
 
   ngOnDestroy(): void  {

@@ -41,6 +41,7 @@ export class CompFindProveedorClienteListComponent implements OnInit {
   @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;
   @ViewChild(MatPaginator) paginadorHost: MatPaginator;
 
+
   public verFooter: boolean = false;
 
   private pageMostar: number = 0;
@@ -60,6 +61,7 @@ export class CompFindProveedorClienteListComponent implements OnInit {
     this.paginadorHost._intl.previousPageLabel = '';        
     this.paginadorHost.hidePageSize=true;
     
+
 
 
     if (this._formControlName == undefined) {

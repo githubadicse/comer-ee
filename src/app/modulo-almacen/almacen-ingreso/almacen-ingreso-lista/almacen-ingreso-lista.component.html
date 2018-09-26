@@ -91,7 +91,7 @@
         [ngClass]="{'highlight': selectedRowIndex == row.iding001}"
         (click)="highlight(row)"></tr>
     </table>
-    <mat-paginator [length]="resultsLength" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="page($event)"></mat-paginator>
+    <mat-paginator #matPaginatorIngreso [length]="resultsLength" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="page($event)"></mat-paginator>
   </div>
 
 </div>
