@@ -8,7 +8,7 @@ import { MatProgressBarModule, MatProgressBar } from '@angular/material/progress
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatSelectModule, MatPaginatorModule } from '@angular/material';
+import { MatSelectModule, MatPaginatorModule, MatButtonModule } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 import { FechaMatComponent } from './fecha-mat/fecha-mat.component';
 import { MatInputModule, MatNativeDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
@@ -28,6 +28,8 @@ import { CompFindEmpleadoComponent } from './comp-find-empleado/comp-find-emplea
 import { CompFindFilialComponent } from './comp-find-filial/comp-find-filial.component';
 import { CompFindTipoDocumentoSunatSoloComponent } from './comp-find-tipo-documento-sunat-solo/comp-find-tipo-documento-sunat-solo.component';
 import { CompFindPeriodoAlmacenComponent } from './comp-find-periodo-almacen/comp-find-periodo-almacen.component';
+import { CompFindProductoAlmacenComponent } from './comp-find-producto-almacen/comp-find-producto-almacen.component';
+import { CompProductoCarritoComponent } from './comp-producto-carrito/comp-producto-carrito.component';
 
 
 @NgModule({
@@ -36,6 +38,7 @@ import { CompFindPeriodoAlmacenComponent } from './comp-find-periodo-almacen/com
     ReactiveFormsModule,
     FormsModule,
     
+    MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
@@ -69,7 +72,9 @@ import { CompFindPeriodoAlmacenComponent } from './comp-find-periodo-almacen/com
     CompFindEmpleadoComponent,
     CompFindFilialComponent,
     CompFindTipoDocumentoSunatSoloComponent,
-    CompFindPeriodoAlmacenComponent,    
+    CompFindPeriodoAlmacenComponent,
+    CompFindProductoAlmacenComponent,
+    CompProductoCarritoComponent,    
   ],
   exports: [
     MatDatepickerModule,
@@ -87,7 +92,9 @@ import { CompFindPeriodoAlmacenComponent } from './comp-find-periodo-almacen/com
     CompFindEmpleadoComponent,
     CompFindFilialComponent,
     CompFindTipoDocumentoSunatSoloComponent,
-    CompFindPeriodoAlmacenComponent
+    CompFindPeriodoAlmacenComponent,
+    CompFindProductoAlmacenComponent,
+    CompProductoCarritoComponent
   ]
 })
 

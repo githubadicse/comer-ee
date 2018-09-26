@@ -1,4 +1,4 @@
-<div class="m-contenedor">
+<div class="m-contenedor w-100">
   <div class="card">
     <div class="card-header">
       BUSCAR PRODUCTO
@@ -13,15 +13,6 @@
             <input autocomplete="off" autofocus matInput [formControl]="_formControlName" placeholder="Buscar: " [(value)]="parametroBuscar">
           </mat-form-field>
           </form>
-        </div>
-        <div class="col-md-6 text-right">
-          <mat-form-field class="w-100">
-            <mat-select appNextfocus placeholder="Almacen" [compareWith]="compareAlmacen" [(value)]="IdalmacenPreSeleccionado" (selectionChange)="changeSelectAlamcen($event.value)" [disabled]="disabledAlamcen">
-              <mat-option *ngFor="let item of listAlmacen" [value]="item">
-                {{item.dscalmacen}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
         </div>
       </div>
     </div>
@@ -44,16 +35,15 @@
                   <tr #rowSelect *ngFor="let row of listProductos; let i=index" [ngClass]="{'selected': indexSelect === i}" (click)="indexSelect=i; resEmit(i)">
                     <td>
                       <div>
-                        <p class="titulo">{{row.producto.dscproducto}}</p>
-                        <span class="subtitulo">{{row.almacen.dscalmacen | lowercase}} | categoria: {{row.producto.categoria.dsccategoria |
-                          lowercase}} | marca: {{row.producto.marca.dscmarca | lowercase}}</span>
+                        <p class="titulo">{{row.dscproducto}}</p>
+                        <span class="subtitulo">categoria: {{row.categoria.dsccategoria | lowercase}} | marca: {{row.marca.dscmarca | lowercase}}</span>
                       </div>
                     </td>
                     <td>
-                      <h3>{{ row.stockactual }} {{ row.producto.unidadmedida.abrunidadmedida }}</h3>
+                      <h3> {{ row.categoria.dsccategoria | lowercase }} </h3>
                     </td>
                     <td>
-                      <h3> {{ row.producto.precio1 | number:'0.2' }} </h3>
+                      <h3>{{ row.unidadmedida.abrunidadmedida }}</h3>
                     </td>
                   </tr>
                 </tbody>                
@@ -67,7 +57,7 @@
           <!-- <span class="float-left p-2 d-inline">{{totalRecords}} Registros</span> -->
           <mat-paginator #paginatorProducto
             [length]="totalRecords"
-            [pageSize]="rows"            
+            [pageSize]="rows"
             (page)="page($event)">
           </mat-paginator>
 

@@ -1,11 +1,31 @@
 
-* {
+/* * {
     font-size: 11px;
     line-height: 2;
-  }
+  } */
 
 
 #datos{
     border: 1px solid #E3DADA;
     padding: 5px;
+}
+
+.btn-carrito{
+    float: right;
+    top: 25px;
+    z-index: 50;
+    right: 10px;
+    position: relative;
+}
+
+.btn-listo-carrito {
+    top: 100px;
+    z-index: 50;
+    right: -40px;
+    position: relative;
+}
+
+.app-list-producto {
+    width: 100%;
+    float: left;
 }
