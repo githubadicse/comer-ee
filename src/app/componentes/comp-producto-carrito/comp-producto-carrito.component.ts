@@ -32,7 +32,7 @@ export class CompProductoCarritoComponent implements OnInit {
       
       setTimeout(() => {
         this.renderer.removeClass(this.countCarrito.nativeElement, 'animationAddItem');
-      }, 600);
+      }, 400);
     })
 
   }

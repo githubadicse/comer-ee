@@ -56,8 +56,7 @@ export class SigninComponent implements OnInit {
          localStorage.setItem("anno",annoQaliwarma);
          localStorage.setItem("numeroEntrega",numeroEntrega);
          localStorage.setItem("filial",idfilial)
-         this.router.navigate ( [ '/' ] );
-
+         this.router.navigate ( [ '/' ] );         
 
 
        } else {

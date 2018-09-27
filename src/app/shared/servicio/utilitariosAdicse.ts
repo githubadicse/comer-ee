@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, RequestOptions} from  '@angular/http';
 import { HttpHeaders } from '@angular/common/http';
+import { MatPaginator } from '@angular/material/paginator';
 @Injectable()
 export class UtilitariosAdicse {
 
@@ -169,6 +170,6 @@ export class UtilitariosAdicse {
           text += possible.charAt(Math.floor(Math.random() * possible.length));
       
         return text;
-    }
+    }  
   
 }
