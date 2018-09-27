@@ -12,7 +12,7 @@ export class GuiaRemisionService {
 
   getGuiaRemisionPorSerieNumero(serie: number, numero: number) {
 
-    let url = this.configService.getUrlSecurityRes("guiaremision", "guiaRemisionPorSerieNumero");
+    let url = this.configService.getUrlSecurityRes("guiaremision", "guiaRemisionPorSerieNumeroReport");
     //let params = {serie:serie,numero:numero};
     let header = this.configService.getHeaderHttpClientForm();
 
@@ -27,7 +27,7 @@ export class GuiaRemisionService {
 
   getGuiaRemisionPorItemAnno(iditem: string, anno: number, numeroEntrega:number) {
 
-    let url = this.configService.getUrlSecurityRes("guiaremision", "guiasRemisionPorItem");
+    let url = this.configService.getUrlSecurityRes("guiaremision", "guiasRemisionPorItemReport");
     //let params = {serie:serie,numero:numero};
     let header = this.configService.getHeaderHttpClientForm();
 
@@ -43,7 +43,7 @@ export class GuiaRemisionService {
 
   getGuiaRemisionPorCodigoModular(anno: number, numeroEntrega: number, codigoModular: string) {
 
-    let url = this.configService.getUrlSecurityRes("guiaremision", "guiaRemisionPorCodigoModular");
+    let url = this.configService.getUrlSecurityRes("guiaremision", "guiaRemisionPorCodigoModularReport");
     //let params = {serie:serie,numero:numero};
     let header = this.configService.getHeaderHttpClientForm();
 

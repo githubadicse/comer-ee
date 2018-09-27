@@ -1,4 +1,4 @@
-<div >
+<div [hidden]="showChild" >
   <h3>
     {{titulo}}
   </h3>
@@ -6,7 +6,8 @@
 
 
   <div style="height: 70%;">
-    <button type="button" class="btn btn-danger btn-circle"  (click)="create()">
+      <!-- (click)="create()" -->
+    <button type="button" class="btn btn-danger btn-circle"  [routerLink]="['./edicion']" (click)="showChild=true">
       <i class="fa fa-plus"></i>
     </button>
     <button type="button" class="btn btn-info btn-circle" [routerLink]="['./productoedicion', {id:0}]">
@@ -90,11 +91,11 @@
         [ngClass]="{'highlight': selectedRowIndex == row.iding001}"
         (click)="highlight(row)"></tr>
     </table>
-    <mat-paginator [length]="resultsLength" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="page($event)"></mat-paginator>
+    <mat-paginator #matPaginatorIngreso [length]="resultsLength" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="page($event)"></mat-paginator>
   </div>
-
-
 
 </div>
 
-
+<div>
+  <router-outlet (activate)='onActivateChild()' (deactivate)='onDeactivateChild()'></router-outlet>
+</div>

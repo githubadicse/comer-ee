@@ -1,34 +1,28 @@
+
 ::ng-deep .mat-autocomplete-panel {
     display: table;
 }
 
 .mat-option {
-  height: 60px;  
-  vertical-align: middle;
-  border-bottom: 1px solid #bbbbbb;  
-  line-height: initial;  
-  white-space: normal;
-}
+    height: 60px;  
+    vertical-align: middle;
+    border-bottom: 1px solid #bbbbbb;  
+    line-height: initial;  
+    white-space: normal;
+  }
 
-.mat-option .titulo { font-size: 15px; font-weight: 700; margin: 0; }
-.mat-option .subtitulo { font-size: 12px; font-weight: 400; color: grey; margin: 0; }
-.mat-option .precio { font-size: 17px; font-weight: 700; vertical-align: middle; margin-top:15;}
+  .mat-option .titulo { font-size: 15px; font-weight: 700; margin: 0; }
+  .mat-option .subtitulo { font-size: 12px; font-weight: 400; color: grey; margin: 0; }
+  .mat-option .precio { font-size: 17px; font-weight: 700; vertical-align: middle; margin-top:15;}
+  
+  .mat-option.mat-active {
+      background: #ffff7c;
+  }
 
-.mat-option.mat-active {
-    background: #ffff7c;
-}
-
-.autocomplete-footer{    
-    background: white;            
-    line-height: 43px;
-    height: 45px;
-    // padding-left: 18px;
+.autocomplete-footer{
     box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
 }
 
 .mat-paginator {
-    height: 45px;
-    background: linear-gradient(to bottom, #f6f7f9 0%, #ebedf0 100%);
+    background: linear-gradient(to bottom, #f6f7f9 0%, #ebedf0 100%);      
 }
-
-::ng-deep .mat-paginator-range-actions { align-items: normal !important;}

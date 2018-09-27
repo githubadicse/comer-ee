@@ -1,0 +1,30 @@
+<h3>Control producto carrito</h3>
+
+<div class="row">
+    <div class="col-8">
+        <div class="card">
+            <div class="card-header">
+                <h4>Detalle del producto</h4>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="form">
+                    <app-comp-find-producto-list (getObject)="_getObjectList($event)" [_formControlName]="this.form.get('producto')"></app-comp-find-producto-list>
+                    <input type="text" placeholder="Cantidad" formControlName="cantidad">
+                    <input type="text" placeholder="Lote" formControlName="lote">
+                    <input type="date" placeholder="Fecha Vencimiento" formControlName="fechavencimiento">
+                    <br><br>
+                    <button (click)="addCarrito()">Agregar</button>
+                </form>
+            </div>            
+        </div>
+    </div>
+</div>
+
+<br>
+<hr>
+<br>
+
+
+<app-comp-producto-carrito></app-comp-producto-carrito>
+
+<br>

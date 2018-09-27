@@ -57,6 +57,7 @@ export class SigninComponent implements OnInit {
         
          this.router.navigate ( [ '/session/confirmarpass' ] );
 
+
        } else {
          localStorage.clear();
          

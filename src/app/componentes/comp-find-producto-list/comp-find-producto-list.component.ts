@@ -9,6 +9,7 @@ import { MatAutocompleteTrigger } from '@angular/material';
 import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
 import { ProductoService } from '../../modulo-sistema-config/tablas/producto/service/producto.service';
 import { ProductoModel } from '../../modulo-sistema-config/tablas/producto/model/producto.model';
+import { Observable } from 'rxjs/Observable';
 
 export class buscarMasDe {
   public parametro: string = null;
@@ -25,6 +26,7 @@ export class buscarMasDe {
 
 
 export class CompFindProductoListComponent implements OnInit {
+
   @Input()
   myControl = new FormControl();
 
@@ -44,12 +46,17 @@ export class CompFindProductoListComponent implements OnInit {
 
     
   public producto: ProductoModel;
+  public productosModelOption: Observable<any[]>;
+
   public data:any;
   public esCodigoBarra:boolean = false; 
   public verFooter: boolean = false;
   
 
-  constructor( private crudServiceProducto: ProductoService  ) {
+  constructor( private crudServiceProducto: ProductoService  ) {    
+  }
+  
+  ngOnInit() {        
     if (this._formControlName == undefined) {
       this._formControlName = this.myControl;
     }
@@ -60,15 +67,16 @@ export class CompFindProductoListComponent implements OnInit {
         debounceTime(500),
         distinctUntilChanged(),
         map(value => value)
-    ).subscribe(res => this.filtrar(res));
+    ).subscribe(res => this.filtrar(res));    
+  
   }
- 
-  private filtrar(filterValue): void {    
+
+  private filtrar(filterValue) {        
     if (typeof filterValue !== 'string') {return;}   
     if (filterValue === '') { this.autocomplete.closePanel(); return; }
 
     this.crudServiceProducto.getProductoByParametro(filterValue, this.idalmacen).subscribe(
-      (res: any) => {
+      (res: any) => {        
         this.data = res;
 
         this.verFooter = this.data.length > 2 ? true : false;
@@ -85,9 +93,7 @@ export class CompFindProductoListComponent implements OnInit {
         this.esCodigoBarra = false;
       }
     )
-  }
 
-  ngOnInit() {    
   }
 
   public checkCodigoBarra(): void {    
@@ -101,8 +107,8 @@ export class CompFindProductoListComponent implements OnInit {
     }
   }
 
-  public _displayWith(val: any): string {
-    return val ? val.producto.dscproducto : '';
+  public _displayWith(val: ProductoModel): string {
+    return val ? val.dscproducto : '';
   }
 
 

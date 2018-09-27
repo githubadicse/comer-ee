@@ -9,14 +9,14 @@ import { map } from 'rxjs/internal/operators/map';
 import { ProveedorclienteModel } from '../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model';
 import { ProveedorclientedireccionModel } from '../../modulo-sistema-config/tablas/proveedorcliente/proveedorclientedireccion-model';
 import { ConfigService } from '../../shared/config.service';
-import { of } from 'rxjs';
+
 
 
 @Component({
   selector: 'app-comp-find-proveedor-cliente-list',
   templateUrl: './comp-find-proveedor-cliente-list.component.html',
   styleUrls: ['./comp-find-proveedor-cliente-list.component.scss'],
-  providers: [CrudHttpClientServiceShared]
+  providers: [CrudHttpClientServiceShared]  
 })
 export class CompFindProveedorClienteListComponent implements OnInit {
 
@@ -39,7 +39,8 @@ export class CompFindProveedorClienteListComponent implements OnInit {
   getObject: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginadorHost: MatPaginator;
+
 
   public verFooter: boolean = false;
 
@@ -55,12 +56,12 @@ export class CompFindProveedorClienteListComponent implements OnInit {
   }
 
   ngOnInit() {
+    
+    this.paginadorHost._intl.nextPageLabel = '';
+    this.paginadorHost._intl.previousPageLabel = '';        
+    this.paginadorHost.hidePageSize=true;
+    
 
-    this.paginator._intl.itemsPerPageLabel = '';
-    this.paginator._intl.nextPageLabel = '';
-    this.paginator._intl.previousPageLabel = '';    
-    this.paginator._intl.firstPageLabel = '';    
-    this.paginator.hidePageSize=true; 
 
 
     if (this._formControlName == undefined) {
@@ -79,7 +80,7 @@ export class CompFindProveedorClienteListComponent implements OnInit {
         this.pageMostar = 0;
         this.rows = 5;
         this.ultimoParametroBuscado = res;
-        this.paginator.pageIndex = 0;
+        this.paginadorHost.pageIndex = 0;
         this.filtrar(res);
       });
 

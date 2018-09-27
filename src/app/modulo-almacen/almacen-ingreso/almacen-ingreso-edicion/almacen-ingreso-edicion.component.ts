@@ -27,6 +27,11 @@ import { ProveedorclienteModel } from '../../../modulo-sistema-config/tablas/pro
 import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
 import swal from 'sweetalert2';
 import { NumeradorModel } from '../../../modulo-sistema-config/tipodocumento/numerador.model';
+import { LocalStorageManagerService } from '../../../shared/servicio/local-storage-manager.service';
+import { Subscription } from 'rxjs';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AlmacenIngresoEdicionDialogComponent } from './almacen-ingreso-edicion-dialog/almacen-ingreso-edicion-dialog.component';
+import { MSJ_SUCCESS_TOP_END } from '../../../shared/config.service.const';
 
 @Component({
   selector: 'ad-almacen-ingreso-edicion',
@@ -36,8 +41,11 @@ import { NumeradorModel } from '../../../modulo-sistema-config/tipodocumento/num
     ConfigService,
     PeriodoalmacenService]
 })
+
 export class AlmacenIngresoEdicionComponent implements OnInit {
+  showChild: boolean = false;
   showEdicion: boolean = true;
+  procesando: boolean = false;
   msgPopup: any[];
   id: number;
   sub: any;
@@ -84,6 +92,14 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
   @ViewChild('codigobarra') codigobarraControl: ElementRef;
   @ViewChild('cantidad_') cantidadControl: ElementRef;
 
+
+  // listar productos
+  private keyLocalStorage: string = 'carrito'; // key datos del localstorage key = 'carrito';
+  private countLocalStorageSuscription: Subscription;
+  public ListProductosIngresar: any[] = [];
+  public displayedColumns: string[] = ['#', 'Producto', 'Lote', 'F.Vencimiento', 'Cantidad', '-'];
+  private productoSeleccionado: ProductoModel;
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -95,12 +111,14 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     private periodoalmacenService: PeriodoalmacenService,
     private configService: ConfigService,
     private changeDetectorRef: ChangeDetectorRef,
-    private crudHttpClientServiceShared:CrudHttpClientServiceShared
+    private crudHttpClientServiceShared:CrudHttpClientServiceShared,
+    private localStorageManagerService: LocalStorageManagerService,
 
-
+    private dialog: MatDialog
   ) { 
 
     this.buildForm();
+    this.loadDataLocalStorage();    
   }
 
   ngAfterViewChecked() {
@@ -137,7 +155,6 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
     this.idFilial = this.configService.getIdFilialToken();
 
-
     this.sub = this.route.params.subscribe(
       params => {
         this.id = +params['id'];
@@ -162,10 +179,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     } else {
       this.almacenIngresoModel = new AlmacenIngresoModel();
 
-    }
-    ;
-
-
+    };
 
     this.doAsyncTask().then(
       (val) => console.log(val),
@@ -174,12 +188,13 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
     setTimeout(() => {
       //this.codigobarraControl.nativeElement.focus();
-
     }, 500);
 
+
+    this.suscribeServiceLocalStorage();// susbcribe al servicio del localstorage
   }
 
-
+  
   buildForm() {
 
     this.ingresoForm = this.formBuilder.group({
@@ -218,34 +233,34 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     let periodo = this.getPeriodoAlmacen();
 
     //tipo documento provisional
-    let numeradors = [new NumeradorModel(1,1,1,null)]
-    let tipodocumento = new TipodocumentoModel(1,"FACTURA","01", numeradors )
+    // let numeradors = [new NumeradorModel(1,1,1,null)]
+    // let tipodocumento = new TipodocumentoModel(1,"FACTURA","01", numeradors )
 
     let fecha:string = (this.ingresoForm.controls['fecha'].value).format("DD/MM/YYYY");
     this.ingresoForm.controls['fecha'].setValue(fecha);
-    this.ingresoForm.controls['periodoalmacen'].setValue(periodo);
-    this.ingresoForm.controls['tipodocumento'].setValue(tipodocumento);
+    // this.ingresoForm.controls['periodoalmacen'].setValue(periodo);
+    // this.ingresoForm.controls['tipodocumento'].setValue(tipodocumento);
 
     let hora = this.ingresoForm.controls['hora'].value + ":00";
     this.ingresoForm.controls['hora'].setValue(hora);
-    debugger;
-    let data = JSON.stringify(this.ingresoForm.value);
+
+    this.almacenIngresoModel =<AlmacenIngresoModel>this.ingresoForm.value; 
+    this.almacenIngresoModel.ing002s = this.almacenIngresoDetallesModel;
+    // let data = JSON.stringify(this.ingresoForm.value);
+    console.log(this.almacenIngresoModel);
+    const data = JSON.stringify(this.almacenIngresoModel);
+
     this.crudHttpClientServiceShared.create(data, "ing001", "create").subscribe(
-
       res => {
-
       },
       error => console.log(error),
       () => {
-        swal({
-          position: 'top-end',
-          type: 'success',
-          title: 'Registro Creado',
-          showConfirmButton: false,
-          timer: 1500
-        })
+        this.localStorageManagerService.removeAllLocalSotrage(this.keyLocalStorage);
+        this.ingresoForm.reset();
+
+        swal(MSJ_SUCCESS_TOP_END);        
       }
-    )    
+    )
   }
 
   addCarrito() {
@@ -288,9 +303,6 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     this.almacenIngresoModel.ing002s.push(this.almacenIngresoDetalleModel);
 
     this.almacenIngresoModel.ing002s = this.almacenIngresoModel.ing002s.slice();
-
-
-
 
     this.codigobarraControl.nativeElement.value = "";
     this.productoModel = null;
@@ -532,4 +544,90 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
   }
 
+
+  //// productos a agregar
+  //////////////////////////
+
+  private suscribeServiceLocalStorage(): void {
+    
+    this.initCountLocalStorage();
+
+    this.countLocalStorageSuscription = this.localStorageManagerService.countItem$
+    .subscribe(res =>{
+      // cargar datos del carrito a la lista
+      this.loadDataLocalStorage();
+    });
+  }
+
+  private initCountLocalStorage (): void {
+    this.localStorageManagerService.countInitLocalStorage(this.keyLocalStorage);
+  }
+
+  
+  public deleteRowLocalStorage(index): void {
+    this.localStorageManagerService.removeItemLocalStorage(this.keyLocalStorage,index);
+  }
+
+  private loadDataLocalStorage(): void {
+    // let lista:AlmacenIngresoDetalleModel[]=[];
+    this.ListProductosIngresar = this.localStorageManagerService.getDataLocalStorage(this.keyLocalStorage) || [];
+    
+    //seteamos
+    this.almacenIngresoDetallesModel = [];
+    this.ListProductosIngresar.map(x => {
+      let item = new AlmacenIngresoDetalleModel();
+      item.fechavencimiento = x.fechavencimiento;
+      item.cantidad = x.cantidad;
+      item.nrolote = x.lote;
+      item.producto = x.producto;      
+      this.almacenIngresoDetallesModel.push(item);
+    })
+
+    console.log(this.almacenIngresoDetallesModel);
+    // console.log(<AlmacenIngresoDetalleModel[]>this.ListProductosIngresar);
+  }
+
+  _getObjectProducto(event) {
+    this.productoSeleccionado = event;
+    this.openDialog();
+    console.log(this.productoSeleccionado);
+  }
+
+  _getObJectProductoListIngresar(row: any) {
+    this.productoSeleccionado = <ProductoModel>row.producto;
+    this.openDialog(row);
+    console.log(this.productoSeleccionado);
+  }
+
+  
+  // row: el array que contiene cantidad, fv, lote , etc, es obligatorio en el caso de editar
+  openDialog(row: any = null) {
+    const dialogConfig = new MatDialogConfig();
+
+    // dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '350px';
+
+    // pasa ProductoModel selecionado
+    dialogConfig.data = {
+      producto: this.productoSeleccionado,
+      cantidad: row ? row.cantidad : '',
+      lote: row ? row.lote : '',
+      fechavencimiento: row ? row.fechavencimiento : ''
+    }
+    
+    const dialogRef = this.dialog.open(AlmacenIngresoEdicionDialogComponent,dialogConfig);
+
+    // subscribe al cierre y obtiene los datos
+    dialogRef.afterClosed().subscribe(
+        data => {
+          if (!data) return;
+          this.localStorageManagerService.setDataLocalStorage(this.keyLocalStorage,data);
+        }
+    ); 
+  }
+
+
+
+  ////////////////////
 }

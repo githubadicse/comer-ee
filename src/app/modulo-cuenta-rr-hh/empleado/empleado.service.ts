@@ -27,7 +27,6 @@ export class EmpleadoService {
 
   // muestra todos los empleados o filtra por filial si se especifica idfilial
   getByCondicionFilial(idfilial: number ):Observable<EmpleadoModel[]> {    
-    debugger;
     const eventoController: string = idfilial === undefined ? 'getall' : 'findByCondicionFilial';
     let url = this.configService.getUrlSecurityRes("empleado", eventoController);
     //let header = this.configService.getHeaderHttpClientGet();

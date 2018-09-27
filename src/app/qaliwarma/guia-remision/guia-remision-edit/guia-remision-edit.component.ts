@@ -101,6 +101,11 @@ export class GuiaRemisionEditComponent implements OnInit {
 
 
    getGuiaRemisionPorCodigoModular (){
+    let d = new Date();
+    let a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style.display = "none";
+    let nombre = "VOLUMEN -"+this.anno + "-" + this.numeroEntrega + "-" + d.getDate()+"-"+d.getHours()+"-"+d.getMinutes()+"-"+d.getSeconds();
     this.guiaRemisionService.getGuiaRemisionPorCodigoModular ( this.anno,this.numeroEntrega,this.codigoModular ).subscribe(
 
       res => {
@@ -119,7 +124,12 @@ export class GuiaRemisionEditComponent implements OnInit {
         let blob = new Blob([res.body], { type: mediaType });
         //let file = new window.Blob([res.body], {type: 'application/pdf'});
         var fileURL = URL.createObjectURL(blob);
+        //a.href = fileURL;
+        //a.download = nombre +".pdf";
+        //a.click();        
+        //window.URL.revokeObjectURL(fileURL) ;
         window.open(fileURL);
+
       }
     )
    }
