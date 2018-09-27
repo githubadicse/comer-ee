@@ -73,8 +73,10 @@
 
 
           <span class="mobile-label">Accion</span>
-
-          <i (click)="edit(element)" class="fa fa-edit fa-1x" style="cursor: pointer;font-size:16px;color:blue ; text-align: center;"
+          <!-- <i (click)="edit(element)"  class="fa fa-edit fa-1x" style="cursor: pointer;font-size:16px;color:blue ; text-align: center;"
+            aria-hidden="true" data-toggle="tooltip" title="Editar">
+          </i> -->          
+          <i [routerLink]="['./edicion', {id: element.iding001}]"  class="fa fa-edit fa-1x" style="cursor: pointer;font-size:16px;color:blue ; text-align: center;"
             aria-hidden="true" data-toggle="tooltip" title="Editar">
           </i>&nbsp;
           <i (click)="delete(element)" class="fa fa-trash fa-1x" style="cursor: pointer;font-size:16px;color:red ; text-align: center;"

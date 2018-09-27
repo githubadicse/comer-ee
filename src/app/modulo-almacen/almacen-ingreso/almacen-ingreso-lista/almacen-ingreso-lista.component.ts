@@ -145,7 +145,7 @@ export class AlmacenIngresoListaComponent implements OnInit {
     let idAlmacen:number = e.idalmacen;
     this._filterPage = JSON.stringify( this.utilitariosAdicse.Tablefilter(this._filter,idAlmacen,'almacen.idalmacen','equals'  ));
     this.Typeahead.next("dato");
-    this._merge.subscribe(data => this.almacenIngresosModel = data);    
+    this._merge.subscribe(data => {this.almacenIngresosModel = data, console.log(data);});    
     
   }
 

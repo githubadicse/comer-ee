@@ -25,6 +25,9 @@ export class FechaMatComponent implements OnInit {
   @Input()
   _valueInicial:any
 
+  @Input()
+  _required:boolean = false;
+
   @Output()
   getObject: EventEmitter<String> = new EventEmitter();  
 

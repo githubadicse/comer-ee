@@ -11,10 +11,21 @@
       <form [formGroup]="form">
       <div class="row">
         <div class="col-12">
-          <div class="float-right">
-            <mat-slide-toggle [checked]="checkedActivo" (change)="checkedActivo=$event.checked">Activo</mat-slide-toggle>
-          </div>
-          <h4>Datos Basicos del Producto/Articulo</h4>          
+          
+          <!-- titulo -->
+          <div class="row">
+            <div class="col-md-3">
+                <h4>Datos Basicos</h4>          
+            </div>
+            <div class="col-md-9">
+                <div class="float-right">
+                    <mat-slide-toggle class="pr-1" [checked]="checkedExigeLote" (change)="checkedExigeLote=$event.checked">Exige Lote</mat-slide-toggle>
+                    <mat-slide-toggle class="pr-1" [checked]="checkedExigeVencimiento" (change)="checkedExigeVencimiento=$event.checked">Exige Vencimineto</mat-slide-toggle>
+                    <mat-slide-toggle class="" [checked]="checkedActivo" (change)="checkedActivo=$event.checked">Activo</mat-slide-toggle>
+                </div>
+            </div>
+          </div>                    
+
           <hr>
           <br>          
         </div>                        
@@ -67,8 +78,8 @@
 
             <mat-form-field class="w-100">
               <input matInput placeholder="Stock Minimo" formControlName="stockminimo">
-            </mat-form-field>
-            
+            </mat-form-field>            
+
         </div>                   
       </div>
 
