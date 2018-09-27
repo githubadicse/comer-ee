@@ -22,7 +22,9 @@ export class CompFindPeriodoAlmacenComponent implements OnInit {
   @Output()
   getObject: EventEmitter<PeriodoalmacenModel> = new EventEmitter();  
 
-  public ListPeriodoAlmacen: PeriodoalmacenModel[] = [];  
+  public ListPeriodoAlmacen: PeriodoalmacenModel[] = []; // a este modelo se le agrega el "nommes" que no esta en el modelo original
+  public ListPeriodoAlmacenInterno: PeriodoalmacenModel[] = []; // sin  "nommes"
+    
 
   constructor(private crudService: CrudHttpClientServiceShared) { }
 
@@ -35,11 +37,12 @@ export class CompFindPeriodoAlmacenComponent implements OnInit {
   }
 
   private loadListPeriodoAlmacen(): void {    
-    this.crudService.getall('periodoalmacen', 'getall').subscribe((res: any) => {
-      this.ListPeriodoAlmacen = <PeriodoalmacenModel[]>res      
+    this.crudService.getall('periodoalmacen', 'getall').subscribe((res: any) => {      
+      this.ListPeriodoAlmacen = <PeriodoalmacenModel[]>res;
+      // this.ListPeriodoAlmacen = this.ListPeriodoAlmacenInterno.slice();
 
       // si no se asigna a _formControlName selecciona la primera opcion
-      if (!this._formControlName.value){
+      if (!this._formControlName.value){        
         this._formControlName.setValue(this.ListPeriodoAlmacen[0]);
       }
 

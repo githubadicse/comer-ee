@@ -14,9 +14,9 @@
       <mat-form-field class="w-100">
         <input matInput autocomplete="off"
             placeholder="Lote"
-            formControlName="lote">
+            formControlName="lote" [required]="producto.exigeLote">
       </mat-form-field>      
-      <app-fecha-mat (getObject)="_getObjectFecha($event)" [_formControlName]="this.form.get('fechavencimiento')" _placeholder="Fecha de Vencimiento"></app-fecha-mat>      
+      <app-fecha-mat (getObject)="_getObjectFecha($event)" [_formControlName]="this.form.get('fechavencimiento')" _placeholder="Fecha de Vencimiento" [_required]="producto.exigeVencimiento"></app-fecha-mat>      
  
 </mat-dialog-content>
 

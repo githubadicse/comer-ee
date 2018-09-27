@@ -26,7 +26,7 @@
                                         <app-comp-find-proveedor-cliente-list agruparPorDireccion="true" [_formControlName]="this.ingresoForm.get('proveedorcliente')"></app-comp-find-proveedor-cliente-list>
                         
                                         <!-- periodo del almacen, periodo de trabajo -->
-                                        <app-comp-find-periodo-almacen _disabled="true"></app-comp-find-periodo-almacen>
+                                        <app-comp-find-periodo-almacen _disabled="true" [_formControlName]="this.ingresoForm.get('periodoalmacen')"></app-comp-find-periodo-almacen>
                         
                                         <!-- fecha de ingreso de la mercaderia al almacen -->
                                         <app-fecha-mat _placeholder="FECHA INGRESO" [_formControlName]="this.ingresoForm.get('fecha')"></app-fecha-mat>
@@ -121,11 +121,23 @@
 
                     <ng-container matColumnDef="-">
                         <th mat-header-cell *matHeaderCellDef class="m-0 bg-dark text-white" style="width: 65px;"> - </th>
-                        <td mat-cell *matCellDef="let element; let i=index" class="w-10">
-                            <i class="fa fa-trash-o cursor pr-1" aria-hidden="true" (click)="deleteRowLocalStorage(i)"></i>
-                            <i class="fa fa-pencil cursor" aria-hidden="true" (click)="_getObJectProductoListIngresar(element)"></i>
+                        <td mat-cell *matCellDef="let element; let i=index" class="w-10 position-relative">
+                            <div>
+                                <i class="fa fa-pencil cursor pr-1" aria-hidden="true" (click)="_getObJectProductoListIngresar(element)"></i>
+                                <i class="fa fa-trash-o cursor" aria-hidden="true" (click)="rowIndexCondirmDelete = i"></i>
+                            </div>          
+
+                            <!-- mesaje de confirmacion para borrar-->
+                            <div class="rowConfirmDelete" [ngClass]="{'visible selected': rowIndexCondirmDelete === i}">
+                                <div>                                    
+                                    <button mat-button color="accent" (click)="deleteRowLocalStorage(i)">Borrar</button>
+                                    <button mat-button (click)="rowIndexCondirmDelete = null">Cancelar</button>
+                                </div>
+                            </div>
+                            <!-- mesaje de confirmacion para borrar-->
+
                         </td>
-                    </ng-container>
+                    </ng-container>                    
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -149,7 +161,7 @@
 
 <!-- componente buscar producto -->
 <!-- componetne carrito de productos -->
-<div [hidden]="!showChild">    
+<div *ngIf="showChild">    
     <h2>Listado de productos</h2>        
     <span class="text-secondary">Selecione los productos que van a ingresar.</span>
     

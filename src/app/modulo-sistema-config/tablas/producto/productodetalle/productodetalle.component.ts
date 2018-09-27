@@ -16,7 +16,7 @@ import { filter } from 'rxjs/internal/operators/filter';
 import { map } from 'rxjs/internal/operators/map';
 import { CrudHttpClientServiceShared } from '../../../../shared/servicio/crudHttpClient.service.shared';
 import { CategoriaArticuloModel } from '../../../../modulo-almacen/categoria-articulo/categoria-articulo-model';
-import { MSJ_SUCCESS } from '../../../../shared/config.service.const';
+import { MSJ_SUCCESS, MSJ_SUCCESS_TOP_END } from '../../../../shared/config.service.const';
 
 @Component({
   selector: 'ad-productodetalle',
@@ -51,6 +51,8 @@ export class ProductodetalleComponent implements OnInit {
 
   isEdit: boolean = false;
   checkedActivo: boolean = true;
+  checkedExigeLote: boolean = false;
+  checkedExigeVencimiento: boolean = false;
 
   ListImagenes: any = null;
   filesToUpload: Array<File> = [];
@@ -134,6 +136,8 @@ export class ProductodetalleComponent implements OnInit {
       codigobarras: [this.productoModel.codigobarras],
       activo: [this.checkedActivo, Validators.required],
       stockminimo: [this.productoModel.stockminimo, Validators.required],
+      exigeLote: [this.checkedExigeLote],
+      exigeVencimiento: [this.checkedExigeVencimiento],
     });
   }
 
@@ -156,6 +160,8 @@ export class ProductodetalleComponent implements OnInit {
     this.procesando = true;
 
     this.form.value.activo = this.checkedActivo === true ? 1 : 0;
+    this.form.value.exigeLote = this.checkedExigeLote;
+    this.form.value.exigeVencimiento = this.checkedExigeVencimiento;
     this.form.value.codigobarras = this.listCodigoBarras;
     this.form.value.idproducto = this.productoModel.idproducto || 0;
     this.productoModel = <ProductoModel>this.form.value;
@@ -172,7 +178,7 @@ export class ProductodetalleComponent implements OnInit {
 
         this.nuevoRegistro(); // resetear a valores iniciales
         this.prepararFormulario();
-        swal(MSJ_SUCCESS); 
+        swal(MSJ_SUCCESS_TOP_END); 
         this.procesando = false;
       }, 800);
     });
@@ -183,7 +189,7 @@ export class ProductodetalleComponent implements OnInit {
       setTimeout(() => {   
         this.uploadImagenes();// para subir imagen si lo hubiera
         
-        swal(MSJ_SUCCESS); 
+        swal(MSJ_SUCCESS_TOP_END); 
         this.procesando = false;
       }, 800);
     });
