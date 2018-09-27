@@ -111,7 +111,9 @@
   </div>
 
 
-
+  <div>
+    <router-outlet (activate)='onActivateChild()' (deactivate)='onDeactivateChild()'></router-outlet>
+  </div>
 </div>
 
 

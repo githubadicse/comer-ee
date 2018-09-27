@@ -9,8 +9,8 @@ export const AppRoutes: Routes = [
     component: AdminLayoutComponent,
     children: [
       {
-      path: '',
-      loadChildren: './dashboard/dashboard.module#DashboardModule',
+      path: 'qaliwarma/catalogo',
+      loadChildren: './qaliwarma/catalogo-producto/catalogo-producto.module#CatalogoProductoModule',
       canActivate: [AuthGuard]
       },
       {

@@ -9,16 +9,18 @@ import swal from 'sweetalert2';
 import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
 import { MomentDateAdapter } from '../../../shared/validators/MomentDateAdapter';
 import { UsuarioEmpleadoModel } from '../../../modulo-sistema-config/usuario/usuario-empleado-model';
+import { UsuarioService } from '../../../modulo-sistema-config/usuario/usuario.service';
+import { UsuarioModel } from '../../../modulo-sistema-config/usuario/usuario-model';
 
 
 @Component({
   selector: 'ad-empleado-edit',
   templateUrl: './empleado-edit.component.html',
   styleUrls: ['./empleado-edit.component.css'],
-  providers: [SharedService, CrudHttpClientServiceShared, MomentDateAdapter]
+  providers: [SharedService, CrudHttpClientServiceShared, MomentDateAdapter, UsuarioService]
 })
 export class EmpleadoEditComponent implements OnInit {
-
+  flagRefreshReturn: boolean = false;
   @Input() isVisible: boolean;
   @Input() accion: string;
   @Input() idElement: number;
@@ -38,8 +40,9 @@ export class EmpleadoEditComponent implements OnInit {
   color = 'accent';
   checked = false;
   disabled = false;
-
+  public usuarioModel: UsuarioModel[];
   constructor(private formBuilder: FormBuilder,
+    private usuarioService: UsuarioService,
     private sharedService: SharedService,
     private route: ActivatedRoute,
     private crudHttpClientServiceShared: CrudHttpClientServiceShared,
@@ -52,15 +55,16 @@ export class EmpleadoEditComponent implements OnInit {
   ngOnInit() {
     
     //this.setModel(this.empleadoModel,this.empleadoForm);
-    
+    this.getUsuario();
     if (this.idElement != 0) {
       this.getEdit();
     } else {
 
 
-
+     
       this.empleadoForm.get('activo').setValue(false);
       this.flag = true;
+     
     }
     //this.getEdit();
   }
@@ -119,7 +123,7 @@ export class EmpleadoEditComponent implements OnInit {
     this.empleadoForm.controls['fechaingreso'].setValue(fechaingreso);
     this.empleadoForm.controls['fechanacimiento'].setValue(fechanacimiento);
     this.empleadoForm.controls['usuarioempleados'].setValue(usuarioempleados);
-
+    this.flagRefreshReturn = true;
     let data = JSON.stringify(this.empleadoForm.value);
     this.crudHttpClientServiceShared.create(data, "empleado", "create").subscribe(
 
@@ -172,5 +176,15 @@ export class EmpleadoEditComponent implements OnInit {
 
     this.out_isVisible.emit(!this.isVisible);
   }
+
+  getUsuario() {
+    this.usuarioService.getUsuario()
+      .subscribe(
+        res => {
+          this.usuarioModel = res;
+        }
+      )
+  }
+
 
 }
