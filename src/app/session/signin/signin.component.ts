@@ -43,19 +43,26 @@ export class SigninComponent implements OnInit {
 
        if (y.token) {
          localStorage.setItem("token", y.token );
-         let idusuario = this.configService.getIdUsuarioToken();
+         let idusuario = this.configService.getIdUsuarioToken();         
          let idfilial = this.configService.getIdFilialToken();
          let numeroEntrega = this.configService.getNumeroEntrega();
          let annoQaliwarma = this.configService.getAnnoQaliwarma();
+         const countCambioPass = this.configService.getCntCambioPass() || 0;
 
          localStorage.setItem("currentUserName", y.user.username);
           console.log("usario que devuelve token",y.user);
+          console.log("Contador cambio clave ",countCambioPass);
          localStorage.setItem("idusuario", idusuario);
          localStorage.setItem("anno",annoQaliwarma);
          localStorage.setItem("numeroEntrega",numeroEntrega);
          localStorage.setItem("filial",idfilial)
         
-         this.router.navigate ( [ '/session/confirmarpass' ] );
+
+         if ( countCambioPass === 0 ) {
+           this.router.navigate ( [ '/session/confirmarpass' ] );
+         } else {
+          this.router.navigate ( [ '/' ] );
+         }
 
 
        } else {

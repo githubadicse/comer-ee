@@ -67,8 +67,8 @@ export class UsuarioEditComponent implements OnInit {
       clave: [this.usuarioModel.clave , Validators.required],
       activo: [this.checkedActivo , Validators.required],
       perfil: [this.usuarioModel.perfil , Validators.required],
-
-      filial: [this.usuarioModel.filial , Validators.required]
+      filial: [this.usuarioModel.filial , Validators.required],
+      cntCambioClave: null
     
     })
   }
