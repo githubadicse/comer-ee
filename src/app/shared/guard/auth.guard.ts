@@ -8,12 +8,11 @@ export class AuthGuard implements CanActivate {
     constructor(private router: Router) { }
 
     canActivate() {
-        if (localStorage.getItem('currentUserName')) {
-            
-            return true;
-        }
+
 
         this.router.navigate(['/session/signin']);
         return false;
+
+        
     }
 }

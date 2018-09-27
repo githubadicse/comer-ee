@@ -9,7 +9,7 @@ import { GrowlModule, DataTableModule, FileUploadModule, ConfirmDialogModule } f
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
-import { MatTableModule, MatSortModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatTableModule, MatSortModule, MatProgressSpinnerModule, MatSelectModule } from '@angular/material';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -38,7 +38,9 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatInputModule,
     MatButtonModule,
     ComponentesModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+ 
+    MatSelectModule
 
 
   ],
