@@ -233,17 +233,17 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     let periodo = this.getPeriodoAlmacen();
 
     //tipo documento provisional
-    let numeradors = [new NumeradorModel(1,1,1,null)]
-    let tipodocumento = new TipodocumentoModel(1,"FACTURA","01", numeradors )
+    // let numeradors = [new NumeradorModel(1,1,1,null)]
+    // let tipodocumento = new TipodocumentoModel(1,"FACTURA","01", numeradors )
 
     let fecha:string = (this.ingresoForm.controls['fecha'].value).format("DD/MM/YYYY");
     this.ingresoForm.controls['fecha'].setValue(fecha);
-    this.ingresoForm.controls['periodoalmacen'].setValue(periodo);
-    this.ingresoForm.controls['tipodocumento'].setValue(tipodocumento);
+    // this.ingresoForm.controls['periodoalmacen'].setValue(periodo);
+    // this.ingresoForm.controls['tipodocumento'].setValue(tipodocumento);
 
     let hora = this.ingresoForm.controls['hora'].value + ":00";
     this.ingresoForm.controls['hora'].setValue(hora);
-        
+
     this.almacenIngresoModel =<AlmacenIngresoModel>this.ingresoForm.value; 
     this.almacenIngresoModel.ing002s = this.almacenIngresoDetallesModel;
     // let data = JSON.stringify(this.ingresoForm.value);
@@ -548,7 +548,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
   //// productos a agregar
   //////////////////////////
 
-  private suscribeServiceLocalStorage() {
+  private suscribeServiceLocalStorage(): void {
     
     this.initCountLocalStorage();
 
@@ -559,16 +559,16 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     });
   }
 
-  private initCountLocalStorage () {
+  private initCountLocalStorage (): void {
     this.localStorageManagerService.countInitLocalStorage(this.keyLocalStorage);
   }
 
   
-  public deleteRowLocalStorage(index) {
+  public deleteRowLocalStorage(index): void {
     this.localStorageManagerService.removeItemLocalStorage(this.keyLocalStorage,index);
   }
 
-  private loadDataLocalStorage() {
+  private loadDataLocalStorage(): void {
     // let lista:AlmacenIngresoDetalleModel[]=[];
     this.ListProductosIngresar = this.localStorageManagerService.getDataLocalStorage(this.keyLocalStorage) || [];
     
@@ -593,17 +593,27 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     console.log(this.productoSeleccionado);
   }
 
+  _getObJectProductoListIngresar(row: any) {
+    this.productoSeleccionado = <ProductoModel>row.producto;
+    this.openDialog(row);
+    console.log(this.productoSeleccionado);
+  }
+
   
-  openDialog() {
+  // row: el array que contiene cantidad, fv, lote , etc, es obligatorio en el caso de editar
+  openDialog(row: any = null) {
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.disableClose = true;
+    // dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '350px';
 
     // pasa ProductoModel selecionado
     dialogConfig.data = {
-      producto: this.productoSeleccionado
+      producto: this.productoSeleccionado,
+      cantidad: row ? row.cantidad : '',
+      lote: row ? row.lote : '',
+      fechavencimiento: row ? row.fechavencimiento : ''
     }
     
     const dialogRef = this.dialog.open(AlmacenIngresoEdicionDialogComponent,dialogConfig);
