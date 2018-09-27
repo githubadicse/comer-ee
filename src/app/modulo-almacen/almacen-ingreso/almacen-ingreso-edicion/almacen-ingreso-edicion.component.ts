@@ -593,14 +593,15 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     console.log(this.productoSeleccionado);
   }
 
-  _getObJectProductoListIngresar(producto: ProductoModel) {
-    this.productoSeleccionado = producto;
-    this.openDialog();
+  _getObJectProductoListIngresar(row: any) {
+    this.productoSeleccionado = <ProductoModel>row.producto;
+    this.openDialog(row);
     console.log(this.productoSeleccionado);
   }
 
   
-  openDialog() {
+  // row: el array que contiene cantidad, fv, lote , etc, es obligatorio en el caso de editar
+  openDialog(row: any = null) {
     const dialogConfig = new MatDialogConfig();
 
     // dialogConfig.disableClose = true;
@@ -609,7 +610,10 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
     // pasa ProductoModel selecionado
     dialogConfig.data = {
-      producto: this.productoSeleccionado
+      producto: this.productoSeleccionado,
+      cantidad: row ? row.cantidad : '',
+      lote: row ? row.lote : '',
+      fechavencimiento: row ? row.fechavencimiento : ''
     }
     
     const dialogRef = this.dialog.open(AlmacenIngresoEdicionDialogComponent,dialogConfig);

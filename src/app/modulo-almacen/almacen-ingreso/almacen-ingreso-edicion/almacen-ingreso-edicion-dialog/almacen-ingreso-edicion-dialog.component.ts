@@ -12,6 +12,10 @@ export class AlmacenIngresoEdicionDialogComponent implements OnInit {
   
   form: FormGroup;  
   producto: ProductoModel;
+
+  private cantidad: string = '';
+  private lote: string = '';
+  private fechavencimiento: string = '';
   // fecha: string;
   constructor(
     private formBuilder: FormBuilder,
@@ -20,15 +24,18 @@ export class AlmacenIngresoEdicionDialogComponent implements OnInit {
   ) {
 
     this.producto = data.producto;
+    this.cantidad = data.cantidad;
+    this.lote = data.lote;
+    this.fechavencimiento = data.fechavencimiento;
    }
 
   ngOnInit() {
 
     this.form = this.formBuilder.group({
       producto: this.producto,
-      cantidad: ['', Validators.required],
-      lote: ['', Validators.required],
-      fechavencimiento: ['']
+      cantidad: [this.cantidad, Validators.required],
+      lote: [this.lote, Validators.required],
+      fechavencimiento: [this.fechavencimiento]
     });
   }
 

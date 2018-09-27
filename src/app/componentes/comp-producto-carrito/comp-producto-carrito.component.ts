@@ -18,8 +18,7 @@ export class CompProductoCarritoComponent implements OnInit {
   constructor(
     public localStorageManagerService: LocalStorageManagerService,
     private renderer: Renderer2, private el: ElementRef
-  ) { 
-            
+  ) {            
   }
 
   ngOnInit() {      
