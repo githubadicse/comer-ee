@@ -36,6 +36,7 @@ import { TranslateService } from '@ngx-translate/core';
         </a>
         <mat-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub'">
           <mat-list-item *ngFor="let childitem of menuitem.children" routerLinkActive="open">
+            
             <a *ngIf="childitem.state.split('/')[1]" [routerLink]="['/', menuitem.state, childitem.state.split('/')[0],childitem.state.split('/')[1]]" class="relative">{{ childitem.name | translate }}</a>
             <a *ngIf="!childitem.state.split('/')[1]" [routerLink]="['/', menuitem.state, childitem.state.split('/')[0] ]" class="relative">{{ childitem.name | translate }}</a>
           </mat-list-item>
