@@ -5,6 +5,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { ConfigService } from '../../shared/config.service';
 import { Observable } from 'rxjs';
 import { EmpleadoModel } from './empleado-model';
+import { UsuarioModel } from '../../modulo-sistema-config/usuario/usuario-model';
 
 @Injectable()
 export class EmpleadoService {
@@ -33,5 +34,6 @@ export class EmpleadoService {
     
     return this.http.get<EmpleadoModel[]>(url,{params:parametros });    
   }
+
 
 }

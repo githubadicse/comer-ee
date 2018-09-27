@@ -47,12 +47,13 @@ export class LocalStorageManagerService {
   }
 
   private buscarProducto(producto: ProductoModel): number {
-    let _index: number = null
-    this.ListaProductosCarrito
-        .filter(x => x.producto.idproducto === producto.idproducto)
+    let _index: number = null;
+    this.ListaProductosCarrito        
         .map((x,index) => {
-          console.log('producto ya existe: ', x);
-          _index = index;
+          if ( x.producto.idproducto === producto.idproducto ) {// producto ya existe en la lista            
+            _index = index;
+            return;
+          }          
       })
     
       return _index;

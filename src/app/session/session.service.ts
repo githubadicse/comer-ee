@@ -22,8 +22,7 @@ export class SessionService {
     let header = this.configService.getHeaderHttpClientFormPostOnlyTypeJson()
  
     let obj = JSON.stringify(model);
-    
-    debugger;
+        
     let data;
     return this.httpCliente.post<HttpResponse<any>>(tokenUrl,obj)
  

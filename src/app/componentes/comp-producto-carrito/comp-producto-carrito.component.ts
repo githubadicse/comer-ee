@@ -18,8 +18,7 @@ export class CompProductoCarritoComponent implements OnInit {
   constructor(
     public localStorageManagerService: LocalStorageManagerService,
     private renderer: Renderer2, private el: ElementRef
-  ) { 
-            
+  ) {            
   }
 
   ngOnInit() {      
@@ -32,7 +31,7 @@ export class CompProductoCarritoComponent implements OnInit {
       
       setTimeout(() => {
         this.renderer.removeClass(this.countCarrito.nativeElement, 'animationAddItem');
-      }, 600);
+      }, 400);
     })
 
   }

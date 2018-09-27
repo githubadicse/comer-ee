@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../../shared/config.service';
+import { UsuarioModel } from './usuario-model';
+import { Observable } from 'rxjs';
 
 
 
 @Injectable()
 export class UsuarioService {
 
-  constructor(private configService: ConfigService
+  constructor(private configService: ConfigService, private httpCliente:HttpClient
     , private http: HttpClient
 
   ) { }
@@ -35,4 +37,11 @@ export class UsuarioService {
 
   }
 
+
+  getUsuario():Observable<UsuarioModel[]>{
+    let url = this.configService.getUrlSecurityRes("usuario","getall");
+
+    return this.httpCliente.get<UsuarioModel[]>(url);
+    
+  }
 }

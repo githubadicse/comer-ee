@@ -362,6 +362,15 @@ getHeadersFormBlob() {
    
   }
 
+  getCntCambioPass():string{
+    let idToken = localStorage.getItem("token");
+
+    let decodificado = jwt_decode(idToken);
+
+    return decodificado['cntCambioClave'];
+   
+  }
+
   getIdFilialToken(){
     let idToken = localStorage.getItem("token");
 

@@ -6,6 +6,7 @@ export class ComponentesUtilitarios {
     
     constructor(){}
 
+    // componentes de buscar productos
     // calcula el alto del body y de la tabla para aumentar, si existe espacio, mas registros (filas) en la vista (tabla)
     public CalcRowsViewSizeScreen(heightSizeCardBody: number, heightSizeTable: number, paginator: MatPaginator): void {        
         if (paginator.getNumberOfPages() === paginator._pageIndex || heightSizeTable === 0) return;
@@ -16,6 +17,7 @@ export class ComponentesUtilitarios {
 
         if ( countRowsAdd > 0 ) {
         // determina si la cantidad de filas a insertar encaja en el alto del carbody (contenedor)
+        // el ancho de cada fila es de 55
         countRowsAdd = rowI + (countRowsAdd);       
         const RowsxSizeRow = Math.round(countRowsAdd * 55) - heightSizeCardBody;
         if ( RowsxSizeRow > 55) return;
