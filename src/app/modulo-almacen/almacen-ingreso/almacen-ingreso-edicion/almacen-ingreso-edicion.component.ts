@@ -107,14 +107,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
-    private sharedService: SharedService,
-    private almacenIngresoService: AlmacenIngresoService,
-    private codigobarraService: CodigobarraService,
-    private proveedorclienteService: ProveedorclienteService,
-    private periodoalmacenService: PeriodoalmacenService,
     private configService: ConfigService,
-    private changeDetectorRef: ChangeDetectorRef,
     private crudHttpClientServiceShared:CrudHttpClientServiceShared,
     private localStorageManagerService: LocalStorageManagerService,
 
@@ -125,35 +118,6 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     this.loadDataLocalStorage();    
   }
 
-  ngAfterViewChecked() {
-    this.changeDetectorRef.detectChanges();
-  }
-
-  // doAsyncTask() {
-  //   let error = false;
-  //   var promise = new Promise((resolve, reject) => {
-  //     setTimeout(() => {
-  //       console.log("Inicio carga...");
-  //       this.getAllAlmacen()
-  //       this.getAllEmpleado();
-  //       this.getAllMotivoIngreso();
-  //       this.getAllTipoDocumento();
-  //       if (error) {
-  //         reject();
-  //       } else {
-  //         resolve();
-  //         console.log("Fin carga");
-  //         if (this.id > 0) {
-
-  //           this.edit();
-  //         }
-
-
-  //       }
-  //     }, 300);
-  //   });
-  //   return promise;
-  // }
 
   ngOnInit() {
     this.buildForm();
@@ -165,16 +129,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
       }
     );
 
-    this.es = {
-      firstDayOfWeek: 1,
-      dayNames: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
-      dayNamesShort: ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"],
-      dayNamesMin: ["D", "L", "M", "X", "J", "V", "S"],
-      monthNames: ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
-      monthNamesShort: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"],
-      today: 'Hoy',
-      clear: 'Borrar'
-    }
+
 
         
     if (!this.id) {
@@ -184,16 +139,6 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
       // this.almacenIngresoModel = new AlmacenIngresoModel();
       this.edit();
     };
-
-    // this.doAsyncTask().then(
-    //   (val) => console.log(val),
-    //   (err) => console.error(err)
-    // )
-
-    // setTimeout(() => {
-    //   //this.codigobarraControl.nativeElement.focus();
-    // }, 500);
-
 
     this.suscribeServiceLocalStorage();// susbcribe al servicio del localstorage
   }
@@ -246,14 +191,12 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     this.buildForm();
   }
 
-  getPeriodoAlmacen(){
-    let almacen =  this.ingresoForm.get('almacen').value;
-    let periodoalmacenModel = new PeriodoalmacenModel(1,9,2018,"A",1, almacen);
-    return periodoalmacenModel;
-  }
+
+
 
 
   create(){
+
     
     if (this.id) {
       this.update();
@@ -271,11 +214,12 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
     const horaFormControl = this.ingresoForm.controls['hora'].value;
     const hora = horaFormControl.split(':').length === 2 ? horaFormControl + ":00" : horaFormControl;
+
     this.ingresoForm.controls['hora'].setValue(hora);
 
     this.almacenIngresoModel =<AlmacenIngresoModel>this.ingresoForm.value; 
-    this.almacenIngresoModel.ing002s = this.almacenIngresoDetallesModel;    
 
+    this.almacenIngresoModel.ing002s = this.almacenIngresoDetallesModel;    
     console.log(this.almacenIngresoModel);
 
     const data = JSON.stringify(this.almacenIngresoModel);
@@ -290,6 +234,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
       }
     )
   }
+
 
   
   update() {
@@ -342,10 +287,12 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
       // })
   }
 
+
   edit() {
     this.sharedService.findById(this.id, "ing001", "findById")
       .subscribe(
       result => {
+
 
         this.almacenIngresoModel = <AlmacenIngresoModel>result.data;
         console.log(this.almacenIngresoModel);
@@ -591,7 +538,6 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     //console.log("Deactivate outlet edicion, osea se oculta el kardex");
     this.showEdicion = true;
     // this.showEdicion = false;
-
   }
 
 

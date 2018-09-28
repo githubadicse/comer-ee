@@ -49,15 +49,7 @@
             </mat-form-field>
         </p>
 
-       <p>
-        <mat-form-field>
-            <mat-select appNextfocus placeholder="Usuario" formControlName="idusuario" >
-              <mat-option *ngFor="let usuario of usuarioModel" [value]="usuario.idusuario">
-                {{usuario.nomusuario}}
-              </mat-option>
-            </mat-select>
-        </mat-form-field>
-       </p>
+
 
         <p>
             <mat-slide-toggle class="example-margin" formControlName="activo" [color]="color" [disabled]="!this.empleadoForm.get('activo')">
@@ -72,7 +64,7 @@
                     <input matInput placeholder="Fecha Creacion Registro " formControlName="fechaRegistroSystema" readonly="true">
                 </mat-form-field>&nbsp;
                 <mat-form-field>
-                    <input matInput placeholder="IdUsuario Creacion Registro " formControlName="idusuario" readonly="true">
+                    <input matInput placeholder="IdUsuario Creacion Registro " formControlName="idusuarioCrea" readonly="true">
                 </mat-form-field>
             </p>
             <p>
