@@ -37,7 +37,6 @@ export class UsuarioService {
 
   }
 
-
   getUsuario():Observable<UsuarioModel[]>{
     let url = this.configService.getUrlSecurityRes("usuario","getall");
 

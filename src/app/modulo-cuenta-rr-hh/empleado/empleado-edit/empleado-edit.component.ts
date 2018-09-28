@@ -60,8 +60,6 @@ export class EmpleadoEditComponent implements OnInit {
       this.getEdit();
     } else {
 
-
-     
       this.empleadoForm.get('activo').setValue(false);
       this.flag = true;
      
@@ -81,11 +79,11 @@ export class EmpleadoEditComponent implements OnInit {
       telefono: [''],
       email: [''],
       filial : [''],
-      usuarioempleados: [''],
+
       activo: [false],
       fechaRegistroSystema: [''],
       fechaRegistroSystemaModifica: [''],
-      idusuario: [''],
+      idusuarioCrea: [''],
       idusuarioModifica: ['']
 
     })
@@ -98,12 +96,9 @@ export class EmpleadoEditComponent implements OnInit {
         res => {
           let usuarioempleados = [];
           let empleado = new EmpleadoModel(res.idempleado, res.nomempleado, res.dni, res.fechaingreso, res.fechanacimiento, res.direccion, res.telefono, res.email,res.filial==undefined?'':res.filial,
-          
-            res.usuarioempleados==undefined? usuarioempleados:res.usuarioempleados, 
             res.activo,
-            res.fechaRegistroSystema, res.fechaRegistroSystemaModifica, res.idusuario, res.idusuarioModifica);
-
-
+            res.fechaRegistroSystema, res.fechaRegistroSystemaModifica, res.idusuarioCrea, res.idusuarioModifica);
+          console.log(empleado);
           this.empleadoForm.setValue(empleado);
           this.flag = true;
 
