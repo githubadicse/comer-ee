@@ -117,7 +117,7 @@ export class EmpleadoEditComponent implements OnInit {
 
     this.empleadoForm.controls['fechaingreso'].setValue(fechaingreso);
     this.empleadoForm.controls['fechanacimiento'].setValue(fechanacimiento);
-    this.empleadoForm.controls['usuarioempleados'].setValue(usuarioempleados);
+
     this.flagRefreshReturn = true;
     let data = JSON.stringify(this.empleadoForm.value);
     this.crudHttpClientServiceShared.create(data, "empleado", "create").subscribe(
