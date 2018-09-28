@@ -200,7 +200,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     
     if (this.id) {
       this.update();
-    }
+    } 
 
 
     // elimina el key "nomes" que no es parte del modelo orginal y se usa para mostrar el nombre del mes en el control
