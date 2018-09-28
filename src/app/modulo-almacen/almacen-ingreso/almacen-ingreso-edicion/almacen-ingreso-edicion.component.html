@@ -55,12 +55,12 @@
                                         
                                         <!-- serie del documento proveedor que envia la mercaderia -->
                                         <mat-form-field class="pr-2">
-                                            <input matInput placeholder="SERIE">
+                                            <input matInput placeholder="SERIE" formControlName="seriedocproveedor">
                                         </mat-form-field>
                         
                                         <!-- nrodocumento del documento proveedor que envia la mercaderia -->
                                         <mat-form-field>
-                                            <input matInput placeholder="NRO DOCUMENTO">
+                                            <input matInput placeholder="NRO DOCUMENTO" formControlName="nrodocproveedor">
                                         </mat-form-field>                
                         
                                     </div>
@@ -149,8 +149,8 @@
             <br>                
             <br>
 
-            <button appNextfocus appKeyClick="F10" type="button" 
-                [disabled]="!this.ingresoForm.valid || ListProductosIngresar.length == 0"
+            <!-- [disabled]="!this.ingresoForm.valid || ListProductosIngresar.length == 0" -->
+            <button appNextfocus appKeyClick="F10" type="button"                 
                 class="btn btn-success btn-sm mr-2" (click)="create();">
               <i *ngIf="procesando" class="fa fa-spinner fa-spin fa-fw"></i>
               [F10] Guardar

@@ -32,6 +32,8 @@ import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AlmacenIngresoEdicionDialogComponent } from './almacen-ingreso-edicion-dialog/almacen-ingreso-edicion-dialog.component';
 import { MSJ_SUCCESS_TOP_END } from '../../../shared/config.service.const';
+import { Moment } from 'moment';
+import * as moment from 'moment';
 
 @Component({
   selector: 'ad-almacen-ingreso-edicion',
@@ -134,7 +136,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
       this.newIngreso();
 
     } else {
-      this.almacenIngresoModel = new AlmacenIngresoModel();
+      // this.almacenIngresoModel = new AlmacenIngresoModel();
       this.edit();
     };
 
@@ -182,7 +184,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
   newIngreso() {
     this.almacenIngresoModel = new AlmacenIngresoModel();
-    this.almacenIngresoDetallesModel = [];
+    this.almacenIngresoDetallesModel = [];    
     
     this.ingresoForm.reset();
     this.localStorageManagerService.removeAllLocalSotrage(this.keyLocalStorage)
@@ -194,17 +196,25 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
 
   create(){
-    // elimina el key "nomes" que no esta en el modelo orginal y se usa para mostrar el nombre del mes
+
+    
+    if (this.id) {
+      this.update();
+    }
+
+
+    // elimina el key "nomes" que no es parte del modelo orginal y se usa para mostrar el nombre del mes en el control
     let periodo = this.ingresoForm.value.periodoalmacen;
     delete periodo["nommes"];
-
-
-    const fecha:string = (this.ingresoForm.controls['fecha'].value).format("DD/MM/YYYY");
+    
+    // const fechaFormControl = this.ingresoForm.controls['fecha'].value;
+    // const fecha: string = typeof fechaFormControl === 'string' ? moment(fechaFormControl).format("DD/MM/YYYY") : (fechaFormControl).format("DD/MM/YYYY");
+    const fecha: string =(this.ingresoForm.controls['fecha'].value).format("DD/MM/YYYY");
     this.ingresoForm.controls['fecha'].setValue(fecha);
 
+    const horaFormControl = this.ingresoForm.controls['hora'].value;
+    const hora = horaFormControl.split(':').length === 2 ? horaFormControl + ":00" : horaFormControl;
 
-
-    let hora = this.ingresoForm.controls['hora'].value + ":00";
     this.ingresoForm.controls['hora'].setValue(hora);
 
     this.almacenIngresoModel =<AlmacenIngresoModel>this.ingresoForm.value; 
@@ -226,6 +236,58 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
   }
 
 
+  
+  update() {
+
+    // this.almacenIngresoModel =<AlmacenIngresoModel>this.ingresoForm.value; 
+    // let fecha = this.configService.getDateString(this.almacenIngresoModel.fecha);
+    // let hora = this.configService.getHoraString(this.almacenIngresoModel.hora);
+
+
+    // this.almacenIngresoModel.fecha = fecha;
+    // this.almacenIngresoModel.hora = hora;
+    // this.almacenIngresoModel.periodoalmacen = this.periodoalmacenModel;
+    // this.almacenIngresoModel.fechaRegistroSystema = null;
+
+    //this.almacenIngresoModel.ing002s = this.almacenIngresoDetallesModel;
+
+    // let periodo = this.ingresoForm.value.periodoalmacen;
+    // delete periodo["nommes"];    
+    delete this.ingresoForm.value.periodoalmacen["nommes"];
+
+    this.almacenIngresoModel =<AlmacenIngresoModel>this.ingresoForm.value;     
+    const fecha = this.configService.getDateString(this.almacenIngresoModel.fecha);
+    this.almacenIngresoModel.fecha = fecha;
+
+    const horaFormControl = this.ingresoForm.controls['hora'].value;
+    const hora = horaFormControl.split(':').length === 2 ? horaFormControl + ":00" : horaFormControl;
+    this.almacenIngresoModel.hora = hora;
+
+    // this.almacenIngresoModel =<AlmacenIngresoModel>this.ingresoForm.value; 
+    this.almacenIngresoModel =<AlmacenIngresoModel>this.ingresoForm.value; 
+    this.almacenIngresoModel.ing002s = this.almacenIngresoDetallesModel; 
+    console.log('update', this.almacenIngresoModel);
+
+    const data = JSON.stringify(this.almacenIngresoModel);
+
+    this.crudHttpClientServiceShared.update(data, "ing001", "update")
+      .subscribe(
+      res => {
+        // this.msgPopup = [];
+        // this.msgPopup.push({ severity: 'success', summary: 'Aviso', detail: 'Registro Grabado !' });
+        swal(MSJ_SUCCESS_TOP_END);
+      })
+      // error => {
+      //   console.log(error);
+      // })
+      // () => {
+      //   this.almacenIngresoDetallesModel = [];
+      //   this.almacenIngresoModel = new AlmacenIngresoModel();
+      //   this.buildForm();
+      // })
+  }
+
+
   edit() {
     this.sharedService.findById(this.id, "ing001", "findById")
       .subscribe(
@@ -236,11 +298,16 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
         console.log(this.almacenIngresoModel);
         this.buildForm();
 
+        this.insertLocalStorageFromEdit(this.almacenIngresoModel.ing002s);
 
-        let date = this.configService.stringToDate(this.almacenIngresoModel.fecha, "dd/MM/yyyy", "/");        
-        let hora = this.configService.stringToTime(this.almacenIngresoModel.hora, "hh:mm", ":");
 
-        //this.almacenIngresoDetallesModel = this.almacenIngresoModel.ing002s;
+        let date = this.configService.stringToDate(this.almacenIngresoModel.fecha, "dd/MM/yyyy", "/");
+        this.ingresoForm.controls["fecha"].setValue(date);
+        // let hora = this.configService.stringToTime(this.almacenIngresoModel.hora, "hh:mm", ":");        
+        // this.ingresoForm.controls["hora"].setValue(hora);
+        // this.almacenIngresoModel.hora = hora;
+
+        // this.almacenIngresoDetallesModel = this.almacenIngresoModel.ing002s;
         // this.almacenIngresoModel.ing002s = this.almacenIngresoModel.ing002s.slice();
         //this.ingresoForm.setValue(this.almacenIngresoModel);
 
@@ -439,41 +506,6 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
   
 
-  save() {
-
-    let fecha = this.configService.getDateString(this.almacenIngresoModel.fecha);
-    let hora = this.configService.getHoraString(this.almacenIngresoModel.hora);
-
-
-    this.almacenIngresoModel.fecha = fecha;
-    this.almacenIngresoModel.hora = hora;
-    this.almacenIngresoModel.periodoalmacen = this.periodoalmacenModel;
-    this.almacenIngresoModel.fechahorasys = null;
-
-    //this.almacenIngresoModel.ing002s = this.almacenIngresoDetallesModel;
-
-    this.sharedService.save(this.almacenIngresoModel, "ing001", "save")
-      .subscribe(
-      res => {
-        this.msgPopup = [];
-        this.msgPopup.push({ severity: 'success', summary: 'Aviso', detail: 'Registro Grabado !' });
-
-      },
-      error => {
-        alert(error);
-      },
-      () => {
-        this.almacenIngresoDetallesModel = [];
-        this.almacenIngresoModel = new AlmacenIngresoModel();
-        this.buildForm();
-      }
-
-
-
-
-
-      )
-  }
 
 
 
@@ -548,17 +580,17 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
       this.almacenIngresoDetallesModel.push(item);
     })
 
-    console.log(this.almacenIngresoDetallesModel);
+    // console.log(this.almacenIngresoDetallesModel);
     // console.log(<AlmacenIngresoDetalleModel[]>this.ListProductosIngresar);
   }
 
-  _getObjectProducto(event) {
+  _getObjectProducto(event): void {
     this.productoSeleccionado = event;
     this.openDialog();
     console.log(this.productoSeleccionado);
   }
 
-  _getObJectProductoListIngresar(row: any) {
+  _getObJectProductoListIngresar(row: any): void {
     this.productoSeleccionado = <ProductoModel>row.producto;
     this.openDialog(row);
     console.log(this.productoSeleccionado);
@@ -591,6 +623,18 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
         }
     ); 
   }
+
+  // EDITAR REGISTRO: carga productos ing002 al storage
+  private insertLocalStorageFromEdit(ListIng002: AlmacenIngresoDetalleModel[]): void {
+    this.localStorageManagerService.removeAllLocalSotrage(this.keyLocalStorage);
+
+    ListIng002.map(x => {
+      const rowInsertStorage = {'producto': x.producto, 'cantidad': x.cantidad, 'lote': x.nrolote, 'fechavencimiento': x.fechavencimiento};
+      this.localStorageManagerService.setDataLocalStorage(this.keyLocalStorage,rowInsertStorage);
+    });
+
+  }
+
 
 
 
