@@ -15,12 +15,11 @@ export class EmpleadoModel {
         public telefono:string=null,
         public email:string=null,
         public filial:FilialModel=null,
-        
-        public usuarioempleados:UsuarioEmpleadoModel[] = [],
+
         public activo:boolean=null,
         public fechaRegistroSystema:string=null,
         public fechaRegistroSystemaModifica:string=null,
-        public idusuario:number=null,
+        public idusuarioCrea:number=null,
         public idusuarioModifica=null
         
     ){

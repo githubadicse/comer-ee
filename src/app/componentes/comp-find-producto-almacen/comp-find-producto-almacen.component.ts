@@ -32,19 +32,20 @@ export class CompFindProductoAlmacenComponent implements OnInit {
   // public listAlmacen: AlmacenModel[];  
   public procesando: boolean = true;  
   private indexSelect: number = 0;
-  @ViewChildren('rowSelect') rowsProductos: QueryList<any> // para la seccion con las flechas del teclado up down
+  @ViewChildren('rowSelect') rowsProductos: QueryList<any> // para la seccion con las flechas del teclado up down  
   
   @Input() _formControlName = new FormControl();
   @Input() myControl = new FormControl();  
   @Input() parametroBuscar: string = '';  // parametro a buscar preseleccionado  
   @Input() pageSizeInit: number = 5; //Cantidad de filas a mostrar inicialmente
-  @Output() getObject: EventEmitter<ProductoModel> = new EventEmitter();
+  @Output() getObject: EventEmitter<ProductoModel> = new EventEmitter();  
 
   @ViewChild(MatPaginator) paginatorProducto: MatPaginator;
 
   @ViewChild('tablaContent') tablaContent: ElementRef;
   @ViewChild('cardBody') cardBody: ElementRef;    
   
+  @ViewChild('txtparametro') txtparametro : ElementRef;
   
   constructor(
     private productoService: ProductoService,          
@@ -53,6 +54,9 @@ export class CompFindProductoAlmacenComponent implements OnInit {
 
   ngOnInit() {
 
+    setTimeout(() => {
+      this.txtparametro.nativeElement.focus();      
+    }, 100);
     this.rows = this.pageSizeInit; 
 
     this.paginatorProducto._intl.nextPageLabel = '';

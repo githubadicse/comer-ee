@@ -32,6 +32,8 @@ import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AlmacenIngresoEdicionDialogComponent } from './almacen-ingreso-edicion-dialog/almacen-ingreso-edicion-dialog.component';
 import { MSJ_SUCCESS_TOP_END } from '../../../shared/config.service.const';
+import { Moment } from 'moment';
+import * as moment from 'moment';
 
 @Component({
   selector: 'ad-almacen-ingreso-edicion',
@@ -47,7 +49,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
   showEdicion: boolean = true;
   procesando: boolean = false;
   msgPopup: any[];
-  id: number;
+  id: number = 0;
   sub: any;
 
   public idFilial:number=1;
@@ -57,7 +59,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
   public productoModel: ProductoModel;
   public codigobarraModel: CodigobarraModel;
 
-  public almacenIngresoModel: AlmacenIngresoModel;
+  public almacenIngresoModel: AlmacenIngresoModel = new AlmacenIngresoModel;
 
   public almacenIngresoDetallesModel: AlmacenIngresoDetalleModel[] = [];
   public almacenIngresoDetalleModel: AlmacenIngresoDetalleModel;
@@ -100,6 +102,8 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
   public displayedColumns: string[] = ['#', 'Producto', 'Lote', 'F.Vencimiento', 'Cantidad', '-'];
   private productoSeleccionado: ProductoModel;
 
+  public rowIndexCondirmDelete: number = null; // index de la fila a eliminar , para mostrar la barra de confirmarcion
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -110,15 +114,13 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     private dialog: MatDialog
   ) { 
 
-    this.buildForm();
+    // this.buildForm();
     this.loadDataLocalStorage();    
   }
 
 
-  
-
   ngOnInit() {
-
+    this.buildForm();
     this.idFilial = this.configService.getIdFilialToken();
 
     this.sub = this.route.params.subscribe(
@@ -129,16 +131,14 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
 
 
-    
-    if (this.id == 0) {
+        
+    if (!this.id) {
       this.newIngreso();
 
     } else {
-      this.almacenIngresoModel = new AlmacenIngresoModel();
-
+      // this.almacenIngresoModel = new AlmacenIngresoModel();
+      this.edit();
     };
-
-
 
     this.suscribeServiceLocalStorage();// susbcribe al servicio del localstorage
   }
@@ -146,20 +146,37 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
   
   buildForm() {
 
+    // this.ingresoForm = this.formBuilder.group({
+    //   iding001: ['0'],
+    //   fecha: ['', Validators.required],
+    //   hora: ['', Validators.required],
+    //   proveedorcliente: ['', Validators.required],
+    //   nrodoc: [''],
+    //   almacen: ['', Validators.required],
+    //   periodoalmacen: [''],
+    //   empleado: ['', Validators.required],
+    //   glosa: [''],
+    //   motivoingreso: ['', Validators.required],
+    //   tipodocumento: ['', Validators.required],
+    //   seriedocproveedor: [''],
+    //   nrodocproveedor: ['']
+    // });
+
     this.ingresoForm = this.formBuilder.group({
-      iding001: ['0'],
-      fecha: ['', Validators.required],
-      hora: ['', Validators.required],
-      proveedorcliente: ['', Validators.required],
-      nrodoc: [''],
-      almacen: ['', Validators.required],
-      periodoalmacen: [''],
-      empleado: ['', Validators.required],
-      glosa: [''],
-      motivoingreso: ['', Validators.required],
-      tipodocumento: ['', Validators.required],
-      seriedocproveedor: [''],
-      nrodocproveedor: ['']
+      iding001: [this.almacenIngresoModel.iding001 || 0],
+      fecha: [this.almacenIngresoModel.fecha, Validators.required],
+      hora: [this.almacenIngresoModel.hora, Validators.required],
+      proveedorcliente: [this.almacenIngresoModel.proveedorcliente, Validators.required],
+      nrodoc: [this.almacenIngresoModel.nrodoc],
+      almacen: [this.almacenIngresoModel.almacen, Validators.required],
+      periodoalmacen: [this.almacenIngresoModel.periodoalmacen],
+      empleado: [this.almacenIngresoModel.empleado, Validators.required],
+      glosa: [this.almacenIngresoModel.glosa],
+      motivoingreso: [this.almacenIngresoModel.motivoingreso, Validators.required],
+      tipodocumento: [this.almacenIngresoModel.tipodocumento, Validators.required],
+      seriedocproveedor: [this.almacenIngresoModel.seriedocproveedor],
+      nrodocproveedor: [this.almacenIngresoModel.nrodocproveedor],
+      ing002s:this.almacenIngresoDetallesModel
 
     });
 
@@ -167,8 +184,11 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
   newIngreso() {
     this.almacenIngresoModel = new AlmacenIngresoModel();
-    this.almacenIngresoDetallesModel = [];
-
+    this.almacenIngresoDetallesModel = [];    
+    
+    this.ingresoForm.reset();
+    this.localStorageManagerService.removeAllLocalSotrage(this.keyLocalStorage)
+    this.buildForm();
   }
 
 
@@ -177,21 +197,30 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
   create(){
 
-    //tipo documento provisional
-    // let numeradors = [new NumeradorModel(1,1,1,null)]
-    // let tipodocumento = new TipodocumentoModel(1,"FACTURA","01", numeradors )
+    
+    if (this.id) {
+      this.update();
+    }
 
-    let fecha:string = (this.ingresoForm.controls['fecha'].value).format("DD/MM/YYYY");
+
+    // elimina el key "nomes" que no es parte del modelo orginal y se usa para mostrar el nombre del mes en el control
+    let periodo = this.ingresoForm.value.periodoalmacen;
+    delete periodo["nommes"];
+    
+    // const fechaFormControl = this.ingresoForm.controls['fecha'].value;
+    // const fecha: string = typeof fechaFormControl === 'string' ? moment(fechaFormControl).format("DD/MM/YYYY") : (fechaFormControl).format("DD/MM/YYYY");
+    const fecha: string =(this.ingresoForm.controls['fecha'].value).format("DD/MM/YYYY");
     this.ingresoForm.controls['fecha'].setValue(fecha);
-    // this.ingresoForm.controls['periodoalmacen'].setValue(periodo);
-    // this.ingresoForm.controls['tipodocumento'].setValue(tipodocumento);
 
+    const horaFormControl = this.ingresoForm.controls['hora'].value;
+    const hora = horaFormControl.split(':').length === 2 ? horaFormControl + ":00" : horaFormControl;
 
-    let hora = this.ingresoForm.controls['hora'].value + ":00";
     this.ingresoForm.controls['hora'].setValue(hora);
 
     this.almacenIngresoModel =<AlmacenIngresoModel>this.ingresoForm.value; 
-    this.almacenIngresoModel.ing002s = this.almacenIngresoDetallesModel;
+
+    this.almacenIngresoModel.ing002s = this.almacenIngresoDetallesModel;    
+    console.log(this.almacenIngresoModel);
 
     const data = JSON.stringify(this.almacenIngresoModel);
 
@@ -200,19 +229,116 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
       },
       error => console.log(error),
       () => {
-        this.localStorageManagerService.removeAllLocalSotrage(this.keyLocalStorage);
-        this.ingresoForm.reset();
-
+        this.newIngreso();
         swal(MSJ_SUCCESS_TOP_END);        
       }
     )
   }
 
 
+  
+  update() {
+
+    // this.almacenIngresoModel =<AlmacenIngresoModel>this.ingresoForm.value; 
+    // let fecha = this.configService.getDateString(this.almacenIngresoModel.fecha);
+    // let hora = this.configService.getHoraString(this.almacenIngresoModel.hora);
+
+
+    // this.almacenIngresoModel.fecha = fecha;
+    // this.almacenIngresoModel.hora = hora;
+    // this.almacenIngresoModel.periodoalmacen = this.periodoalmacenModel;
+    // this.almacenIngresoModel.fechaRegistroSystema = null;
+
+    //this.almacenIngresoModel.ing002s = this.almacenIngresoDetallesModel;
+
+    // let periodo = this.ingresoForm.value.periodoalmacen;
+    // delete periodo["nommes"];    
+    delete this.ingresoForm.value.periodoalmacen["nommes"];
+
+    this.almacenIngresoModel =<AlmacenIngresoModel>this.ingresoForm.value;     
+    const fecha = this.configService.getDateString(this.almacenIngresoModel.fecha);
+    this.almacenIngresoModel.fecha = fecha;
+
+    const horaFormControl = this.ingresoForm.controls['hora'].value;
+    const hora = horaFormControl.split(':').length === 2 ? horaFormControl + ":00" : horaFormControl;
+    this.almacenIngresoModel.hora = hora;
+
+    // this.almacenIngresoModel =<AlmacenIngresoModel>this.ingresoForm.value; 
+    this.almacenIngresoModel =<AlmacenIngresoModel>this.ingresoForm.value; 
+    this.almacenIngresoModel.ing002s = this.almacenIngresoDetallesModel; 
+    console.log('update', this.almacenIngresoModel);
+
+    const data = JSON.stringify(this.almacenIngresoModel);
+
+    this.crudHttpClientServiceShared.update(data, "ing001", "update")
+      .subscribe(
+      res => {
+        // this.msgPopup = [];
+        // this.msgPopup.push({ severity: 'success', summary: 'Aviso', detail: 'Registro Grabado !' });
+        swal(MSJ_SUCCESS_TOP_END);
+      })
+      // error => {
+      //   console.log(error);
+      // })
+      // () => {
+      //   this.almacenIngresoDetallesModel = [];
+      //   this.almacenIngresoModel = new AlmacenIngresoModel();
+      //   this.buildForm();
+      // })
+  }
+
 
   edit() {
+    this.sharedService.findById(this.id, "ing001", "findById")
+      .subscribe(
+      result => {
 
+
+        this.almacenIngresoModel = <AlmacenIngresoModel>result.data;
+        console.log(this.almacenIngresoModel);
+        this.buildForm();
+
+        this.insertLocalStorageFromEdit(this.almacenIngresoModel.ing002s);
+
+
+        let date = this.configService.stringToDate(this.almacenIngresoModel.fecha, "dd/MM/yyyy", "/");
+        this.ingresoForm.controls["fecha"].setValue(date);
+        // let hora = this.configService.stringToTime(this.almacenIngresoModel.hora, "hh:mm", ":");        
+        // this.ingresoForm.controls["hora"].setValue(hora);
+        // this.almacenIngresoModel.hora = hora;
+
+        // this.almacenIngresoDetallesModel = this.almacenIngresoModel.ing002s;
+        // this.almacenIngresoModel.ing002s = this.almacenIngresoModel.ing002s.slice();
+        //this.ingresoForm.setValue(this.almacenIngresoModel);
+
+        // this.ingresoForm.controls["iding001"].setValue(this.almacenIngresoModel.iding001);
+        // this.ingresoForm.controls["fecha"].setValue(date);
+        // this.ingresoForm.controls["hora"].setValue(hora);
+        // this.ingresoForm.controls["proveedorcliente"].setValue(this.almacenIngresoModel.proveedorcliente);
+        // this.ingresoForm.controls["nrodoc"].setValue(this.almacenIngresoModel.nrodoc);
+        // this.ingresoForm.controls["almacen"].setValue(this.almacenIngresoModel.almacen);
+        // this.ingresoForm.controls["periodoalmacen"].setValue(this.almacenIngresoModel.periodoalmacen);
+        // this.ingresoForm.controls["empleado"].setValue(this.almacenIngresoModel.empleado);
+        // this.ingresoForm.controls["glosa"].setValue(this.almacenIngresoModel.glosa);
+        // this.ingresoForm.controls["motivoingreso"].setValue(this.almacenIngresoModel.motivoingreso);
+        // this.ingresoForm.controls["tipodocumento"].setValue(this.almacenIngresoModel.tipodocumento);
+        // this.ingresoForm.controls["seriedocproveedor"].setValue(this.almacenIngresoModel.seriedocproveedor);
+        // this.ingresoForm.controls["nrodocproveedor"].setValue(this.almacenIngresoModel.nrodocproveedor);
+
+
+
+
+
+
+      })
   }
+
+  
+
+
+
+
+
 
 
   //// productos a agregar
@@ -235,6 +361,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
   
   public deleteRowLocalStorage(index): void {
+    this.rowIndexCondirmDelete= null;
     this.localStorageManagerService.removeItemLocalStorage(this.keyLocalStorage,index);
   }
 
@@ -253,17 +380,17 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
       this.almacenIngresoDetallesModel.push(item);
     })
 
-    console.log(this.almacenIngresoDetallesModel);
+    // console.log(this.almacenIngresoDetallesModel);
     // console.log(<AlmacenIngresoDetalleModel[]>this.ListProductosIngresar);
   }
 
-  _getObjectProducto(event) {
+  _getObjectProducto(event): void {
     this.productoSeleccionado = event;
     this.openDialog();
     console.log(this.productoSeleccionado);
   }
 
-  _getObJectProductoListIngresar(row: any) {
+  _getObJectProductoListIngresar(row: any): void {
     this.productoSeleccionado = <ProductoModel>row.producto;
     this.openDialog(row);
     console.log(this.productoSeleccionado);
@@ -296,6 +423,18 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
         }
     ); 
   }
+
+  // EDITAR REGISTRO: carga productos ing002 al storage
+  private insertLocalStorageFromEdit(ListIng002: AlmacenIngresoDetalleModel[]): void {
+    this.localStorageManagerService.removeAllLocalSotrage(this.keyLocalStorage);
+
+    ListIng002.map(x => {
+      const rowInsertStorage = {'producto': x.producto, 'cantidad': x.cantidad, 'lote': x.nrolote, 'fechavencimiento': x.fechavencimiento};
+      this.localStorageManagerService.setDataLocalStorage(this.keyLocalStorage,rowInsertStorage);
+    });
+
+  }
+
 
 
 

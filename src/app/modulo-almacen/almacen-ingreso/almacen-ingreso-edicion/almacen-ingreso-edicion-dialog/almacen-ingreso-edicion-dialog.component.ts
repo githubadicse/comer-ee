@@ -24,6 +24,7 @@ export class AlmacenIngresoEdicionDialogComponent implements OnInit {
   ) {
 
     this.producto = data.producto;
+    // this.producto.exigeLote = data.producto.exigeLote ? false : true;
     this.cantidad = data.cantidad;
     this.lote = data.lote;
     this.fechavencimiento = data.fechavencimiento;
@@ -33,8 +34,8 @@ export class AlmacenIngresoEdicionDialogComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       producto: this.producto,
-      cantidad: [this.cantidad, Validators.required],
-      lote: [this.lote, Validators.required],
+      cantidad: [this.cantidad,  Validators.required],
+      lote: [this.lote],
       fechavencimiento: [this.fechavencimiento]
     });
   }

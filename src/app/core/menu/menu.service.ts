@@ -168,7 +168,7 @@ const MENUITEMS = [
     name: 'DOCUMENTACION',
     type: 'link',
     icon: 'local_library',
-    idmenu : '07'
+    idmenu : '08'
   }
 ];
 

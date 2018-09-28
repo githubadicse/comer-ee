@@ -4,8 +4,47 @@
     line-height: 2;
   } */
 .tr-color-selected-1 tr:hover{
-    background: #fff9c4;    
+    background: #fff9c4;       
 }
+
+.rowConfirmDelete {
+    background: #f50057;
+    color: #E3DADA;
+    z-index: 1000;
+    position: absolute;
+    top: -1px;
+    right: 0px;
+    width: 0px;
+    height: 101%;
+    padding: 6px;
+    text-align: center;
+    white-space: nowrap;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    transition: all 0.2s ease-in-out;        
+    visibility: hidden;
+    opacity: 0;
+}
+.rowConfirmDelete div {
+    position: relative;
+    transform: scalex(0); 
+    transition: all 0.1s ease-in-out;   
+}
+
+.rowConfirmDelete.visible {    
+    visibility: visible;    
+}
+
+.rowConfirmDelete.selected {
+    width: 200px;        
+    opacity: 1;
+}
+
+.rowConfirmDelete.selected div {
+    transform: scalex(1);
+}
+
 
 #datos{
     border: 1px solid #E3DADA;

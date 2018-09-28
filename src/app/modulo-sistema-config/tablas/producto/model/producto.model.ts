@@ -23,8 +23,8 @@ export class ProductoModel {
         public stockminimo:number=0,
         public codigobarras:CodigobarraModel[]=[],
         public activo:number = 0,
-        public exigevencimiento:number=0,
-        public exigelote:number=0
+        public exigeVencimiento:boolean=false,
+        public exigeLote:boolean=false
         
 
     ){

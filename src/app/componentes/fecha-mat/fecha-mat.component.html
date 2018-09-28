@@ -1,7 +1,7 @@
 <!-- Fecha Distribucion -->
 
 <mat-form-field>
-  <input (dateChange) = "dateChange($event)" [formControl]="_formControlName" matInput [matDatepicker]="picker" [placeholder]="_placeholder" onkeyup="
+  <input (dateChange) = "dateChange($event)" [required]="_required" [formControl]="_formControlName" matInput [matDatepicker]="picker" [placeholder]="_placeholder" onkeyup="
           let v = this.value;
 
           if (v.match(/^\d{2}$/) !== null) {
