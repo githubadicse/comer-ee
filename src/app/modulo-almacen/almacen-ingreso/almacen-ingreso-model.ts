@@ -20,7 +20,7 @@ export class AlmacenIngresoModel {
         //public com001:any=null,
         public empleado:EmpleadoModel=null,
         public glosa:string=null,
-        public fechahorasys:String=null,
+        // public fechahorasys:String=null,
         //public condicionrelacioncompra:any = null,
         
         public periodoalmacen:PeriodoalmacenModel=null,

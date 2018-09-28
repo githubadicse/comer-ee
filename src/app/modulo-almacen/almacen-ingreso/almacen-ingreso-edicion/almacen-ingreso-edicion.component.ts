@@ -253,7 +253,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
   create(){
     
-    // elimina el key "nomes" que no esta en el modelo orginal y se usa para mostrar el nombre del mes
+    // elimina el key "nomes" que no es parte del modelo orginal y se usa para mostrar el nombre del mes en el control
     let periodo = this.ingresoForm.value.periodoalmacen;
     delete periodo["nommes"];
 
@@ -503,7 +503,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     this.almacenIngresoModel.fecha = fecha;
     this.almacenIngresoModel.hora = hora;
     this.almacenIngresoModel.periodoalmacen = this.periodoalmacenModel;
-    this.almacenIngresoModel.fechahorasys = null;
+    // this.almacenIngresoModel.fechahorasys = null;
 
     //this.almacenIngresoModel.ing002s = this.almacenIngresoDetallesModel;
 
