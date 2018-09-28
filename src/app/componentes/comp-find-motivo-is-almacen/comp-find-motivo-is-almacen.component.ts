@@ -29,12 +29,13 @@ export class CompFindMotivoIsAlmacenComponent implements OnInit {
   constructor(private crudService: CrudHttpClientServiceShared) { }
 
   ngOnInit() {
+    
+    this.loadListMotivos();
 
     if (this._formControlName == undefined) {
       this._formControlName = this.myControl;
     }
     
-    this.loadListMotivos();
 
   }
 
@@ -50,7 +51,9 @@ export class CompFindMotivoIsAlmacenComponent implements OnInit {
     this.getObject.emit(a.value);
   }
 
-  compareMotivo = (val1: any, val2: any):boolean => val1.dscmotivoingreso === val2;
-  
+  // compareMotivo = (val1: any, val2: any):boolean => val1.dscmotivoingreso === val2;
+  compareMotivo(c1: MotivoIngresoModel | MotivoSalidaModel, c2: MotivoIngresoModel | MotivoSalidaModel): boolean {
+    return c1 && c2 ? (c1['idmotivoingreso'] | c1['idmotivosalida']) === (c2['idmotivoingreso'] | c2['idmotivosalida']) : c1 === c2;
+  }
 
 }
