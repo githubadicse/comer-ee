@@ -34,6 +34,7 @@ import { AlmacenIngresoEdicionDialogComponent } from './almacen-ingreso-edicion-
 import { MSJ_SUCCESS_TOP_END } from '../../../shared/config.service.const';
 import { Moment } from 'moment';
 import * as moment from 'moment';
+import { MomentDateAdapter } from '../../../shared/validators/MomentDateAdapter';
 
 @Component({
   selector: 'ad-almacen-ingreso-edicion',
@@ -41,7 +42,7 @@ import * as moment from 'moment';
   styleUrls: ['./almacen-ingreso-edicion.component.css'],
   providers: [SharedService, AlmacenIngresoService, CodigobarraService, ProveedorclienteService,
     ConfigService,
-    PeriodoalmacenService]
+    PeriodoalmacenService,MomentDateAdapter]
 })
 
 export class AlmacenIngresoEdicionComponent implements OnInit {
@@ -106,12 +107,13 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
+
     private configService: ConfigService,
     private crudHttpClientServiceShared:CrudHttpClientServiceShared,
     private localStorageManagerService: LocalStorageManagerService,
 
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private DateAdapter: MomentDateAdapter
   ) { 
 
     // this.buildForm();
@@ -122,14 +124,6 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.idFilial = this.configService.getIdFilialToken();
-
-    this.sub = this.route.params.subscribe(
-      params => {
-        this.id = +params['id'];
-      }
-    );
-
-
 
         
     if (!this.id) {
@@ -163,20 +157,20 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     // });
 
     this.ingresoForm = this.formBuilder.group({
-      iding001: [this.almacenIngresoModel.iding001 || 0],
-      fecha: [this.almacenIngresoModel.fecha, Validators.required],
-      hora: [this.almacenIngresoModel.hora, Validators.required],
-      proveedorcliente: [this.almacenIngresoModel.proveedorcliente, Validators.required],
-      nrodoc: [this.almacenIngresoModel.nrodoc],
-      almacen: [this.almacenIngresoModel.almacen, Validators.required],
-      periodoalmacen: [this.almacenIngresoModel.periodoalmacen],
-      empleado: [this.almacenIngresoModel.empleado, Validators.required],
-      glosa: [this.almacenIngresoModel.glosa],
-      motivoingreso: [this.almacenIngresoModel.motivoingreso, Validators.required],
-      tipodocumento: [this.almacenIngresoModel.tipodocumento, Validators.required],
-      seriedocproveedor: [this.almacenIngresoModel.seriedocproveedor],
-      nrodocproveedor: [this.almacenIngresoModel.nrodocproveedor],
-      ing002s:this.almacenIngresoDetallesModel
+      iding001: ['0'],
+      fecha: [''],
+      hora: ['', Validators.required],
+      proveedorcliente: ['', Validators.required],
+      nrodoc: [''],
+      almacen: ['', Validators.required],
+      periodoalmacen: [''],
+      empleado: ['', Validators.required],
+      glosa: [''],
+      motivoingreso: ['', Validators.required],
+      tipodocumento: ['', Validators.required],
+      seriedocproveedor: [''],
+      nrodocproveedor: [''],
+      ing002s:['']
 
     });
 
@@ -186,7 +180,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     this.almacenIngresoModel = new AlmacenIngresoModel();
     this.almacenIngresoDetallesModel = [];    
     
-    this.ingresoForm.reset();
+    //this.ingresoForm.reset();
     this.localStorageManagerService.removeAllLocalSotrage(this.keyLocalStorage)
     this.buildForm();
   }
@@ -197,41 +191,28 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
   create(){
 
-    
-    if (this.id) {
-      this.update();
-    }
-
-
     // elimina el key "nomes" que no es parte del modelo orginal y se usa para mostrar el nombre del mes en el control
     let periodo = this.ingresoForm.value.periodoalmacen;
     delete periodo["nommes"];
     
-    // const fechaFormControl = this.ingresoForm.controls['fecha'].value;
-    // const fecha: string = typeof fechaFormControl === 'string' ? moment(fechaFormControl).format("DD/MM/YYYY") : (fechaFormControl).format("DD/MM/YYYY");
-    const fecha: string =(this.ingresoForm.controls['fecha'].value).format("DD/MM/YYYY");
+    let fechaMoment = this.ingresoForm.controls['fecha'].value;
+    let fecha = this.DateAdapter.format(this.ingresoForm.controls['fecha'].value, 'DD/MM/YYYY');
+
+   
     this.ingresoForm.controls['fecha'].setValue(fecha);
 
-    const horaFormControl = this.ingresoForm.controls['hora'].value;
-    const hora = horaFormControl.split(':').length === 2 ? horaFormControl + ":00" : horaFormControl;
-
-    this.ingresoForm.controls['hora'].setValue(hora);
-
-    this.almacenIngresoModel =<AlmacenIngresoModel>this.ingresoForm.value; 
-
-    this.almacenIngresoModel.ing002s = this.almacenIngresoDetallesModel;    
-    console.log(this.almacenIngresoModel);
-
-    const data = JSON.stringify(this.almacenIngresoModel);
+    this.ingresoForm.controls['ing002s'].setValue(this.almacenIngresoDetallesModel);
+    let data = JSON.stringify(this.ingresoForm.value);
+    this.ingresoForm.controls['fecha'].setValue(fechaMoment);
 
     this.crudHttpClientServiceShared.create(data, "ing001", "create").subscribe(
-      res => {
-      },
-      error => console.log(error),
-      () => {
-        this.newIngreso();
-        swal(MSJ_SUCCESS_TOP_END);        
-      }
+       res => {
+       },
+       error => console.log(error),
+       () => {
+         this.newIngreso();
+         swal(MSJ_SUCCESS_TOP_END);        
+       }
     )
   }
 
@@ -289,49 +270,187 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
 
   edit() {
-    this.sharedService.findById(this.id, "ing001", "findById")
-      .subscribe(
-      result => {
 
-
-        this.almacenIngresoModel = <AlmacenIngresoModel>result.data;
-        console.log(this.almacenIngresoModel);
-        this.buildForm();
-
-        this.insertLocalStorageFromEdit(this.almacenIngresoModel.ing002s);
-
-
-        let date = this.configService.stringToDate(this.almacenIngresoModel.fecha, "dd/MM/yyyy", "/");
-        this.ingresoForm.controls["fecha"].setValue(date);
-        // let hora = this.configService.stringToTime(this.almacenIngresoModel.hora, "hh:mm", ":");        
-        // this.ingresoForm.controls["hora"].setValue(hora);
-        // this.almacenIngresoModel.hora = hora;
-
-        // this.almacenIngresoDetallesModel = this.almacenIngresoModel.ing002s;
-        // this.almacenIngresoModel.ing002s = this.almacenIngresoModel.ing002s.slice();
-        //this.ingresoForm.setValue(this.almacenIngresoModel);
-
-        // this.ingresoForm.controls["iding001"].setValue(this.almacenIngresoModel.iding001);
-        // this.ingresoForm.controls["fecha"].setValue(date);
-        // this.ingresoForm.controls["hora"].setValue(hora);
-        // this.ingresoForm.controls["proveedorcliente"].setValue(this.almacenIngresoModel.proveedorcliente);
-        // this.ingresoForm.controls["nrodoc"].setValue(this.almacenIngresoModel.nrodoc);
-        // this.ingresoForm.controls["almacen"].setValue(this.almacenIngresoModel.almacen);
-        // this.ingresoForm.controls["periodoalmacen"].setValue(this.almacenIngresoModel.periodoalmacen);
-        // this.ingresoForm.controls["empleado"].setValue(this.almacenIngresoModel.empleado);
-        // this.ingresoForm.controls["glosa"].setValue(this.almacenIngresoModel.glosa);
-        // this.ingresoForm.controls["motivoingreso"].setValue(this.almacenIngresoModel.motivoingreso);
-        // this.ingresoForm.controls["tipodocumento"].setValue(this.almacenIngresoModel.tipodocumento);
-        // this.ingresoForm.controls["seriedocproveedor"].setValue(this.almacenIngresoModel.seriedocproveedor);
-        // this.ingresoForm.controls["nrodocproveedor"].setValue(this.almacenIngresoModel.nrodocproveedor);
-
-
-
-
-
-
-      })
   }
+
+  // addCarrito() {
+
+  //   this.msgs = [];
+  //   let rtn = false;
+  //   let tipoaviso = 'warn';
+
+
+  //   if (this.productoModel == null) {
+  //     this.msgs.push({ severity: tipoaviso, summary: 'Aviso', detail: 'Debe indicar un producto' });
+  //     rtn = true;
+  //   } else {
+  //     if (this.productoModel.exigelote && this.nrolote == "") {
+  //       this.msgs.push({ severity: tipoaviso, summary: 'Aviso', detail: 'El producto exige que especifique el nro de lote' });
+  //       rtn = true;
+  //     }
+  //     if (this.productoModel.exigevencimiento && this.fechaVencimiento == null) {
+  //       this.msgs.push({ severity: tipoaviso, summary: 'Aviso', detail: 'El producto exige que especifique la fecha de vencimiento' });
+  //       rtn = true;
+  //     }
+  //   }
+  //   if (this.cantidad == 0) {
+  //     this.msgs.push({ severity: tipoaviso, summary: 'Aviso', detail: 'La cantidad debe ser mayor a cero (0)' });
+  //     rtn = true;
+  //   }
+  //   if (rtn) {
+  //     return;
+  //   }
+
+
+  //   this.almacenIngresoDetalleModel = new AlmacenIngresoDetalleModel();
+
+
+  //   this.almacenIngresoDetalleModel.producto = this.productoModel;
+  //   this.almacenIngresoDetalleModel.cantidad = this.cantidad;
+  //   this.almacenIngresoDetalleModel.nrolote = this.nrolote;
+  //   this.almacenIngresoDetalleModel.fechavencimiento = this.fechaVencimiento;
+
+  //   this.almacenIngresoModel.ing002s.push(this.almacenIngresoDetalleModel);
+
+  //   this.almacenIngresoModel.ing002s = this.almacenIngresoModel.ing002s.slice();
+
+  //   this.codigobarraControl.nativeElement.value = "";
+  //   this.productoModel = null;
+  //   this.cantidad = 0;
+  //   this.nrolote = "";
+  //   this.fechaVencimiento = null;
+  //   this.almacenIngresoDetalleModel = null;
+
+  //   setTimeout(() => {
+  //     this.codigobarraControl.nativeElement.focus();
+  //   }, 500);
+
+  // }
+
+  // getAllAlmacen() {
+
+  //   this.sharedService.getAll("almacen", "getall")
+  //     .subscribe(
+  //     result => {
+  //       //this.almacensModel = result.data;
+  //     }
+  //     )
+
+  // }
+
+  // getAllEmpleado() {
+
+  //   this.sharedService.getAll("empleado", "getall")
+  //     .subscribe(
+  //     result => {
+  //       //this.empleadosModel = result.data;
+  //     }
+  //     )
+
+  // }
+
+
+  // getAllMotivoIngreso() {
+
+  //   this.sharedService.getAll("motivoingreso", "getall")
+  //     .subscribe(
+  //     result => {
+  //       //this.motivoIngresosModel = result.data;
+  //     }
+  //     )
+
+  // }
+
+
+  // getAllTipoDocumento() {
+  //   this.sharedService.getAll("tipodocumento", "getall")
+  //     .subscribe(
+
+  //     result => {
+  //       //this.tipodocumentosModel = result.data;
+  //     }
+  //     )
+  // }
+
+  // searchProveedorCliente(event) {
+
+  //   let query = event.query;
+
+  //   if (query == undefined) {
+  //     query = "";
+  //   }
+
+  //   //  this.proveedorclienteService.getProveedorclienteFilter(query)
+  //   //   .subscribe(
+  //   //   res => {
+  //   //     this.proveedorclientesModel = res.data;
+  //   //   }
+  //   //   ) 
+
+  // }
+
+  // getPeriodoAlmacenByEstado() {
+
+  //   let date = new Date(this.almacenIngresoModel.fecha.toString());
+
+  //   let anno = date.getFullYear()
+  //   let mes = date.getMonth() + 1;
+  //   let idalmacen = this.almacenIngresoModel.almacen.idalmacen;
+
+  //   this.periodoalmacenService.getPeriodoAlmacenByEstado(anno, mes, 'A', idalmacen)
+  //     .subscribe(
+  //     res => {
+  //       debugger;
+  //       let success = false;
+  //      /*  if (res.success) {
+  //         success = true;
+  //         this.periodoalmacenModel = res.data;
+  //         this.save();
+  //       } else {
+  //         success = false;
+  //         this.msgPopup = [];
+  //         this.msgPopup.push({ severity: 'error', summary: 'Aviso Periodo Invalido', detail: 'El registro no se grabo !' });
+  //       } */
+
+
+
+  //     },
+  //     error => {
+
+  //     },
+  //     () => {
+
+
+  //     }
+  //     )
+  // }
+
+  // beforeSave() {
+  //   let build = this.ingresoForm;
+
+  //   this.almacenIngresoModel.almacen = build.controls['almacen'].value;//
+  //   this.almacenIngresoModel.empleado = build.controls['empleado'].value;
+  //   this.almacenIngresoModel.fecha = build.controls['fecha'].value;
+  //   this.almacenIngresoModel.hora = build.controls['hora'].value;
+  //   this.almacenIngresoModel.motivoingreso = build.controls['motivoingreso'].value;
+
+  //   this.almacenIngresoModel.periodoalmacen = build.controls['periodoalmacen'].value;
+  //   this.almacenIngresoModel.proveedorcliente = build.controls['proveedorcliente'].value;
+  //   this.almacenIngresoModel.nrodocproveedor = build.controls['nrodocproveedor'].value;
+  //   this.almacenIngresoModel.seriedocproveedor = build.controls['seriedocproveedor'].value;
+  //   this.almacenIngresoModel.tipodocumento = build.controls['tipodocumento'].value;
+
+  //   this.getPeriodoAlmacenByEstado();
+
+  // }
+
+  
+
+
+
+
+
+
 
   
 
