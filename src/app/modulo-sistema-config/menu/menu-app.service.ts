@@ -20,7 +20,9 @@ export class MenuAppService {
 
   getPerfilDetalle() {
 
-    let login = localStorage.getItem("currentUserName");
+    let login = localStorage.getItem("currentUserName") == undefined?'': localStorage.getItem("currentUserName");
+    
+
     this.perfilService.getPerfilDetalleByIdLogin(login)
       .subscribe(
         res => {

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { SessionService } from '../session.service';
 import { MenuService } from '../../core/menu/menu.service';
 import { ConfigService } from '../../shared/config.service';
+//import * as bcrypt from 'bcrypt';
 
 @Component({
   selector: 'app-signin',
@@ -13,6 +14,7 @@ import { ConfigService } from '../../shared/config.service';
 })
 export class SigninComponent implements OnInit {
 
+  
   public model = { 'username': '', 'password': '' };
   public form: FormGroup;
   constructor(private fb: FormBuilder, private router: Router, private loginService: SessionService, private configService:ConfigService) {}
@@ -23,6 +25,9 @@ export class SigninComponent implements OnInit {
     this.form = this.fb.group ( {
       uname: [null , Validators.compose ( [ Validators.required ] )] , password: [null , Validators.compose ( [ Validators.required ] )]
     } );
+
+
+    
   }
 
   onSubmit() {
@@ -31,6 +36,15 @@ export class SigninComponent implements OnInit {
    
     this.model.username = this.form.controls.uname.value;
     this.model.password = this.form.controls.password.value;
+
+    const saltRounds = 10;
+    const myPlaintextPassword = 's0/\/\P4$$w0rD';
+    const someOtherPlaintextPassword = 'not_bacon';    
+    
+
+    //var salt = bcrypt.genSaltSync(saltRounds);
+    //var hash = bcrypt.hashSync(myPlaintextPassword, salt);
+
 
     this.loginService.sendCredentials(this.model)
     .subscribe(
@@ -56,14 +70,7 @@ export class SigninComponent implements OnInit {
          localStorage.setItem("anno",annoQaliwarma);
          localStorage.setItem("numeroEntrega",numeroEntrega);
          localStorage.setItem("filial",idfilial)
-        
-
-         if ( countCambioPass === 0 ) {
-           this.router.navigate ( [ '/session/confirmarpass' ] );
-         } else {
-          this.router.navigate ( [ '/' ] );
-         }
-
+         this.router.navigate ( [ '/' ] );
 
        } else {
          localStorage.clear();
