@@ -1,3 +1,106 @@
-<p>
-  compras-edit works!
-</p>
+<div class="m-contenedor" [hidden]="showChild">        
+  <div class="card">
+    <div class="card-header">
+      NOTA DE INGRESO
+      <div class="float-sm-right">
+        <button type="button" [routerLink]="['../']" class="btn btn-info btn-sm">Atras</button>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          
+              <form [formGroup]="ingresoForm">
+
+                      <div class="row">
+                          <div class="col-md-6">
+                  
+                              <div class="example-container">
+                                  <!-- tipo de documento del proveedor que envia la mercaderia -->
+                                  <app-comp-find-tipo-documento-sunat-solo [_formControlName]="this.compraForm.get('tipodocumento')"></app-comp-find-tipo-documento-sunat-solo>
+                                  <mat-form-field class="pr-2">
+                                    <input matInput placeholder="SERIE" formControlName="documentoSerie">
+                                  </mat-form-field>
+                
+                                <!-- nrodocumento del documento proveedor que envia la mercaderia -->
+                                <mat-form-field>
+                                    <input matInput placeholder="NRO DOCUMENTO" formControlName="documentoNumero">
+                                </mat-form-field>                
+                  
+                                  <br>
+                                  
+                                  <!-- proveedor que envia la mercaderia -->
+                                  <app-comp-find-proveedor-cliente-list agruparPorDireccion="true" [_formControlName]="this.compraForm.get('proveedorcliente')"></app-comp-find-proveedor-cliente-list>
+                  
+                  
+                                  <!-- fecha de emision del documento de compra -->
+                                  <app-fecha-mat _placeholder="FECHA INGRESO" [_formControlName]="this.compraForm.get('fechaEmision')"></app-fecha-mat>
+                  
+                                  &nbsp;&nbsp;
+                  
+                                  <!-- fecha de vencimiento del documento de compra -->
+                                  <app-fecha-mat _placeholder="FECHA INGRESO" [_formControlName]="this.compraForm.get('fechaVencimiento')"></app-fecha-mat>
+
+                              </div>
+                  
+                          </div>
+                          <div class="col-md-6">
+                              <div class="example-container">
+                  
+                                  <!-- Tipo moneda de compra -->
+                                  <app-comp-find-moneda></app-comp-find-moneda>
+                  
+                  
+
+                  
+                              </div>
+                          </div>                        
+                      </div>                                                        
+              </form>
+          <br>
+          <br>    
+        </div>
+                                    
+        <div class="col-md-12" style="line-height: initial;">                                                
+          <hr><br>
+          <div>
+              <h3 class="float-left">Producto que ingresan</h3>
+              <button class="btn btn-primary btn-sm float-right" (click)="showChild = true">
+                  <i class="fa fa-plus" aria-hidden="true"></i> 
+                  Agregar Productos
+              </button>
+          </div>
+          <br>
+
+
+
+
+        </div>
+      </div>        
+      <br>                
+      <br>
+
+      <!-- [disabled]="!this.ingresoForm.valid || ListProductosIngresar.length == 0" -->
+      <button appNextfocus appKeyClick="F10" type="button"                 
+          class="btn btn-success btn-sm mr-2" (click)="create();">
+        <i *ngIf="procesando" class="fa fa-spinner fa-spin fa-fw"></i>
+        [F10] Guardar
+      </button>    
+    </div>                   
+  </div>
+</div>
+
+<!-- componente buscar producto -->
+<!-- componetne carrito de productos -->
+<div *ngIf="showChild">    
+<h2>Listado de productos</h2>        
+<span class="text-secondary">Selecione los productos que van a ingresar.</span>
+
+<app-comp-producto-carrito class="btn-carrito" (click)="showChild = false"></app-comp-producto-carrito>
+<button class="btn btn-success btn-sm float-right btn-listo-carrito" (click)="showChild = false"> Listo, regresar. </button> 
+<br>        
+
+<app-comp-find-producto-almacen class="app-list-producto" (getObject)="_getObjectProducto($event)"></app-comp-find-producto-almacen>        
+</div>
+

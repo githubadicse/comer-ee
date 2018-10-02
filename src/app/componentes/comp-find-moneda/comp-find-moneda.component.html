@@ -1,0 +1,7 @@
+<mat-form-field class="w-100">
+    <mat-select appNextfocus placeholder="Moneda" [formControl]="_formControlName" [compareWith]="compareMoneda" (selectionChange)="_onSelectionChange($event)">
+      <mat-option *ngFor="let item of ListMoneda" [value]="item">
+        {{item.dscMoneda}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
