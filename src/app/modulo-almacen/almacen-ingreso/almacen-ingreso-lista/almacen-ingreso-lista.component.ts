@@ -145,7 +145,10 @@ export class AlmacenIngresoListaComponent implements OnInit {
     let idAlmacen:number = e.idalmacen;
     this._filterPage = JSON.stringify( this.utilitariosAdicse.Tablefilter(this._filter,idAlmacen,'almacen.idalmacen','equals'  ));
     this.Typeahead.next("dato");
-    this._merge.subscribe(data => {this.almacenIngresosModel = data, console.log(data);});    
+    this._merge.subscribe(data => {
+      this.almacenIngresosModel = data;
+      console.log(data);
+    });    
     
   }
 
@@ -182,7 +185,10 @@ export class AlmacenIngresoListaComponent implements OnInit {
   }
 
 
-  onActivateChild() { this.showChild = true; }
+  onActivateChild() { 
+    this.showChild = true;
+  }
+
   onDeactivateChild() {
     this.showChild = false;
     if (this.sharedService.refreshByStorage('')) {
