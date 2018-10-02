@@ -68,7 +68,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
       // Start watching when user idle is starting.
       //console.log("verifincando ingreso idle");
       this.userIdle.onTimerStart().subscribe(count => {
-        debugger;
+
         this.timeOut = 120 - count;
         this.showTimeOut = true;
         //console.log(count)
