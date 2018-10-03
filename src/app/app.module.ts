@@ -42,7 +42,7 @@ import {
   SidebarComponent,
   NotificationComponent,
   OptionsComponent,
-
+  AdminLayoutComponent,
   AuthLayoutComponent,
   AccordionAnchorDirective,
   AccordionLinkDirective,
