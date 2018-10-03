@@ -256,7 +256,23 @@ getHeadersFormBlob() {
 
    
                 return now;
-    }    
+    }
+    
+    // convierte date(object | moment | string) a string 
+    getDateToStringAllType(fecha: any): string {
+      let fechaRpt: string = '';
+      switch (typeof fecha) {
+        case 'object': // date // moment // si es moment trae la fecha en _d
+          const f = fecha._d ? fecha._d : fecha        
+          fechaRpt = this.getDateString(f);
+          break;
+        case 'string':
+          fechaRpt = fecha;      
+          break;
+      }    
+  
+      return fechaRpt;
+    }
 
     setMapToString(obj){
       obj.array.forEach(element => {
@@ -349,6 +365,37 @@ getHeadersFormBlob() {
         
     jsonRpt = JSON.parse(jsonRpt);
     return jsonRpt;
+  }
+
+   ///// recibe los filtros del table primeng y los pasa a un formato del back-end paginacion
+  /// ejemplo: {"field": "cuenta.banco", "operator": "startswith", "value": "BANCO"}
+  jsonFilterTablePrime(obj: any): string {
+    const filtros = JSON.stringify(obj);
+    obj = JSON.parse(filtros);
+    
+    let rpt: object;
+    let arr_filtros: any[] = [];
+    let arr_filtro_varios: any[] = [];
+    let operador = 'contains';
+    let field = '';
+    
+    Object.keys(obj).map(function (key, index) {        
+      operador = obj[key].operator ? obj[key].operator : 'contains';
+      field = obj[key].field;
+
+        if (index === 0) {
+          arr_filtros.push({ "field": field, "operator": operador, "value": obj[key].value });
+        }
+        else {                              
+          arr_filtro_varios.push({ "field": field, "operator": operador, "value": obj[key].value });
+        }
+    });
+    if ( arr_filtro_varios.length > 0) { arr_filtros.push({ "logic": 'or', "filters": arr_filtro_varios}) }
+        
+    if (obj === '{}' || Object.keys(obj).length === 0) { rpt = {} } else { rpt = { "logic": 'and', "filters": arr_filtros }; } 
+
+    //console.log('stringify', JSON.stringify(rpt));
+    return JSON.stringify(rpt);
   }
     
 

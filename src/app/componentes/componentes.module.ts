@@ -31,6 +31,8 @@ import { CompFindPeriodoAlmacenComponent } from './comp-find-periodo-almacen/com
 import { CompFindProductoAlmacenComponent } from './comp-find-producto-almacen/comp-find-producto-almacen.component';
 import { CompProductoCarritoComponent } from './comp-producto-carrito/comp-producto-carrito.component';
 import { CompFindMonedaComponent } from './comp-find-moneda/comp-find-moneda.component';
+import { CompFindModalidadCompraVentaComponent } from './comp-find-modalidad-compra-venta/comp-find-modalidad-compra-venta.component';
+
 
 
 @NgModule({
@@ -75,8 +77,10 @@ import { CompFindMonedaComponent } from './comp-find-moneda/comp-find-moneda.com
     CompFindTipoDocumentoSunatSoloComponent,
     CompFindPeriodoAlmacenComponent,
     CompFindProductoAlmacenComponent,
-    CompProductoCarritoComponent,    
-    CompFindMonedaComponent
+    CompProductoCarritoComponent,
+    CompFindMonedaComponent,
+    CompFindModalidadCompraVentaComponent,    
+
   ],
   exports: [
     MatDatepickerModule,
@@ -97,7 +101,9 @@ import { CompFindMonedaComponent } from './comp-find-moneda/comp-find-moneda.com
     CompFindPeriodoAlmacenComponent,
     CompFindProductoAlmacenComponent,
     CompProductoCarritoComponent,
-    CompFindMonedaComponent
+    CompFindMonedaComponent,
+    CompFindModalidadCompraVentaComponent,    
+
   ]
 })
 

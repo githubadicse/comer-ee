@@ -65,6 +65,11 @@ export const AppRoutes: Routes = [
         loadChildren: './modulo-almacen/almacen-ingreso/almacen-ingreso.module#AlmacenIngresoModule',
         data : {'tituloModulo':'Ingreso Almacen'}
       },
+      {
+        path: 'almacen/nota-salida',
+        loadChildren: './modulo-almacen/almacen-salida/almacen-salida.module#AlmacenSalidaModule',
+        data : {'tituloModulo':'Salida Almacen'}
+      },
 
       /* almacen proceso de inicio de operaciones cierre y apertura */
       {

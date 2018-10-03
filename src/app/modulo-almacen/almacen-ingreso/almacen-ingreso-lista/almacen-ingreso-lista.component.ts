@@ -1,17 +1,16 @@
-import { Component, OnInit, ViewChild, EventEmitter, Input, Output, ViewEncapsulation, ViewChildren, QueryList } from '@angular/core';
-
-import { Message } from 'primeng/primeng';
+import { Component, OnInit, ViewChild} from '@angular/core';
 
 import { AlmacenIngresoModel } from '../almacen-ingreso-model';
-import { PageEvent, MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator, MatSort } from '@angular/material';
 import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
 import { merge,of as observableOf, Observable, Subject } from 'rxjs';
-import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { startWith, switchMap, map, catchError, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { ConfigService } from '../../../shared/config.service';
 import { FormControl } from '@angular/forms';
-import { AlmacenModel } from '../../../modulo-sistema-config/tablas/almacen/almacen-model';
-import { UtilitariosAdicse } from '../../../shared/servicio/utilitariosAdicse';
 import { SharedService } from '../../../shared/servicio/shared.service';
+import { MSJ_ALERT_BORRAR, MSJ_SUCCESS_TOP_END } from '../../../shared/config.service.const';
+import swal from 'sweetalert2';
+
 
 @Component({
   selector: 'ad-almacen-ingreso-lista',
@@ -19,56 +18,46 @@ import { SharedService } from '../../../shared/servicio/shared.service';
   styleUrls: ['./almacen-ingreso-lista.component.css'],
   providers : [
     CrudHttpClientServiceShared,
-    SharedService,
-    UtilitariosAdicse]
+    SharedService
+  ]
 
 })
 export class AlmacenIngresoListaComponent implements OnInit {
-  showLista: boolean = false;
+  showLista: boolean = true;
   showChild: boolean = false;
 
-  public almacenIngresosModel:AlmacenIngresoModel[]=[];
+  public idRegistroModificar: number;
 
   public titulo:string = "Ingreso Almacen";
 
-  //-comandos obligatorios para la paginacion-//
-  private msgPopup: Message[] = [];
-  public blocked: boolean;
-
-  public showPanelBuscarFlag: boolean = false;
-
-  public filterPage: Object;
-  public displayModal: boolean = false;
-  public refreshPage: boolean = false;
-  //-----------------------------------------//
-
-
-  displayedColumns = ['fecha','nrodoc', 'proveedorcliente.razonsocial', 'nrodocproveedor',  'action'];
+  public almacenIngresosModel:AlmacenIngresoModel[]=[];  
 
   // MatPaginator Inputs
   resultsLength = 0;
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-
-  isLoadingResults = false;
-  isRateLimitReached = false;
-
-  // MatPaginator Output
-  pageEvent: PageEvent;
-
-  @Input() isVisible:boolean;
-
-  @Output() out_isVisible:EventEmitter<any> = new EventEmitter();
-
-  public idFilial:number=1;
-
+  
   setPageSizeOptions(setPageSizeOptionsInput: string) {
     this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
   }
-
-  @ViewChild(MatPaginator) matPaginatorIngreso: MatPaginator;
-  //@ViewChildren(MatPaginator) paginators: QueryList<MatPaginator>
+  
+  @ViewChild(MatPaginator) matPaginatorIngreso: MatPaginator;  
   @ViewChild(MatSort) sort: MatSort;
+
+  displayedColumns = ['fecha','nrodoc', 'proveedorcliente.razonsocial', 'nrodocproveedor',  'action'];  
+  // parametros de filtro o busqueda
+  displayedColumnsFilters = ['fecha','nrodoc', 'proveedorcliente.razonsocial', 'nrodocproveedor'];
+
+
+  idAlmacen: number;
+  parametroBusqueda: string = '';
+
+  formControlBusqueda: FormControl = new FormControl();
+
+  isLoadingResults = false;
+  isRateLimitReached = false;
+  
+  idFilial:number=1;
 
   //filter
   _filter:any = {} ;
@@ -77,21 +66,20 @@ export class AlmacenIngresoListaComponent implements OnInit {
 
   //observable auxiliar.
   Typeahead = new Subject<string>();
-
   selectedRowIndex:any;  
 
-  myControl = new FormControl();
-
+  public rowIndexCondirmDelete: number = null; // index de la fila a eliminar , para mostrar la barra de confirmarcion
+  
+  
   constructor(
     private crudHttpClientServiceShared:CrudHttpClientServiceShared, 
-    private configService:ConfigService,   
-    private sharedService: SharedService,  
-    private utilitariosAdicse:UtilitariosAdicse) { 
-    
+    private configService:ConfigService      
+    ) {    
   }
 
 
   ngOnInit() {
+        
     //this.paginatorLista._intl.itemsPerPageLabel="Reg Por Pag.x"
     this.matPaginatorIngreso._intl.itemsPerPageLabel="Reg Por Pag."
     this.Typeahead.pipe(
@@ -104,7 +92,20 @@ export class AlmacenIngresoListaComponent implements OnInit {
     this.idFilial = this.configService.getIdFilialToken();
     this._filter;
 
-    
+    this.formControlBusqueda!.valueChanges
+    .pipe(
+      startWith(''),
+      distinctUntilChanged(),
+      debounceTime(600),
+      map(val => val)
+    ).subscribe(value => {
+
+      this.parametroBusqueda = value.trim().toLowerCase();
+      this.getArrayFilterTable();      
+      this.Typeahead.next("dato");
+
+    });
+
     this.sort.sortChange.subscribe( ()=> this.matPaginatorIngreso.pageIndex = 0 );
 
     this.sort.active = "fecha";
@@ -115,8 +116,7 @@ export class AlmacenIngresoListaComponent implements OnInit {
     .pipe(
       startWith({}),
       switchMap( () => {
-        this.isLoadingResults = true;
-        return this.crudHttpClientServiceShared.getPagination(this.matPaginatorIngreso.pageIndex, this.pageSize ,this.sort.direction,this.sort.active,this._filterPage,"ing001","pagination",null)
+        return this.crudHttpClientServiceShared.getPaginaionWithFilter(this.matPaginatorIngreso.pageIndex, this.pageSize ,this.sort.direction,this.sort.active,this._filterPage,"ing001","paginacion",null)
         
       }),
       map(
@@ -133,66 +133,72 @@ export class AlmacenIngresoListaComponent implements OnInit {
         return observableOf([]);
       })      
     )
-    //.subscribe(data => this.almacenIngresosModel = data);    
     
-    //la carga de datos se realiza despues de seleccionar el almacen..... con la funcion
-    //f_selected que devuelve el compomente almacen.
     
   }
 
   f_selected(e){
     
-    let idAlmacen:number = e.idalmacen;
-    this._filterPage = JSON.stringify( this.utilitariosAdicse.Tablefilter(this._filter,idAlmacen,'almacen.idalmacen','equals'  ));
+    this.idAlmacen = e.idalmacen;    
+    this.getArrayFilterTable(); // obtiene los filtros
+        
+    this.isLoadingResults = true;
     this.Typeahead.next("dato");
     this._merge.subscribe(data => {
-      this.almacenIngresosModel = data;
-      console.log(data);
+    this.almacenIngresosModel = data;
+
     });    
     
   }
 
+  // devuelve los filtros en formato com.adicse.comercial.specification.Filter;
+  // listo para enviar al back end;
+  getArrayFilterTable() {        
+    let filtros: any[] = [];
+    this.displayedColumnsFilters.map(x => {
+      filtros.push({'field': x,'operator': 'contains', 'value': this.parametroBusqueda})
+    });
 
-  filter(e) {
-    this.filterPage = JSON.stringify(e.filters);
+    // agrega la condicion incial que ira con el operador ligico "and"
+    filtros.unshift({'field': 'almacen.idalmacen','operator': 'eq', 'value': this.idAlmacen});    
+    
+    this._filterPage  = this.configService.jsonFilterTablePrime(filtros);
   }
-  refreshModel(e) {
-    this.almacenIngresosModel = e;
+
+
+  delete(e, index): void {
+    swal(MSJ_ALERT_BORRAR).then((res: any) => {
+      if(res.value) {
+        this.crudHttpClientServiceShared.delete(e.iding001, 'ing001', 'delete').subscribe(res => { 
+          swal(MSJ_SUCCESS_TOP_END); 
+          this.almacenIngresosModel.splice(index,1);
+          this.Typeahead.next("dato");
+        });
+      }
+    });
   }
+
   page(e){
     this.pageSize = e.pageSize;
   }
-  showPanelBuscar() {
-    this.showPanelBuscarFlag = !this.showPanelBuscarFlag;
+
+  changeVerLista(): void { this.showLista = !this.showLista; }
+
+  modificarRegistro(id: number): void {    
+     this.idRegistroModificar = id; 
+     this.changeVerLista();
   }
 
-  edit(e){
-    
-    this.isVisible = false;
-    this.out_isVisible.emit({'isVisible':false,'accion':'edit','element':e});
-
-  }
-  create(){
-    this.isVisible = false;
-    this.out_isVisible.emit({'isVisible':false,'accion':'create'});
+  nuevoRegistro(): void {
+    this.idRegistroModificar = null; 
+     this.changeVerLista();
   }
 
-  highlight(row) {
-    this.selectedRowIndex = row.idProductoPorNumeroEntrega;
-  }
-  ocultarLista(){
-    this.showLista = false;
-  }
-
-
-  onActivateChild() { 
-    this.showChild = true;
-  }
-
-  onDeactivateChild() {
-    this.showChild = false;
-    if (this.sharedService.refreshByStorage('')) {
-      // cargar del storage this.maestros()
+  actualizarLista(isUpdate: boolean): void {
+    if (isUpdate) {
+      this.Typeahead.next("dato");
     }
+    this.changeVerLista();
   }
+
 }

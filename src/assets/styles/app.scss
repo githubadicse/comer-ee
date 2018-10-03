@@ -57,9 +57,13 @@
     padding-top: 11px;
 }
 
+.tr-color-selected-1 tr:hover{
+    background: #fff9c4;       
+}
+
 .animated {
-        -webkit-animation-duration: 1s;
-        animation-duration: 1s;
+        -webkit-animation-duration: 0.8s;
+        animation-duration: 0.8s;
         /* -webkit-animation-fill-mode: both;
         animation-fill-mode: both; */
     }

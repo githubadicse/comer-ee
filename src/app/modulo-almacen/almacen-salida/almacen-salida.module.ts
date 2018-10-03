@@ -12,6 +12,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../../shared/shared.module';
 import { KardexModule } from '../kardex/kardex.module';
+import { ComponentesModule } from '../../componentes/componentes.module';
+import { MatSortModule, MatTableModule, MatPaginatorModule, MatIconModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSlideToggleModule, MatDialogModule, MatSelectModule } from '@angular/material';
+import { AlmacenSalidaEdicionDialogComponent } from './almacen-salida-edicion/almacen-salida-edicion-dialog/almacen-salida-edicion-dialog.component';
 
 
 
@@ -28,8 +31,17 @@ import { KardexModule } from '../kardex/kardex.module';
     CalendarModule,
     MessagesModule,
     KardexModule,
-    HttpClientModule
+    HttpClientModule,
+    ComponentesModule,
+    MatSortModule, MatTableModule, MatPaginatorModule, MatIconModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSlideToggleModule ,
+    MatSelectModule,
+    MatDialogModule 
   ],
-  declarations: [AlmacenSalidaMainComponent, AlmacenSalidaEdicionComponent, AlmacenSalidaListaComponent]
+  declarations: [
+    AlmacenSalidaMainComponent, 
+    AlmacenSalidaEdicionComponent, 
+    AlmacenSalidaListaComponent, AlmacenSalidaEdicionDialogComponent
+  ],
+  entryComponents: [AlmacenSalidaEdicionDialogComponent]
 })
 export class AlmacenSalidaModule { }
