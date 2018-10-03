@@ -6,25 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./almacen-ingreso-main.component.css']
 })
 export class AlmacenIngresoMainComponent implements OnInit {
-  showEdicion: boolean;
-  showLista: boolean;
 
   constructor() { }
 
   ngOnInit() {
-  }
-  onActivate() {
-    console.log("Activate edicion main 1 ");
-    //this.showLista = true;
-    
-
-  }  
-
-  onDeactivate() {
-    console.log("Deactivate edicion main 2 ");
-    this.showLista = false;
-  
-
   }
 
 

@@ -1,4 +1,4 @@
-<div [hidden]="!showLista" >
+<div [hidden]="!showLista" class="animated fadeIn">
   <h3>
     {{titulo}}
   </h3>
@@ -7,7 +7,7 @@
 
   <div style="height: 70%;">
       <!-- (click)="create()" -->
-    <button type="button" class="btn btn-danger btn-circle"  (click)="changeVerLista()">
+    <button type="button" class="btn btn-danger btn-circle"  (click)="nuevoRegistro()">
       <i class="fa fa-plus"></i>
     </button>
     <button type="button" class="btn btn-info btn-circle" [routerLink]="['./productoedicion', {id:0}]">
@@ -39,7 +39,7 @@
     </div>
 
     <div class="mat-elevation-z8">
-      <table mat-table #table [dataSource]="almacenIngresosModel" class="tr-color-selected-1" [class.isMobile]="isMobile" matSort matSortActive="fecha"
+      <table mat-table #table [dataSource]="almacenIngresosModel" class="tr-color-selected-1"  matSort matSortActive="fecha"
         matSortDisableClear matSortDirection="asc">
 
         <!-- Fecha -->
@@ -103,6 +103,6 @@
 </div>
 
 <!-- ingreso almacen edit -->
-<div *ngIf="!showLista">
-  <ad-almacen-ingreso-edicion [idRegistro]="idRegistroModificar" (back)="changeVerLista()"></ad-almacen-ingreso-edicion>
+<div *ngIf="!showLista" class="animated fadeIn">
+  <ad-almacen-ingreso-edicion [idRegistro]="idRegistroModificar" (back)="actualizarLista($event)"></ad-almacen-ingreso-edicion>
 </div>

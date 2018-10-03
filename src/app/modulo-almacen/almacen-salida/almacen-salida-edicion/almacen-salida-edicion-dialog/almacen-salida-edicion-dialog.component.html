@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>Cantidad que sale</h2>
+
+<mat-dialog-content [formGroup]="form">
+      <h5>
+        {{producto.dscproducto}} ({{producto.unidadmedida.abrunidadmedida}})
+      </h5>
+      <br>
+      
+      <mat-form-field class="w-100">
+        <input matInput autocomplete="off" type="number" pattern="[0-9]+(\.[0-9][0-9]?)?"            
+            placeholder="Cantidad"
+            formControlName="cantidad"
+            (keydown.enter)="save()">
+      </mat-form-field>
+      <mat-form-field class="w-100">
+          <input matInput autocomplete="off"
+              placeholder="Lote"
+              formControlName="lote" 
+              (keydown.enter)="save()"
+              [required]="producto.exigeLote">
+      </mat-form-field> 
+ 
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button class="mat-raised-button mat-warn"(click)="close()">Cerrar</button>
+    <button class="mat-raised-button mat-primary"(click)="save()" [disabled]="!form.valid">Agregar</button>
+</mat-dialog-actions>

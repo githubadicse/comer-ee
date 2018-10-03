@@ -13,32 +13,4 @@ export class AlmacenSalidaMainComponent implements OnInit {
   ngOnInit() {
   }
 
-  onActivate() {
-    console.log("Activate outlet main");
-    this.showLista = false;
-    this.showEdicion = true;
-
-  }  
-
-  onDeactivate() {
-    console.log("Deactivate outlet main");
-    this.showLista = true;
-    this.showEdicion = false;
-
-  }
-
-
-  onActivateLista() {
-    console.log("Activate lista");
-    this.showLista = true;
-    this.showEdicion = false;
-
-  }
-  onDeactivateLista() {
-    console.log("Deactivate Lista");
-    this.showLista = false;
-    this.showEdicion = true;
-
-  }
-
 }

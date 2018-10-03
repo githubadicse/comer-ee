@@ -1,16 +1,17 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 
 
 import { AlmacenIngresoModel } from '../almacen-ingreso-model';
-import { AlmacenIngresoDetalleModel } from '../almacen-ingreso-detalle-model';
-import { ConfigService } from '../../../shared/config.service';
 import { ProductoModel } from '../../../modulo-sistema-config/tablas/producto/model/producto.model';
-import { CodigobarraModel } from '../../../modulo-sistema-config/tablas/codigobarra/codigobarra-model';
+import { AlmacenIngresoDetalleModel } from '../almacen-ingreso-detalle-model';
+
+import { ConfigService } from '../../../shared/config.service';
 import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
+import { LocalStorageManagerService } from '../../../shared/servicio/local-storage-manager.service';
+
 import swal from 'sweetalert2';
 
-import { LocalStorageManagerService } from '../../../shared/servicio/local-storage-manager.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AlmacenIngresoEdicionDialogComponent } from './almacen-ingreso-edicion-dialog/almacen-ingreso-edicion-dialog.component';
 import { MSJ_SUCCESS_TOP_END } from '../../../shared/config.service.const';
@@ -23,32 +24,29 @@ import { Subscription } from 'rxjs/internal/Subscription';
   styleUrls: ['./almacen-ingreso-edicion.component.css'],
   providers: [    
     ConfigService,
-    MomentDateAdapter]
+    MomentDateAdapter
+  ]
 })
 
 export class AlmacenIngresoEdicionComponent implements OnInit {
   showChild: boolean = false;
   procesando: boolean = false;  
-  // id: number = 0;  
-  // goBack: boolean = false;
+  isUpdate: boolean = false; // si se actualiza, crea o modifica registro, notifica actulizacion con el evento "back"
+  
+  // id a modificar
   @Input('idRegistro') id: number;
-  @Output('back') back:EventEmitter<boolean> = new EventEmitter();
+
+  // se emite al dar click en el boton "atras". Emite el valor de isUpdate = si se actulizo o no para refrescar lista pricipal
+  @Output('back') back:EventEmitter<boolean> = new EventEmitter(); 
 
   public idFilial:number=1;
   
   public ingresoForm: FormGroup;
-  public productosModel: ProductoModel[] = [];
-  public productoModel: ProductoModel;
-  public codigobarraModel: CodigobarraModel;
 
   public almacenIngresoModel: AlmacenIngresoModel = new AlmacenIngresoModel;
 
   public almacenIngresoDetallesModel: AlmacenIngresoDetalleModel[] = [];
   public almacenIngresoDetalleModel: AlmacenIngresoDetalleModel;
-
-  @ViewChild('codigobarra') codigobarraControl: ElementRef;
-  @ViewChild('cantidad_') cantidadControl: ElementRef;
-
 
   // listar productos
   private keyLocalStorage: string = 'carrito'; // key datos del localstorage key = 'carrito';
@@ -144,6 +142,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
          this.newIngreso();
          swal(MSJ_SUCCESS_TOP_END);        
          this.procesando = false;
+         this.isUpdate=true;
        }
     )
   }
@@ -161,7 +160,11 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     const data = JSON.stringify(this.almacenIngresoModel);    
 
     this.crudHttpClientServiceShared.update(data, "ing001", "update").subscribe(
-       res => {swal(MSJ_SUCCESS_TOP_END); this.procesando=false; },
+       res => {
+            swal(MSJ_SUCCESS_TOP_END); 
+            this.procesando=false; 
+            this.isUpdate=true;
+          },
        error => { console.log(error); this.procesando=false; }
       )
   }
@@ -187,8 +190,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
         //ing002's
         this.insertLocalStorageFromEdit(data.ing002s);
 
-      })
-      
+      })      
 
   }
 
@@ -285,7 +287,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
   }
 
   public regresar(): void {    
-    this.back.emit(true);
+    this.back.emit(this.isUpdate);
   }
 
   ////////////////////
