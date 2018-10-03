@@ -28,7 +28,7 @@ const routes: Routes = [
         path : 'lista', component : AlmacenIngresoListaComponent,
         children : [
           {
-            path : 'edicion' , component : AlmacenIngresoEdicionComponent
+            path : 'edicion' , component : AlmacenIngresoEdicionComponent, data:{ q : 'true'}
           }
         ]
       }

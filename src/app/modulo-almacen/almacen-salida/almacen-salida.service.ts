@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 
 import {  Http, Headers, RequestOptions,  ResponseContentType } from '@angular/http';
 import { ConfigService } from '../../shared/config.service';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable()
 export class AlmacenSalidaService {
 
-  constructor(private configService: ConfigService, private http: Http) { }
+  constructor(private configService: ConfigService, private http: HttpClient) { }
 
   getProductosFilter(query: string) {
 
@@ -33,7 +34,7 @@ export class AlmacenSalidaService {
     let headers = new Headers({ 'Authorization': 'Bearer ' + localStorage.getItem("token") });
 
     let options = new RequestOptions({ responseType: ResponseContentType.Blob, headers });
-    return this.http.get(url, options);
+    // return this.http.get(url, options);
     /*   .map(
         res => res
 
@@ -63,7 +64,7 @@ export class AlmacenSalidaService {
     let headers = new Headers({ 'Authorization': 'Bearer ' + localStorage.getItem("token") });
 
     let options = new RequestOptions({ responseType: ResponseContentType.Blob, headers });
-    return this.http.get(url, options)
+    // return this.http.get(url, options)
     /*  .map(
        res => res   
      ).subscribe(

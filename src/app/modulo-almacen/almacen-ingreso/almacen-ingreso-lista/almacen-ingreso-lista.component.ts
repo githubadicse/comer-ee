@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
 import { SharedService } from '../../../shared/servicio/shared.service';
 import { MSJ_ALERT_BORRAR, MSJ_SUCCESS_TOP_END } from '../../../shared/config.service.const';
 import swal from 'sweetalert2';
-import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'ad-almacen-ingreso-lista',
@@ -18,7 +18,8 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./almacen-ingreso-lista.component.css'],
   providers : [
     CrudHttpClientServiceShared,
-    SharedService]
+    SharedService
+  ]
 
 })
 export class AlmacenIngresoListaComponent implements OnInit {
@@ -35,6 +36,13 @@ export class AlmacenIngresoListaComponent implements OnInit {
   resultsLength = 0;
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 25, 100];
+  
+  setPageSizeOptions(setPageSizeOptionsInput: string) {
+    this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+  }
+  
+  @ViewChild(MatPaginator) matPaginatorIngreso: MatPaginator;  
+  @ViewChild(MatSort) sort: MatSort;
 
   displayedColumns = ['fecha','nrodoc', 'proveedorcliente.razonsocial', 'nrodocproveedor',  'action'];  
   // parametros de filtro o busqueda
@@ -50,13 +58,6 @@ export class AlmacenIngresoListaComponent implements OnInit {
   isRateLimitReached = false;
   
   idFilial:number=1;
-
-  setPageSizeOptions(setPageSizeOptionsInput: string) {
-    this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
-  }
-
-  @ViewChild(MatPaginator) matPaginatorIngreso: MatPaginator;  
-  @ViewChild(MatSort) sort: MatSort;
 
   //filter
   _filter:any = {} ;
@@ -92,7 +93,6 @@ export class AlmacenIngresoListaComponent implements OnInit {
     this._filter;
 
     this.formControlBusqueda!.valueChanges
-
     .pipe(
       startWith(''),
       distinctUntilChanged(),
@@ -186,6 +186,18 @@ export class AlmacenIngresoListaComponent implements OnInit {
   modificarRegistro(id: number): void {    
      this.idRegistroModificar = id; 
      this.changeVerLista();
+  }
+
+  nuevoRegistro(): void {
+    this.idRegistroModificar = null; 
+     this.changeVerLista();
+  }
+
+  actualizarLista(isUpdate: boolean): void {
+    if (isUpdate) {
+      this.Typeahead.next("dato");
+    }
+    this.changeVerLista();
   }
 
 }

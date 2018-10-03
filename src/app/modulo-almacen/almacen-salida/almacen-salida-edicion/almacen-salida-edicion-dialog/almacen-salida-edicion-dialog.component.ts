@@ -1,43 +1,39 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductoModel } from '../../../../modulo-sistema-config/tablas/producto/model/producto.model';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-almacen-ingreso-edicion-dialog',
-  templateUrl: './almacen-ingreso-edicion-dialog.component.html',
-  styleUrls: ['./almacen-ingreso-edicion-dialog.component.scss']
+  selector: 'app-almacen-salida-edicion-dialog',
+  templateUrl: './almacen-salida-edicion-dialog.component.html',
+  styles: []
 })
-export class AlmacenIngresoEdicionDialogComponent implements OnInit {  
-  
+export class AlmacenSalidaEdicionDialogComponent implements OnInit {
+
   form: FormGroup;  
   producto: ProductoModel;
 
   private cantidad: string = '';
   private lote: string = '';
-  private fechavencimiento: string = '';
-  // fecha: string;
+  
   constructor(
     private formBuilder: FormBuilder,
-    private dialogRef: MatDialogRef<AlmacenIngresoEdicionDialogComponent>,
+    private dialogRef: MatDialogRef<AlmacenSalidaEdicionDialogComponent>,
         @Inject(MAT_DIALOG_DATA) data
-  ) {
-
-    this.producto = data.producto;
-    // this.producto.exigeLote = data.producto.exigeLote ? false : true;
+  ) { 
+    this.producto = data.producto;    
     this.cantidad = data.cantidad;
     this.lote = data.lote;
-    this.fechavencimiento = data.fechavencimiento;
-   }
+  }
 
   ngOnInit() {
 
     this.form = this.formBuilder.group({
       producto: this.producto,
       cantidad: [this.cantidad,  Validators.required],
-      lote: [this.lote],
-      fechavencimiento: [this.fechavencimiento]
+      lote: [this.lote],      
     });
+    
   }
 
   save() {    
@@ -49,7 +45,4 @@ export class AlmacenIngresoEdicionDialogComponent implements OnInit {
       this.dialogRef.close();
   }
 
-  _getObjectFecha(event) {
-    this.form.value.fechavencimiento = event;
-  }
 }

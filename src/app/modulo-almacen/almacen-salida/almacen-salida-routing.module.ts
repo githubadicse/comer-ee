@@ -8,40 +8,60 @@ import { KardexOptsComponent } from '../kardex/kardex-opts/kardex-opts.component
 
 
 
-const routes: Routes = [
-  {
+// const routes: Routes = [
+//   {
   
-      path: 'main',
-      component: AlmacenSalidaMainComponent , 
-      children: [
-        {
-          path: '',  redirectTo:'lista'
-        },
-        {
-          path: 'lista', component: AlmacenSalidaListaComponent,
-          children : [
-            {
-              path :'edicion' , component: AlmacenSalidaEdicionComponent,
-              children : [
-                {
-                  path : 'kardex', component : KardexOptsComponent
-                }
-              ]
-            }
-          ]
+//       path: 'main',
+//       component: AlmacenSalidaMainComponent , 
+//       children: [
+//         {
+//           path: '',  redirectTo:'lista'
+//         },
+//         {
+//           path: 'lista', component: AlmacenSalidaListaComponent,
+//           children : [
+//             {
+//               path :'edicion' , component: AlmacenSalidaEdicionComponent,
+//               children : [
+//                 {
+//                   path : 'kardex', component : KardexOptsComponent
+//                 }
+//               ]
+//             }
+//           ]
 
-        }
+//         }
       
     
-      ]
+//       ]
   
   
-    },
+//     },
   
+//     {
+//       path: '**', component: AlmacenSalidaListaComponent
+//     }
+  
+//   ];
+
+  const routes: Routes = [
     {
-      path: '**', component: AlmacenSalidaEdicionComponent
-    }
+      path : '', component : AlmacenSalidaMainComponent,
   
+      children : [
+        {
+          path : '', redirectTo : 'lista'
+        },
+        {
+          path : 'lista', component : AlmacenSalidaListaComponent,
+          children : [
+            {
+              path : 'edicion' , component : AlmacenSalidaEdicionComponent
+            }
+          ]
+        }
+      ]
+    }
   ];
 
 @NgModule({
