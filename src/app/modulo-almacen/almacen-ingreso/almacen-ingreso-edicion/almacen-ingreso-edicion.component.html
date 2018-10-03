@@ -3,7 +3,8 @@
           <div class="card-header">
             NOTA DE INGRESO
             <div class="float-sm-right">
-              <button type="button" [routerLink]="['../']" class="btn btn-info btn-sm">Atras</button>
+              <button type="button" (click)="regresar()" class="btn btn-info btn-sm">Atras</button>
+              <!-- <button type="button" (click)="atras()" class="btn btn-info btn-sm">Atras</button> -->
             </div>
           </div>
     
@@ -151,7 +152,9 @@
 
             <!-- [disabled]="!this.ingresoForm.valid || ListProductosIngresar.length == 0" -->
             <button appNextfocus appKeyClick="F10" type="button"                 
-                class="btn btn-success btn-sm mr-2" (click)="create();">
+                class="btn btn-success btn-sm mr-2" (click)="create();"
+                [disabled]="!this.ingresoForm.valid || ListProductosIngresar.length == 0 || ingresoForm.pristine"
+                >
               <i *ngIf="procesando" class="fa fa-spinner fa-spin fa-fw"></i>
               [F10] Guardar
             </button>    

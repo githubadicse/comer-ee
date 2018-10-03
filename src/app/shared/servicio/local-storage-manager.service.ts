@@ -70,7 +70,14 @@ export class LocalStorageManagerService {
   }
 
   public countInitLocalStorage(key: string): void {
-    this.ListaProductosCarrito = JSON.parse(localStorage.getItem(key)) || [];
+    let itemKey: any = localStorage.getItem(key);    
+    try {
+      this.ListaProductosCarrito = JSON.parse(itemKey) || [];
+    } catch (error) {
+      this.ListaProductosCarrito = itemKey;
+    }
+
+    
     this.countItemLocalSotrage();
   }
 
