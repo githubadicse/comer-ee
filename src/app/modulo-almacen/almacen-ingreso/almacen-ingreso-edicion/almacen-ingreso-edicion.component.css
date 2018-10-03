@@ -1,12 +1,4 @@
-
-/* * {
-    font-size: 11px;
-    line-height: 2;
-  } */
-.tr-color-selected-1 tr:hover{
-    background: #fff9c4;       
-}
-
+/* mostrar div de confirmacion, para borrar */
 .rowConfirmDelete {
     background: #f50057;
     color: #E3DADA;

@@ -1,61 +1,42 @@
-import { Component, OnInit, HostListener, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-
-import { AlmacenIngresoService } from '../almacen-ingreso.service';
-
+import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 
 
 import { AlmacenIngresoModel } from '../almacen-ingreso-model';
 import { AlmacenIngresoDetalleModel } from '../almacen-ingreso-detalle-model';
-
-import { PeriodoalmacenService } from '../../periodoalmacen/periodoalmacen.service';
-import { SharedService } from '../../../shared/servicio/shared.service';
-
-import { EmpleadoModel } from '../../../modulo-cuenta-rr-hh/empleado/empleado-model';
-
-import { TipodocumentoModel } from '../../../modulo-sistema-config/tipodocumento/tipodocumento-model';
-import { PeriodoalmacenModel } from '../../periodoalmacen/periodoalmacen-model';
-import { CodigobarraService } from '../../../modulo-sistema-config/tablas/codigobarra/codigobarra.service';
-import { ProveedorclienteService } from '../../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente.service';
 import { ConfigService } from '../../../shared/config.service';
 import { ProductoModel } from '../../../modulo-sistema-config/tablas/producto/model/producto.model';
 import { CodigobarraModel } from '../../../modulo-sistema-config/tablas/codigobarra/codigobarra-model';
-import { AlmacenModel } from '../../../modulo-sistema-config/tablas/almacen/almacen-model';
-import { MotivoIngresoModel } from '../../../modulo-sistema-config/tablas/motivo-ingreso/motivo-ingreso-model';
-import { ProveedorclienteModel } from '../../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model';
 import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
 import swal from 'sweetalert2';
-import { NumeradorModel } from '../../../modulo-sistema-config/tipodocumento/numerador.model';
+
 import { LocalStorageManagerService } from '../../../shared/servicio/local-storage-manager.service';
-import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AlmacenIngresoEdicionDialogComponent } from './almacen-ingreso-edicion-dialog/almacen-ingreso-edicion-dialog.component';
 import { MSJ_SUCCESS_TOP_END } from '../../../shared/config.service.const';
-import { Moment } from 'moment';
-import * as moment from 'moment';
 import { MomentDateAdapter } from '../../../shared/validators/MomentDateAdapter';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
   selector: 'ad-almacen-ingreso-edicion',
   templateUrl: './almacen-ingreso-edicion.component.html',
   styleUrls: ['./almacen-ingreso-edicion.component.css'],
-  providers: [SharedService, AlmacenIngresoService, CodigobarraService, ProveedorclienteService,
+  providers: [    
     ConfigService,
-    PeriodoalmacenService,MomentDateAdapter]
+    MomentDateAdapter]
 })
 
 export class AlmacenIngresoEdicionComponent implements OnInit {
   showChild: boolean = false;
-  showEdicion: boolean = true;
-  procesando: boolean = false;
-  msgPopup: any[];
-  id: number = 0;
-  sub: any;
+  procesando: boolean = false;  
+  // id: number = 0;  
+  // goBack: boolean = false;
+  @Input('idRegistro') id: number;
+  @Output('back') back:EventEmitter<boolean> = new EventEmitter();
 
   public idFilial:number=1;
   
-  public ingresoForm: any;
+  public ingresoForm: FormGroup;
   public productosModel: ProductoModel[] = [];
   public productoModel: ProductoModel;
   public codigobarraModel: CodigobarraModel;
@@ -64,33 +45,6 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
   public almacenIngresoDetallesModel: AlmacenIngresoDetalleModel[] = [];
   public almacenIngresoDetalleModel: AlmacenIngresoDetalleModel;
-
-  public almacensModel: AlmacenModel[] = [];
-  public almacenModel: AlmacenModel;
-
-  public empleadosModel: EmpleadoModel[] = [];
-  public empleadoModel: EmpleadoModel;
-
-  public motivoIngresosModel: MotivoIngresoModel[] = [];
-  public motivoIngresoModel: MotivoIngresoModel;
-
-  public proveedorclientesModel: ProveedorclienteModel[] = [];
-  public proveedorclienteModel: ProveedorclienteModel;
-
-  public tipodocumentosModel: TipodocumentoModel[] = [];
-  public tipodocumentoModel: TipodocumentoModel;
-
-  public periodoalmacenModel: PeriodoalmacenModel;
-
-  cantidad: number = 0;
-  nrolote: string = "";
-  fechaVencimiento: Date = null;
-
-  public msgs = [];
-
-  es: any;
-
-  
 
   @ViewChild('codigobarra') codigobarraControl: ElementRef;
   @ViewChild('cantidad_') cantidadControl: ElementRef;
@@ -110,22 +64,18 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
     private configService: ConfigService,
     private crudHttpClientServiceShared:CrudHttpClientServiceShared,
-    private localStorageManagerService: LocalStorageManagerService,
-
+    private localStorageManagerService: LocalStorageManagerService,    
     private dialog: MatDialog,
     private DateAdapter: MomentDateAdapter
   ) { 
 
-    // this.buildForm();
-    this.loadDataLocalStorage();    
-  }
-
+    this.loadDataLocalStorage();  
+  }  
 
   ngOnInit() {
     this.buildForm();
     this.idFilial = this.configService.getIdFilialToken();
-
-        
+            
     if (!this.id) {
       this.newIngreso();
 
@@ -140,25 +90,9 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
   
   buildForm() {
 
-    // this.ingresoForm = this.formBuilder.group({
-    //   iding001: ['0'],
-    //   fecha: ['', Validators.required],
-    //   hora: ['', Validators.required],
-    //   proveedorcliente: ['', Validators.required],
-    //   nrodoc: [''],
-    //   almacen: ['', Validators.required],
-    //   periodoalmacen: [''],
-    //   empleado: ['', Validators.required],
-    //   glosa: [''],
-    //   motivoingreso: ['', Validators.required],
-    //   tipodocumento: ['', Validators.required],
-    //   seriedocproveedor: [''],
-    //   nrodocproveedor: ['']
-    // });
-
     this.ingresoForm = this.formBuilder.group({
       iding001: ['0'],
-      fecha: [''],
+      fecha: ['', Validators.required],
       hora: ['', Validators.required],
       proveedorcliente: ['', Validators.required],
       nrodoc: [''],
@@ -171,7 +105,6 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
       seriedocproveedor: [''],
       nrodocproveedor: [''],
       ing002s:['']
-
     });
 
   }
@@ -185,15 +118,14 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     this.buildForm();
   }
 
-
-
-
-
   create(){
+    if (this.procesando) {return;}
+    this.procesando = true;
 
-    // elimina el key "nomes" que no es parte del modelo orginal y se usa para mostrar el nombre del mes en el control
-    let periodo = this.ingresoForm.value.periodoalmacen;
-    delete periodo["nommes"];
+    if (this.id) { this.update(); return;}
+
+    // elimina el key "nomes" de periodoalmacen que no es parte del modelo orginal y se usa para mostrar el nombre del mes en el control  
+    delete this.ingresoForm.value.periodoalmacen["nommes"];
     
     let fechaMoment = this.ingresoForm.controls['fecha'].value;
     let fecha = this.DateAdapter.format(this.ingresoForm.controls['fecha'].value, 'DD/MM/YYYY');
@@ -206,74 +138,61 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     this.ingresoForm.controls['fecha'].setValue(fechaMoment);
 
     this.crudHttpClientServiceShared.create(data, "ing001", "create").subscribe(
-       res => {
-       },
-       error => console.log(error),
+       res => {},
+       error => { console.log(error); this.procesando = false;},
        () => {
          this.newIngreso();
          swal(MSJ_SUCCESS_TOP_END);        
+         this.procesando = false;
        }
     )
   }
 
-
-  
+ 
   update() {
 
-    // this.almacenIngresoModel =<AlmacenIngresoModel>this.ingresoForm.value; 
-    // let fecha = this.configService.getDateString(this.almacenIngresoModel.fecha);
-    // let hora = this.configService.getHoraString(this.almacenIngresoModel.hora);
+    // elimina el key "nomes" de periodoalmacen que no es parte del modelo orginal y se usa para mostrar el nombre del mes en el control  
+    delete this.ingresoForm.value.periodoalmacen["nommes"];    
+    
+    this.almacenIngresoModel = <AlmacenIngresoModel> this.ingresoForm.value        
+    this.almacenIngresoModel.fecha = this.configService.getDateToStringAllType(this.almacenIngresoModel.fecha);
+    this.almacenIngresoModel.ing002s = this.almacenIngresoDetallesModel;
 
+    const data = JSON.stringify(this.almacenIngresoModel);    
 
-    // this.almacenIngresoModel.fecha = fecha;
-    // this.almacenIngresoModel.hora = hora;
-    // this.almacenIngresoModel.periodoalmacen = this.periodoalmacenModel;
-    // this.almacenIngresoModel.fechaRegistroSystema = null;
-
-    //this.almacenIngresoModel.ing002s = this.almacenIngresoDetallesModel;
-
-    // let periodo = this.ingresoForm.value.periodoalmacen;
-    // delete periodo["nommes"];    
-    delete this.ingresoForm.value.periodoalmacen["nommes"];
-
-    this.almacenIngresoModel =<AlmacenIngresoModel>this.ingresoForm.value;     
-    const fecha = this.configService.getDateString(this.almacenIngresoModel.fecha);
-    this.almacenIngresoModel.fecha = fecha;
-
-    const horaFormControl = this.ingresoForm.controls['hora'].value;
-    const hora = horaFormControl.split(':').length === 2 ? horaFormControl + ":00" : horaFormControl;
-    this.almacenIngresoModel.hora = hora;
-
-    // this.almacenIngresoModel =<AlmacenIngresoModel>this.ingresoForm.value; 
-    this.almacenIngresoModel =<AlmacenIngresoModel>this.ingresoForm.value; 
-    this.almacenIngresoModel.ing002s = this.almacenIngresoDetallesModel; 
-    console.log('update', this.almacenIngresoModel);
-
-    const data = JSON.stringify(this.almacenIngresoModel);
-
-    this.crudHttpClientServiceShared.update(data, "ing001", "update")
-      .subscribe(
-      res => {
-        // this.msgPopup = [];
-        // this.msgPopup.push({ severity: 'success', summary: 'Aviso', detail: 'Registro Grabado !' });
-        swal(MSJ_SUCCESS_TOP_END);
-      })
-      // error => {
-      //   console.log(error);
-      // })
-      // () => {
-      //   this.almacenIngresoDetallesModel = [];
-      //   this.almacenIngresoModel = new AlmacenIngresoModel();
-      //   this.buildForm();
-      // })
+    this.crudHttpClientServiceShared.update(data, "ing001", "update").subscribe(
+       res => {swal(MSJ_SUCCESS_TOP_END); this.procesando=false; },
+       error => { console.log(error); this.procesando=false; }
+      )
   }
 
 
   edit() {
 
+    this.crudHttpClientServiceShared.edit(this.id,'ing001','findById').subscribe(
+      res => {                        
+        
+        const data = <AlmacenIngresoModel>res.data;
+        Object.keys(data).forEach(name => {
+          if (this.ingresoForm.controls[name]) {
+            this.ingresoForm.controls[name].patchValue(data[name]);
+          }
+        });
+
+        const hora = data.hora.split(':'); // modifica hora de [hh:mm:ss] a [hh:mm]
+        const fecha = this.configService.stringToDate(data.fecha,'DD/MM/YYYY','/');
+        this.ingresoForm.controls['fecha'].patchValue(fecha);
+        this.ingresoForm.controls['hora'].patchValue(hora[0]+':'+hora[1]);
+
+        //ing002's
+        this.insertLocalStorageFromEdit(data.ing002s);
+
+      })
+      
+
   }
 
-    //// productos a agregar
+  //// productos a agregar
   //////////////////////////
 
   private suscribeServiceLocalStorage(): void {
@@ -312,8 +231,6 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
       this.almacenIngresoDetallesModel.push(item);
     })
 
-    // console.log(this.almacenIngresoDetallesModel);
-    // console.log(<AlmacenIngresoDetalleModel[]>this.ListProductosIngresar);
   }
 
   _getObjectProducto(event): void {
@@ -367,8 +284,9 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
   }
 
-
-
+  public regresar(): void {    
+    this.back.emit(true);
+  }
 
   ////////////////////
 }
