@@ -48,25 +48,11 @@
                           <div class="col-md-6">
                               <div class="example-container">
                   
-                                  <!-- empleado que recibe la mercaderia -->
-                                  <app-comp-find-empleado [idFilial]="this.idFilial" [_formControlName]="this.ingresoForm.get('empleado')"></app-comp-find-empleado>
+                                  <!-- Tipo moneda de compra -->
+                                  <app-comp-find-moneda></app-comp-find-moneda>
                   
                   
-                                  <!-- almacen donde ingresara la mercaderia -->
-                                  <app-comp-find-almacen [idFilial]="this.idFilial" [_formControlName]="this.ingresoForm.get('almacen')"></app-comp-find-almacen>
-                  
-                                  <!-- tipo de documento del proveedor que envia la mercaderia -->
-                                  <app-comp-find-tipo-documento-sunat-solo [_formControlName]="this.ingresoForm.get('tipodocumento')"></app-comp-find-tipo-documento-sunat-solo>
-                                  
-                                  <!-- serie del documento proveedor que envia la mercaderia -->
-                                  <mat-form-field class="pr-2">
-                                      <input matInput placeholder="SERIE" formControlName="seriedocproveedor">
-                                  </mat-form-field>
-                  
-                                  <!-- nrodocumento del documento proveedor que envia la mercaderia -->
-                                  <mat-form-field>
-                                      <input matInput placeholder="NRO DOCUMENTO" formControlName="nrodocproveedor">
-                                  </mat-form-field>                
+
                   
                               </div>
                           </div>                        
@@ -87,66 +73,6 @@
           </div>
           <br>
 
-          <table mat-table [dataSource]="ListProductosIngresar" class="mat-elevation-z8 w-100 tr-color-selected-1">
-
-              <!--- Note that these columns can be defined in any order.
-                      The actual rendered columns are set as a property on the row definition" -->
-
-              <!-- Position Column -->
-              <ng-container matColumnDef="#">
-                  <th mat-header-cell *matHeaderCellDef class="m-0 bg-dark  text-white"> # </th>
-                  <td mat-cell *matCellDef="let element; let i=index"> {{i+1}} </td>
-              </ng-container>
-
-              <!-- Name Column -->
-              <ng-container matColumnDef="Producto">
-                  <th mat-header-cell *matHeaderCellDef class="m-0 bg-dark  text-white"> Producto </th>
-                  <td mat-cell *matCellDef="let element">
-                      <div>
-                          <span><b>{{element.producto.dscproducto }} ({{element.producto.unidadmedida.abrunidadmedida}})</b></span><br>
-                          <span class="text-secondary">marca: {{element.producto.marca.dscmarca | lowercase}} | categoria: {{element.producto.categoria.dsccategoria | lowercase}} </span>
-                      </div>
-                  </td>
-              </ng-container>
-              
-              <ng-container matColumnDef="Lote">
-                  <th mat-header-cell *matHeaderCellDef class="m-0 bg-dark  text-white"> Lote </th>
-                  <td mat-cell *matCellDef="let element"> {{element.lote}} </td>
-              </ng-container>
-              
-              <ng-container matColumnDef="F.Vencimiento">
-                  <th mat-header-cell *matHeaderCellDef class="m-0 bg-dark  text-white"> F.Vencimiento </th>
-                  <td mat-cell *matCellDef="let element"> {{element.fechavencimiento}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="Cantidad">
-                  <th mat-header-cell *matHeaderCellDef class="m-0 bg-dark  text-white"> Cantidad </th>
-                  <td mat-cell *matCellDef="let element" > {{element.cantidad}} <span class="text-secondary font-weight-light" style="font-size: 11px;">{{element.producto.unidadmedida.abrunidadmedida}}</span> </td>
-              </ng-container>
-
-              <ng-container matColumnDef="-">
-                  <th mat-header-cell *matHeaderCellDef class="m-0 bg-dark text-white" style="width: 65px;"> - </th>
-                  <td mat-cell *matCellDef="let element; let i=index" class="w-10 position-relative">
-                      <div>
-                          <i class="fa fa-pencil cursor pr-1" aria-hidden="true" (click)="_getObJectProductoListIngresar(element)"></i>
-                          <i class="fa fa-trash-o cursor" aria-hidden="true" (click)="rowIndexCondirmDelete = i"></i>
-                      </div>          
-
-                      <!-- mesaje de confirmacion para borrar-->
-                      <div class="rowConfirmDelete" [ngClass]="{'visible selected': rowIndexCondirmDelete === i}">
-                          <div>                                    
-                              <button mat-button color="accent" (click)="deleteRowLocalStorage(i)">Borrar</button>
-                              <button mat-button (click)="rowIndexCondirmDelete = null">Cancelar</button>
-                          </div>
-                      </div>
-                      <!-- mesaje de confirmacion para borrar-->
-
-                  </td>
-              </ng-container>                    
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
 
 
         </div>

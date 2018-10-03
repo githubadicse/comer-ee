@@ -34,6 +34,7 @@ import { CompFindMonedaComponent } from './comp-find-moneda/comp-find-moneda.com
 import { CompFindModalidadCompraVentaComponent } from './comp-find-modalidad-compra-venta/comp-find-modalidad-compra-venta.component';
 
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -79,6 +80,7 @@ import { CompFindModalidadCompraVentaComponent } from './comp-find-modalidad-com
     CompProductoCarritoComponent,
     CompFindMonedaComponent,
     CompFindModalidadCompraVentaComponent,    
+
   ],
   exports: [
     MatDatepickerModule,
@@ -101,6 +103,7 @@ import { CompFindModalidadCompraVentaComponent } from './comp-find-modalidad-com
     CompProductoCarritoComponent,
     CompFindMonedaComponent,
     CompFindModalidadCompraVentaComponent,    
+
   ]
 })
 
