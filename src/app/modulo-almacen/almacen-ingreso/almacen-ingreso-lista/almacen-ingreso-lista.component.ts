@@ -145,7 +145,8 @@ export class AlmacenIngresoListaComponent implements OnInit {
     this.isLoadingResults = true;
     this.Typeahead.next("dato");
     this._merge.subscribe(data => {
-      this.almacenIngresosModel = data;
+    this.almacenIngresosModel = data;
+
     });    
     
   }

@@ -5,6 +5,7 @@ import { CargarInfoMainComponent } from './cargar-info/cargar-info-main/cargar-i
 import { CalcularVolumenMainComponent } from './calcular-volumen/calcular-volumen-main/calcular-volumen-main.component';
 import { GenerarExcelMainComponent } from './generar-excel/generar-excel-main/generar-excel-main.component';
 import { EliminarCalculoMainComponent } from './eliminar-calculo/eliminar-calculo-main/eliminar-calculo-main.component';
+import { GenerarGuiasMainComponent } from './generar-guias/generar-guias-main/generar-guias-main.component';
 
 const routes: Routes = [
   {
@@ -19,7 +20,10 @@ const routes: Routes = [
     },
     {
       path : 'eliminar-calculo', component : EliminarCalculoMainComponent
-    }    
+    }    ,
+    {
+      path : 'generar-guia', component : GenerarGuiasMainComponent
+    }        
   ]
   }
 ];

@@ -14,6 +14,7 @@ import { MatListModule } from '@angular/material/list';
 import { GenerarExcelMainComponent } from './generar-excel/generar-excel-main/generar-excel-main.component';
 import { EliminarCalculoMainComponent } from './eliminar-calculo/eliminar-calculo-main/eliminar-calculo-main.component';
 import { SharedModule } from '../../shared/shared.module';
+import { GenerarGuiasMainComponent } from './generar-guias/generar-guias-main/generar-guias-main.component';
 
 @NgModule({
   imports: [
@@ -29,6 +30,6 @@ import { SharedModule } from '../../shared/shared.module';
     MatListModule,
     SharedModule
   ],
-  declarations: [MainProcesosComponent,CargarInfoMainComponent,CalcularVolumenMainComponent,GenerarExcelMainComponent,EliminarCalculoMainComponent]
+  declarations: [MainProcesosComponent,CargarInfoMainComponent,CalcularVolumenMainComponent,GenerarExcelMainComponent,EliminarCalculoMainComponent,GenerarGuiasMainComponent]
 })
 export class ProcesosModule { }

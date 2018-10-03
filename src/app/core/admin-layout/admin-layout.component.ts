@@ -2,11 +2,13 @@ import { Component, ElementRef, NgZone, OnInit, OnDestroy, ViewChild, HostListen
 import { Router, NavigationEnd, ActivationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { UserIdleService } from 'angular-user-idle';
 
 import { TranslateService } from '@ngx-translate/core';
 
 import { PerfectScrollbarConfigInterface, PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { Title } from '@angular/platform-browser';
+import swal from 'sweetalert2';
 
 const SMALL_WIDTH_BREAKPOINT = 960;
 
@@ -17,6 +19,8 @@ const SMALL_WIDTH_BREAKPOINT = 960;
 export class AdminLayoutComponent implements OnInit, OnDestroy {
 
   private _router: Subscription;
+  public timeOut = 0;
+  public showTimeOut = false;  
 
   mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
   url: string;
@@ -38,7 +42,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   constructor(
     private title:Title,
     private _element: ElementRef,
-    private router: Router,
+    private router: Router,private userIdle: UserIdleService,
     zone: NgZone) {
   
       this.getDataRoute()
@@ -56,6 +60,28 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+      //Start watching for user inactivity.
+      this.userIdle.startWatching();
+      //this.userIdle.ping$.subscribe(() => console.log("PING"));
+    
+      // Start watching when user idle is starting.
+      //console.log("verifincando ingreso idle");
+      this.userIdle.onTimerStart().subscribe(count => {
+
+        this.timeOut = 120 - count;
+        this.showTimeOut = true;
+        //console.log(count)
+        });
+      
+    
+      // Start watch when time is up.
+      this.userIdle.onTimeout().subscribe(() => {
+        //console.log('Time is up!');
+        this.showTimeOut = false;
+        this.closeSeccion();
+      } );
+
 
     this.url = this.router.url;
 
@@ -123,4 +149,37 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
       }, 350);
     }
   }
+
+
+  stop() {
+    this.userIdle.stopTimer();
+  }
+ 
+  stopWatching() {
+
+    this.userIdle.stopWatching();
+  }
+ 
+  startWatching() {
+    this.userIdle.startWatching();
+  }
+ 
+  restart() {
+    this.userIdle.resetTimer();
+    this.showTimeOut = false;
+    
+  }
+  closeSeccion(){
+    localStorage.removeItem('currentUserName');
+    localStorage.removeItem('token');
+    this.router.navigate(['/session/signin']);
+    swal('Su session fue cerrada')
+  }
+ 
+  onLoggedout() {
+
+    localStorage.removeItem('currentUserName');
+    localStorage.removeItem('token');
+    //localStorage.clear();
+  }  
 }

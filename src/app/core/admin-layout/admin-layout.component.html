@@ -1,6 +1,7 @@
 <div class="app mat-typography" [dir]="options.dir" [ngClass]="{'app-dark': options.dark, 'boxed': options.boxed, 'collapsed-sidebar': options.collapsed, 'compact-sidebar': options.compact, 'side-panel-opened': sidePanelOpened, 'side-panel-closed': !sidePanelOpened }">
   <ngx-loading-bar color="#009688"></ngx-loading-bar>
   <app-header (toggleSidenav)="sidemenu.toggle()" (toggleNotificationSidenav)="notifications.toggle()"></app-header>
+  <div *ngIf="showTimeOut" class="cerrarsesion2">!! Atencion su sesion se cerrara en : {{timeOut}} &nbsp;&nbsp;&nbsp;  <span class="badge badge-pill badge-primary" style="cursor:pointer" (click)="restart()">Click para continuar</span> </div>
 
   <mat-sidenav-container class="app-inner">
     <mat-sidenav #sidemenu class="sidebar-panel" id="sidebar-panel" [mode]="isOver() ? 'over' : 'side'" [opened]="!isOver()" (openedStart)="sidePanelOpened = true"
