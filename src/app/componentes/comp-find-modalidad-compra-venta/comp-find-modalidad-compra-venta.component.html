@@ -1,0 +1,7 @@
+<mat-form-field class="w-100">
+    <mat-select appNextfocus placeholder="Modalidad" [formControl]="_formControlName" [compareWith]="compareModalidad" (selectionChange)="_onSelectionChange($event)">
+      <mat-option *ngFor="let item of ListModalidad" [value]="item">
+        {{item.dscModalidadCompraVenta}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
