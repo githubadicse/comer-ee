@@ -11,7 +11,7 @@ export const AppRoutes: Routes = [
       {
       path: '',
       loadChildren: './dashboard/dashboard.module#DashboardModule',
-      // canActivate: [AuthGuard],
+      canActivate: [AuthGuard],
       data : {'tituloModulo':'Inicio'}
       },
       {
@@ -64,6 +64,11 @@ export const AppRoutes: Routes = [
         path: 'almacen/nota-ingreso',
         loadChildren: './modulo-almacen/almacen-ingreso/almacen-ingreso.module#AlmacenIngresoModule',
         data : {'tituloModulo':'Ingreso Almacen'}
+      },
+      {
+        path: 'almacen/nota-salida',
+        loadChildren: './modulo-almacen/almacen-salida/almacen-salida.module#AlmacenSalidaModule',
+        data : {'tituloModulo':'Salida Almacen'}
       },
 
       /* almacen proceso de inicio de operaciones cierre y apertura */

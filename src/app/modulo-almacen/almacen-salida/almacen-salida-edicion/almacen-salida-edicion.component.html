@@ -1,211 +1,159 @@
-<p-growl [value]="this.msgPopup" [life]=1500>
-</p-growl>
-
-<div class="container-fluid" #divedicion [hidden]="!this.showEdicion" >
-    <div>
-        <button type="button" class="btn btn-success" style="cursor:pointer;" [routerLink]="['../../lista']">Registro de salidas</button>
-
-        <button type="button" class="btn btn-success" style="cursor:pointer;" [routerLink]="['../../lista']">Imprimir Nota de salida</button>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="col-md-7 col-sm-6">
-            <div class="form-group row">
-                <label class="control-label col-md-3">Codigo barra</label>
-                <div class="col-md-4">
-                    <input #codigobarra type="text" class="form-control inputfield" (keyup)="searchCodigoBarra($event)" placeholder="Codigo de barra">
-                </div>
+<div class="m-contenedor" [hidden]="showChild">        
+        <div class="card">
+          <div class="card-header">
+            NOTA DE SALIDA
+            <div class="float-sm-right">
+              <button type="button" (click)="regresar()" class="btn btn-info btn-sm">Atras</button>
+              <!-- <button type="button" (click)="atras()" class="btn btn-info btn-sm">Atras</button> -->
             </div>
-            <div class="form-group row">
-                <label class="col-md-3">Producto</label>
+          </div>
+    
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                
+                    <form [formGroup]="salidaForm">
 
-                <div class="col-md-9">
-
-                    <div class="col-12" style="margin:0; padding:0;">
-                        <p-autoComplete [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" inputStyleClass="inputfield" minLength=3 field="dscproducto"
-                            [suggestions]="productosModel" (completeMethod)="searchProducto($event)" [delay]="700" placeholder="Producto"
-                            [(ngModel)]="productoModel">
-
-                        </p-autoComplete>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="control-label col-md-3">Cantidad</label>
-                <div class="col-md-3">
-                    <input #cantidad_ type="number" class="form-control inputfield" [(ngModel)]="cantidad">
-                </div>
-
-
-                <label class="control-label col-md-1">Lote</label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control inputfield" [(ngModel)]="nrolote">
-                </div>
-
-            </div>
-            <div class="form-group row">
-                <label class="control-label col-md-3">Fecha Vcmto.</label>
-                <div class="col-md-6">
-                    <!-- <input type="text" class="form-control inputfield" [(ngModel)]="fechaVencimiento"> -->
-                    <p-calendar [locale]="es" [(ngModel)]="fechaVencimiento" [showIcon]="true" dateFormat="dd/mm/yy" inputStyleClass="inputfield"></p-calendar>
-                    <span style="margin-left:80px;"></span>
-                    <button class="col-2" (click)="addCarrito()" type="button" class="btn btn-success btn-sm" style="height: 22px; padding:0; margin:0px; width:50px;">
-                        <i class="fa fa-shopping-cart fa-5x"></i>
+                            <div class="row">
+                                <div class="col-md-6">
+                        
+                                    <div class="example-container">
+                                        <!-- Motivo por la que ingresa la mercaderia -->
+                                        <app-comp-find-motivo-is-almacen [_formControlName]="this.salidaForm.get('motivosalida')" tipoMotivo="s"></app-comp-find-motivo-is-almacen>
+                        
+                                        <br>
+                                        
+                                        <!-- proveedor que envia la mercaderia -->
+                                        <app-comp-find-proveedor-cliente-list agruparPorDireccion="true" [_formControlName]="this.salidaForm.get('proveedorcliente')"></app-comp-find-proveedor-cliente-list>
+                        
+                                        <!-- periodo del almacen, periodo de trabajo -->
+                                        <app-comp-find-periodo-almacen _disabled="true" [_formControlName]="this.salidaForm.get('periodoalmacen')"></app-comp-find-periodo-almacen>
+                        
+                                        <!-- fecha de ingreso de la mercaderia al almacen -->
+                                        <app-fecha-mat _placeholder="FECHA INGRESO" [_formControlName]="this.salidaForm.get('fecha')"></app-fecha-mat>
+                        
+                                        &nbsp;&nbsp;
+                        
+                                        <!-- hora en que la mercaderia ingresa al almacen -->
+                                        <mat-form-field>
+                                            <input style="margin-top:-150px;" type="time" formControlName="hora" matInput placeholder="HORA">
+                                        </mat-form-field>
+                                    </div>
+                        
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="example-container">
+                        
+                                        <!-- empleado que recibe la mercaderia -->
+                                        <app-comp-find-empleado [idFilial]="this.idFilial" [_formControlName]="this.salidaForm.get('empleado')"></app-comp-find-empleado>
+                        
+                        
+                                        <!-- almacen donde ingresara la mercaderia -->
+                                        <app-comp-find-almacen [idFilial]="this.idFilial" [_formControlName]="this.salidaForm.get('almacen')"></app-comp-find-almacen>
+                        
+                                        <!-- glosa -->
+                                        <mat-form-field class="w-100">
+                                            <textarea matInput rows="3" placeholder="Glosa"></textarea>
+                                        </mat-form-field>            
+                        
+                                    </div>
+                                </div>                        
+                            </div>                                                        
+                    </form>
+                <br>
+                <br>    
+              </div>
+                                          
+              <div class="col-md-12" style="line-height: initial;">                                                
+                <hr><br>
+                <div>
+                    <h3 class="float-left">Producto que ingresan</h3>
+                    <button class="btn btn-primary btn-sm float-right" (click)="showChild = true">
+                        <i class="fa fa-plus" aria-hidden="true"></i> 
+                        Agregar Productos
                     </button>
                 </div>
+                <br>
+
+                <table mat-table [dataSource]="ListProductosIngresar" class="mat-elevation-z8 w-100 tr-color-selected-1">
+
+                    <!--- Note that these columns can be defined in any order.
+                            The actual rendered columns are set as a property on the row definition" -->
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="#">
+                        <th mat-header-cell *matHeaderCellDef class="m-0 bg-dark  text-white"> # </th>
+                        <td mat-cell *matCellDef="let element; let i=index"> {{i+1}} </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="Producto">
+                        <th mat-header-cell *matHeaderCellDef class="m-0 bg-dark  text-white"> Producto </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div>
+                                <span><b>{{element.producto.dscproducto }} ({{element.producto.unidadmedida.abrunidadmedida}})</b></span><br>
+                                <span class="text-secondary">marca: {{element.producto.marca.dscmarca | lowercase}} | categoria: {{element.producto.categoria.dsccategoria | lowercase}} </span>
+                            </div>
+                        </td>
+                    </ng-container>                                        
+
+                    <ng-container matColumnDef="Cantidad">
+                        <th mat-header-cell *matHeaderCellDef class="m-0 bg-dark  text-white"> Cantidad </th>
+                        <td mat-cell *matCellDef="let element" > {{element.cantidad}} <span class="text-secondary font-weight-light" style="font-size: 11px;">{{element.producto.unidadmedida.abrunidadmedida}}</span> </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="-">
+                        <th mat-header-cell *matHeaderCellDef class="m-0 bg-dark text-white" style="width: 65px;"> - </th>
+                        <td mat-cell *matCellDef="let element; let i=index" class="w-10 position-relative">
+                            <div>
+                                <i class="fa fa-pencil cursor pr-1" aria-hidden="true" (click)="_getObJectProductoListIngresar(element)"></i>
+                                <i class="fa fa-trash-o cursor" aria-hidden="true" (click)="rowIndexCondirmDelete = i"></i>
+                            </div>          
+
+                            <!-- mesaje de confirmacion para borrar-->
+                            <div class="rowConfirmDelete" [ngClass]="{'visible selected': rowIndexCondirmDelete === i}">
+                                <div>                                    
+                                    <button mat-button color="accent" (click)="deleteRowLocalStorage(i)">Borrar</button>
+                                    <button mat-button (click)="rowIndexCondirmDelete = null">Cancelar</button>
+                                </div>
+                            </div>
+                            <!-- mesaje de confirmacion para borrar-->
+
+                        </td>
+                    </ng-container>                    
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
 
 
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <p-messages [(value)]="msgs"></p-messages>
-                </div>
-            </div>
+              </div>
+            </div>        
+            <br>                
+            <br>
 
-            <div row>
-
-                <p-dataTable [immutable]="false" [value]="this.almacenSalidaModel.salida002s" [responsive]="true">
-
-                    <p-column field="producto.idproducto" header="Codigo" [style]="{'width':'10%'}"></p-column>
-                    <p-column field="producto.dscproducto" header="Descripcion" [style]="{'width':'40%'}"></p-column>
-                    <p-column field="cantidad" header="Cant" [style]="{'width':'10%'}"></p-column>
-
-                    <p-column field="nrolote" header="Nro Lote" [style]="{'width':'10%'}"></p-column>
-                    <!-- <p-column field="fechavencimiento" header="Fecha Vcmto" [style]="{'width':'10%'}"></p-column> -->
-                    <p-column header="Fecha Vcmto">
-                        <ng-template let-det="rowData" pTemplate="body">
-                            <span>{{det.fechavencimiento | date:'dd/MM/yyyy' }} </span>
-                        </ng-template>
-                    </p-column>
-                    <p-column [style]="{'width':'5%'}">
-                        <ng-template let-data="rowData" pTemplate type="body">
-                            <i style="cursor: pointer;" class="fa fa-trash-o fa-1x" aria-hidden="true" data-toggle="tooltip" title="Eliminar" 
-                            (click)="getKardex()" ></i>
-                        </ng-template>
-                    </p-column>
-                    <p-column [style]="{'width':'5%'}">
-                        <ng-template let-data="rowData" pTemplate type="body">
-                            <i style="cursor: pointer;" class="fa fa-outdent fa-1x" aria-hidden="true" data-toggle="tooltip" title="kardex" 
-                        
-                            (click)="this.getKardex(data)"
-                            ></i>
-                        </ng-template>
-                    </p-column>
-
-                </p-dataTable>
-            </div>
-
+            <!-- [disabled]="!this.salidaForm.valid || ListProductosIngresar.length == 0" -->
+            <button appNextfocus appKeyClick="F10" type="button"                 
+                class="btn btn-success btn-sm mr-2" (click)="create();"
+                [disabled]="!this.salidaForm.valid || ListProductosIngresar.length == 0 || salidaForm.pristine"
+                >
+              <i *ngIf="procesando" class="fa fa-spinner fa-spin fa-fw"></i>
+              [F10] Guardar
+            </button>    
+          </div>                   
         </div>
-
-       
-        <div class="col-md-5 col-sm-6">
-            <div style="background: gray; color:white; padding:3px; ">
-                DATOS DEL PROVEEDOR
-            </div>
-            <form action="" [formGroup]="salidaForm">
-                <div id="datos">
-                    <div class="form-group row">
-                        <label class="control-label col-3">Nro Salida</label>
-                        <div class="col-4">
-                            <input readonly formControlName="nrodoc" type="text" class="form-control inputfield">
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="control-label col-3">Fecha Ing.:
-                            <span *ngIf="!salidaForm.get('fecha').valid" style="color:red">*</span>
-                        </label>
-                        <div class="col-6">
-                            <p-calendar formControlName="fecha" [locale]="es" [showIcon]="true" dateFormat="dd/mm/yy" inputStyleClass="inputfield"></p-calendar>
-
-                        </div>
-
-
-                    </div>
-                    <div class="form-group row">
-                        <label class="control-label col-3">Hora:
-                            <span *ngIf="!salidaForm.get('hora').valid" style="color:red">*</span>
-                        </label>
-                        <div class="col-6">
-                            <p-calendar formControlName="hora" [timeOnly]="true" inputStyleClass="inputfield"></p-calendar>
-
-                        </div>
-
-                    </div>
-                    <div class="form-group row">
-                        <label class="control-label col-3">Almacen
-                            <span *ngIf="!salidaForm.get('almacen').valid" style="color:red">*</span>
-                        </label>
-                        <div class="col-9">
-
-                            <select class="form-control inputselect" formControlName="almacen">
-                                <option *ngFor="let almacen of almacensModel" [selected]="almacen.idalmacen == (this.salidaForm.controls['almacen'].value==null?'':this.salidaForm.controls['almacen'].value.idalmacen)"
-                                    [ngValue]="almacen">{{almacen.dscalmacen}}</option>
-                            </select>
-
-
-                        </div>
-
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="control-label col-3">Trab. Rec.
-                            <span *ngIf="!salidaForm.get('empleado').valid" style="color:red">*</span>
-                        </label>
-                        <div class="col-9">
-                            <select class="form-control inputselect" formControlName="empleado">
-                                <option *ngFor="let empleado of empleadosModel" [selected]="empleado.idempleado == (this.salidaForm.controls['empleado'].value==null?'':this.salidaForm.controls['empleado'].value.idempleado)"
-                                    [ngValue]="empleado">{{empleado.nomempleado}}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="control-label col-3">Motivo
-                            <span *ngIf="!salidaForm.get('motivosalida').valid" style="color:red">*</span>
-                        </label>
-                        <div class="col-9">
-                            <select class="form-control inputselect" formControlName="motivosalida">
-                                <option *ngFor="let motivo of motivoSalidasModel" [selected]="motivo.idmotivosalida == (this.salidaForm.controls['motivosalida'].value==null?'':this.salidaForm.controls['motivosalida'].value.idmotivosalida)"
-                                    [ngValue]="motivo">{{motivo.dscmotivosalida}}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <th>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="control-label col-3">Proveedor
-                            <span *ngIf="!salidaForm.get('proveedorcliente').valid" style="color:red">*</span>
-                        </label>
-                        <div class="col-9">
-                            <p-autoComplete [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" inputStyleClass="inputfield" minLength=3 field="razonsocial"
-                                [suggestions]="proveedorclientesModel" (completeMethod)="searchProveedorCliente($event)" [delay]="700"
-                                placeholder="Digite el nombre de proveedor" formControlName="proveedorcliente">
-
-                            </p-autoComplete>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="control-label col-3">Direccion</label>
-                        <div class="col-9">
-                            <input type="text" class="form-control inputfield">
-                        </div>
-                    </div>
- 
-
-                </div>
-            </form>
-            <div>
-                <button [disabled]="!salidaForm.valid || this.almacenSalidaModel.salida002s.length == 0" type="button" class="btn btn-primary"
-                    style="cursor:pointer;" (click)="beforeSave()">Grabar</button>
-            </div>
-        </div>
-
-
-    </div>
 </div>
-<router-outlet (activate)='onActivate($event)' (deactivate)='onDeactivate($event)' ></router-outlet>
+
+<!-- componente buscar producto -->
+<!-- componetne carrito de productos -->
+<div *ngIf="showChild">    
+    <h2>Listado de productos</h2>        
+    <span class="text-secondary">Selecione los productos que van a Salir.</span>
+    
+    <app-comp-producto-carrito class="btn-carrito" (click)="showChild = false"></app-comp-producto-carrito>
+    <button class="btn btn-success btn-sm float-right btn-listo-carrito" (click)="showChild = false"> Listo, regresar. </button> 
+    <br>        
+    
+    <app-comp-find-producto-almacen class="app-list-producto" (getObject)="_getObjectProducto($event)"></app-comp-find-producto-almacen>        
+</div>
+    

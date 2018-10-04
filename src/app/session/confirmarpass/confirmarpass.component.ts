@@ -55,7 +55,7 @@ export class ConfirmarpassComponent implements OnInit {
 
     this.crudHttpClientServiceShared.update(this.usuarioModel,"usuario","update").subscribe(
       res=>{
-        this.router.navigate( ['/'] );
+        this.router.navigate(['/session/signin']);
       },
       error=>console.log(error),
       ()=>{        

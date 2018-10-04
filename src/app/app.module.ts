@@ -54,6 +54,7 @@ import { AuthGuard } from './shared/guard/auth.guard';
 import { ConfigService } from './shared/config.service';
 import { InterceptorAutorizationService } from './shared/interceptor-autorization.service';
 import { CrudHttpClientServiceShared } from './shared/servicio/crudHttpClient.service.shared';
+import { UserIdleModule } from 'angular-user-idle';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -97,6 +98,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       }
     }),
     
+    
+
     LoadingBarRouterModule,
     MatFormFieldModule,
     MatInputModule,
@@ -115,7 +118,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FlexLayoutModule,
     BidiModule,
     AgmCoreModule.forRoot({apiKey: 'YOURAPIKEY'}),
-    PerfectScrollbarModule
+    PerfectScrollbarModule,
+
+    UserIdleModule.forRoot({idle: 600, timeout: 120, ping: 60})
   ],
   providers: [AuthGuard,ConfigService,InterceptorAutorizationService,
     CrudHttpClientServiceShared,

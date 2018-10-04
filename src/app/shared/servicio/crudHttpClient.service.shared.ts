@@ -44,6 +44,8 @@ export class CrudHttpClientServiceShared {
     let url = this.configService.getUrlSecurityRes(controller,evento);
     let header = this.configService.getHeaderHttpClientGet();
 
+    localStorage.setItem('pintar', controller); // para actualizar las listas despues de modificar o guardar
+    
     return this.httpClient.put<any>(url,model,{headers:header});
   }
 
@@ -58,20 +60,26 @@ export class CrudHttpClientServiceShared {
 
   getPagination(pagenumber,rows,sortdireccion,sortcolumn,filters,controller,evento,paramsExtra):Observable<any>{
 
-  
 		let obj = {'pagenumber':pagenumber,'rows':rows,'sortdireccion':sortdireccion,'sortcolumn':sortcolumn,'filters':filters, 'paramsExtra':paramsExtra};
     let objser = this.configService.serialize(obj);
 
-  
+    let url = this.configService.getUrlSecurityRes(controller,evento);    
+    return this.httpClient.post(url, objser,{headers:this.configService.getHeaderHttpClientForm() });         
 
-      let url = this.configService.getUrlSecurityRes(controller,evento);
-      //return this.httpClient.post(url, objser,{headers:this.configService.getHeaderHttpClientForm() });
-      return this.httpClient.post(url, objser,{headers:this.configService.getHeaderHttpClientForm() });
+  }
 
-   		//return this.http.post(url,objser,this.configService.getHeadersForm())
-      //      .map(res=> res.json());		             
+  // paginacion con fitro com.adicse.comercial.specification.Filter;
+  // el fitro es enviado desde la config.service>jsonFilterTablePrime 
+  // con operadores logicos {and > {or, or, or ...}}
+  getPaginaionWithFilter(pagenumber,rows,sortdireccion,sortcolumn,filters,controller,evento,paramsExtra): Observable<any> {
+      
+    let obj = {'pagenumber':pagenumber,'rows':rows,'sortdireccion':sortdireccion,'sortcolumn':sortcolumn,'paramsExtra':paramsExtra};
+    let objser = this.configService.serialize(obj);
+    let url = this.configService.getUrlSecurityRes(controller,evento) +'?'+ objser;
 
-
+    const header = this.configService.getHeaderHttpClientGet();
+    
+    return this.httpClient.post(url, filters, { headers: header });
   }
   
   getAllByFilter(controller: string, evento: string, filters: string): Observable<any> {
