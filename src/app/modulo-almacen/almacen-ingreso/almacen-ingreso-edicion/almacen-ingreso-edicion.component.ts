@@ -34,7 +34,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
   isUpdate: boolean = false; // si se actualiza, crea o modifica registro, notifica actulizacion con el evento "back"
   
   // id a modificar
-  @Input('idRegistro') id: number;
+  @Input('idRegistro') idRegistro: number;
 
   // se emite al dar click en el boton "atras". Emite el valor de isUpdate = si se actulizo o no para refrescar lista pricipal
   @Output('back') back:EventEmitter<boolean> = new EventEmitter(); 
@@ -74,7 +74,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     this.buildForm();
     this.idFilial = this.configService.getIdFilialToken();
             
-    if (!this.id) {
+    if (!this.idRegistro) {
       this.newIngreso();
 
     } else {
@@ -120,7 +120,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
     if (this.procesando) {return;}
     this.procesando = true;
 
-    if (this.id) { this.update(); return;}
+    if (this.idRegistro) { this.update(); return;}
 
     // elimina el key "nomes" de periodoalmacen que no es parte del modelo orginal y se usa para mostrar el nombre del mes en el control  
     delete this.ingresoForm.value.periodoalmacen["nommes"];
@@ -172,7 +172,7 @@ export class AlmacenIngresoEdicionComponent implements OnInit {
 
   edit() {
 
-    this.crudHttpClientServiceShared.edit(this.id,'ing001','findById').subscribe(
+    this.crudHttpClientServiceShared.edit(this.idRegistro,'ing001','findById').subscribe(
       res => {                        
         
         const data = <AlmacenIngresoModel>res.data;

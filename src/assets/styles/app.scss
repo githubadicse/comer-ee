@@ -1,0 +1,89 @@
+@import "scss/material.variables";
+@import "scss/material.themes";
+@import "scss/mixins/bi-app/bi-app-ltr";
+// Core Variables and Mixins
+@import "scss/app.variables";
+@import "scss/mixins";
+// Core Styles
+@import "scss/core";
+@import "scss/material";
+@import "scss/utilities/utilities";
+
+
+.cursor{ cursor: pointer; }
+.m-contenedor {
+    font-size: 12px;
+    line-height: 2;
+  }
+
+.m-contenedor .card{
+    padding: 0;
+    margin: 0;
+    margin-top: 8px;
+    // padding-left:10px;
+    
+  }
+  
+.m-contenedor .mat-form-field-label-wrapper {
+  font-size: 14px;
+}
+
+.bg-grey {
+  background: #eeeeee;
+}
+
+.table-1 {
+    width: 100%;
+    font-size: 14px; 
+    font-weight: 500;    
+}
+
+.table-1 tr {    
+    border-bottom: 1px solid rgb(182, 182, 182);    
+}
+.table-1 tr:hover {
+    background: #e3f5fd;
+}
+
+.table-1 tr.selected {
+    background: #c6e2ee;
+}
+
+.table-1 tr.sin-borde{    
+    border-bottom: none;
+}
+
+.table-1 tr td{
+    padding-top: 11px;
+}
+
+.tr-color-selected-1 tr:hover{
+    background: #fff9c4;       
+}
+
+.animated {
+        -webkit-animation-duration: 0.8s;
+        animation-duration: 0.8s;
+        /* -webkit-animation-fill-mode: both;
+        animation-fill-mode: both; */
+    }
+    
+    .fast {
+        -webkit-animation-duration: 0.3s;
+        animation-duration: 0.3s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    
+    .fadeIn {
+        animation-name: fadeIn;
+    }

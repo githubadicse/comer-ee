@@ -27,7 +27,7 @@ export class CompraModel {
         public flagGeneraFromNotaIngreso:boolean=false,
         public fechaRegistroSystema:string=null,
         public idUsuarioCrea:number=null,
-        public fechaRegistroSystemaModifica:string,
+        public fechaRegistroSystemaModifica:string=null,
         public idUsuarioModifica:number=null,
         public com002s:CompraDetalleModel = null,
 

@@ -24,6 +24,12 @@ export class LocalStorageManagerService {
     return this.ListaProductosCarrito[index];
   }
 
+  // guarda la data tal cual es recibida sin hacer validaciones de busqieda
+  public setAllDataLocalStorage(key: string, data: any){
+    this.ListaProductosCarrito = data;
+    this.saveLocalStorage(key);
+  }
+
   // item: obligado debe incluir [productoModel] todos los datos que se va a guardar  
   public setDataLocalStorage(key: string, item: any): void {
     const producto: ProductoModel = item.producto;    
