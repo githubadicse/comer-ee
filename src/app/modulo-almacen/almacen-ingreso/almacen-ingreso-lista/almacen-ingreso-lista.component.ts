@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 
 import { AlmacenIngresoModel } from '../almacen-ingreso-model';
 import { MatPaginator, MatSort } from '@angular/material';
@@ -23,12 +23,21 @@ import swal from 'sweetalert2';
 
 })
 export class AlmacenIngresoListaComponent implements OnInit {
+
+  // activa modo busqueda
+  @Input() modoBusqueda: boolean = false;
+  @Output() getRptBusqueda: EventEmitter<number> = new EventEmitter();
+
+  // se emite al dar click en el boton "atras". Emite el valor de isUpdate = si se actulizo o no para refrescar lista pricipal
+  @Output('back') back:EventEmitter<boolean> = new EventEmitter(); 
+
+
   showLista: boolean = true;
   showChild: boolean = false;
 
   public idRegistroModificar: number;
 
-  public titulo:string = "Ingreso Almacen";
+  public titulo:string = !this.modoBusqueda ? "Ingreso Almacen": "Seleccione Nota de ingreso";
 
   public almacenIngresosModel:AlmacenIngresoModel[]=[];  
 
@@ -199,6 +208,16 @@ export class AlmacenIngresoListaComponent implements OnInit {
       this.Typeahead.next("dato");
     }
     this.changeVerLista();
+  }
+
+  // modo busqueda, seleccionable: 
+  // Emite AlmacenIngresoModel resultado de la busqueda
+  _getRptBusqueda(item: AlmacenIngresoModel): void {
+    this.getRptBusqueda.emit(item.iding001);
+  }
+
+  public regresar(): void {    
+    this.back.emit(true);
   }
 
 }

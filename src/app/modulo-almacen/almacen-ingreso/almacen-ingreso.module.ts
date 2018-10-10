@@ -11,10 +11,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { KardexModule } from '../kardex/kardex.module';
 import { SharedModule } from '../../shared/shared.module';
-import { MatSortModule, MatTableModule, MatPaginatorModule, MatIconModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSlideToggleModule, MatDialogModule } from '@angular/material';
+import { MatSortModule, MatTableModule, MatPaginatorModule, MatIconModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSlideToggleModule, MatDialogModule, MatSelectModule } from '@angular/material';
 import { ComponentesModule } from '../../componentes/componentes.module';
-import {MatSelectModule} from '@angular/material/select';
-import { CompFindProductoAlmacenComponent } from '../../componentes/comp-find-producto-almacen/comp-find-producto-almacen.component';
 import { AlmacenIngresoEdicionDialogComponent } from './almacen-ingreso-edicion/almacen-ingreso-edicion-dialog/almacen-ingreso-edicion-dialog.component';
 
 
@@ -34,13 +32,19 @@ import { AlmacenIngresoEdicionDialogComponent } from './almacen-ingreso-edicion/
     ComponentesModule,
     MatSortModule, MatTableModule, MatPaginatorModule, MatIconModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSlideToggleModule ,
     MatSelectModule,
-    MatDialogModule 
+    MatDialogModule,
+
   ],
   declarations: [
     AlmacenIngresoMainComponent, 
     AlmacenIngresoEdicionComponent, 
     AlmacenIngresoListaComponent, 
-    AlmacenIngresoEdicionDialogComponent    
+    AlmacenIngresoEdicionDialogComponent
+  ],
+  exports: [
+    AlmacenIngresoListaComponent,
+    AlmacenIngresoEdicionComponent,
+    AlmacenIngresoEdicionDialogComponent
   ],
   entryComponents: [AlmacenIngresoEdicionDialogComponent]
 })

@@ -5,6 +5,7 @@ import { TipodocumentoModel } from "../../modulo-sistema-config/tipodocumento/ti
 import { ProveedorclienteModel } from "../../modulo-sistema-config/tablas/proveedorcliente/proveedorcliente-model";
 import { AlmacenModel } from "../../modulo-sistema-config/tablas/almacen/almacen-model";
 import { MotivoIngresoModel } from "../../modulo-sistema-config/tablas/motivo-ingreso/motivo-ingreso-model";
+import { CompraModel } from '../../modulo-compras/compra-model';
 
 
 
@@ -17,7 +18,7 @@ export class AlmacenIngresoModel {
         public proveedorcliente:ProveedorclienteModel =null,
         public almacen:AlmacenModel= null ,
         public nrodoc:number=null,
-        //public com001:any=null,
+        public com001:CompraModel=null,
         public empleado:EmpleadoModel=null,
         public glosa:string=null,
         // public fechaRegistroSystema:String=null,
