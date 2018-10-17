@@ -1,5 +1,6 @@
 import { ProductoModel } from "../modulo-sistema-config/tablas/producto/model/producto.model";
 import { CompraModel } from "./compra-model";
+import { CompraDetalleRelacionModel } from './compra-detalle-relacion.model';
 
 export class CompraDetalleModel {
 
@@ -17,7 +18,8 @@ export class CompraDetalleModel {
         public importeCompra:number=0,
         public importeFlete:number=0,
         public importeUnitario:number=0,
-        public importeTotalCostoUnitario=0
+        public importeTotalCostoUnitario=0,
+        public ing001Com002Relacions: CompraDetalleRelacionModel[] = null
     ){
 
     }

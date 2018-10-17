@@ -12,11 +12,15 @@ import { PerfilService } from '../modulo-sistema-config/perfil/perfil.service';
 
 
 export class DashboardComponent implements OnInit{
-
-  constructor( private menuAppService:MenuAppService){
+  // data: any;
+  filesToUpload: any[] = [];
+  constructor( 
+    private menuAppService:MenuAppService
+    ){
   }
 
   ngOnInit() {
     this.menuAppService.getPerfilDetalle();
   }
+
 }

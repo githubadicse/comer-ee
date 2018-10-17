@@ -148,7 +148,7 @@ export class ExcelJsonComponent implements OnInit {
     const row_json = JSON.parse(JSON.stringify(eval(json_string.trim())));
 
     // crea el txt con el json
-    const nomFile = `20601449910-0${row['idDocumento']}-${row['abrDocumentoNomFile'] + row['Serie']}-${row['Numero']}.txt`;    
+    const nomFile = `20601449910-0${row['idDocumento']}-${row['abrDocumentoNomFile'] + row['Serie']}-${row['Numero']}.json`;
     const file_upload = new File([JSON.stringify(row_json)], nomFile, {type: "text/plain;charset=utf-8"});
       
     //consola        
