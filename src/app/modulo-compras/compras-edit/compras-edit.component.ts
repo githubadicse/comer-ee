@@ -17,6 +17,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CompraModel } from '../compra-model';
 import { MomentDateAdapter } from '../../shared/validators/MomentDateAdapter';
 // import { MatPaginator, MatTableDataSource, MatTable, MatTableModule } from '@angular/material'
+import { CompraDetalleRelacionModel } from '../compra-detalle-relacion.model';
 
 @Component({
   selector: 'app-compras-edit',
@@ -45,11 +46,12 @@ export class ComprasEditComponent implements OnInit {
   public idFilialNotaCredito: number;
 
   public compraModel : CompraModel;
+  private compraDetalleRelacion: CompraDetalleRelacionModel;
   private notaIngreso: AlmacenIngresoModel = null;
   private listProductosNotaIngreso: AlmacenIngresoDetalleModel[] = [];  
   public dscNotaIngeso: string = '';
-  listProductosCompra = [];
-  listModel = [];
+  listProductosCompra:CompraDetalleModel[] = [];
+  listModel:CompraDetalleModel[] = [];
   listaMostrar: CompraDetalleModel[] = [];
 
   public displayedColumns: string[] = ['#', 'Producto', 'Cantidad', 'ISC', 'Bruto', 'Desc', 'Val.Compra', 'IGV %', 'IGV', 'Imp.Compra', 'Flete', 'Imp.Uni', 'Costo.Uni','-'];
@@ -134,8 +136,8 @@ export class ComprasEditComponent implements OnInit {
   }
 
   create(){
-    if (this.procesando) {return;}
-    this.procesando = true;
+    // if (this.procesando) {return;}
+    // this.procesando = true;
 
     if (this.idRegistro) { this.update(); return;}
 
@@ -143,8 +145,9 @@ export class ComprasEditComponent implements OnInit {
     // delete this.compraForm.value.periodoalmacen["nommes"];
     
     let fechaMomentEmision = this.compraForm.controls['fechaEmision'].value;
-    let fechaEmision = this.DateAdapter.format(this.compraForm.controls['fechaEmision'].value, 'DD/MM/YYYY');
     let fechaMomentVencimineto= this.compraForm.controls['fechaVencimiento'].value;
+
+    let fechaEmision = this.DateAdapter.format(this.compraForm.controls['fechaEmision'].value, 'DD/MM/YYYY');
     let fechaVencimiento = this.DateAdapter.format(this.compraForm.controls['fechaVencimiento'].value, 'DD/MM/YYYY');
    
     this.compraForm.controls['fechaEmision'].setValue(fechaEmision);
@@ -154,11 +157,34 @@ export class ComprasEditComponent implements OnInit {
     this.compraForm.controls['importeBruto'].setValue(this.TotalImporteBruto);
     this.compraForm.controls['importeIgv'].setValue(this.TotalImporteIGV);
     this.compraForm.controls['importeCompra'].setValue(this.TotalImporteCompra);
+    
+    // evalua si productos proceden de nota de ingreso    
+    this.listModel.map(x => {
+      let ingComRelation: CompraDetalleRelacionModel[] = [];
+      if (this.notaIngreso) {
+        const hora = this.notaIngreso.hora.split(':'); // modifica hora de [hh:mm:ss] a [hh:mm]        
+        let compraDetalleRelacion: CompraDetalleRelacionModel = new CompraDetalleRelacionModel();        
+        this.notaIngreso.hora = hora[0]+':'+hora[1];
+
+        compraDetalleRelacion.ing001 = this.notaIngreso;
+        // compraDetalleRelacion.com002 = x        
+        ingComRelation.push(compraDetalleRelacion);
+        x.ing001Com002Relacions = ingComRelation;
+      } else {
+        x.ing001Com002Relacions = null;
+      }
+    });
+
 
     
-    this.compraForm.controls['com002s'].setValue(this.listProductosCompra);
-    let data = JSON.stringify(this.compraForm.value);
+
+    this.compraForm.controls['com002s'].patchValue(this.listModel);
+
+
     console.log(this.compraForm.value);
+    let data = JSON.stringify(this.compraForm.value);
+    //let data = this.compraForm.value;
+    console.log(data);
     
     this.compraForm.controls['fechaEmision'].setValue(fechaMomentEmision);
     this.compraForm.controls['fechaVencimiento'].setValue(fechaMomentVencimineto);
@@ -166,7 +192,7 @@ export class ComprasEditComponent implements OnInit {
 
     // return;
     this.crudHttpClientServiceShared.create(data, "com001", "create").subscribe(
-       res => {this.updateNotaIngreso(res)},
+       res => {},
        error => { console.log(error); this.procesando = false;},
        () => {
          this.newCompra();
@@ -227,16 +253,16 @@ export class ComprasEditComponent implements OnInit {
 
   }
 
-  updateNotaIngreso(Com001: CompraModel): void {    
-    if ( this.notaIngreso=== null ) {return;}
-    this.notaIngreso.com001 = Com001;
-    this.crudHttpClientServiceShared.create(this.notaIngreso.com001, "ing001", "updateCom001").subscribe(
-      res => {},
-      error => { console.log(error);},
-      () => {
-      }
-   )
-  }
+  // updateNotaIngreso(Com001: CompraModel): void {    
+  //   if ( this.notaIngreso=== null ) {return;}
+  //   this.notaIngreso.com001 = Com001;
+  //   this.crudHttpClientServiceShared.create(this.notaIngreso.com001, "ing001", "updateCom001").subscribe(
+  //     res => {},
+  //     error => { console.log(error);},
+  //     () => {
+  //     }
+  //  )
+  // }
 
   _getObJectProductoListIngresar(row: any): void {
     this.productoSeleccionado = <ProductoModel>row.producto;

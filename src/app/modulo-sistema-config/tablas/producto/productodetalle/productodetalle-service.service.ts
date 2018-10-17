@@ -11,7 +11,8 @@ import { ConfigService } from '../../../../shared/config.service';
 @Injectable()
 export class ProductodetalleServiceService {
 
-  constructor(private configService:ConfigService,
+  constructor(
+    private configService:ConfigService,
     private httpClient:HttpClient
   ) { }
 
