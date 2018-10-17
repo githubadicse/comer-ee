@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 
 import { AdminLayoutComponent, AuthLayoutComponent } from './core';
 import { AuthGuard } from './shared/guard/auth.guard';
+import { ExcelJsonComponent } from './cable/excel-json/excel-json.component';
 
 export const AppRoutes: Routes = [
   {
@@ -121,6 +122,12 @@ export const AppRoutes: Routes = [
       {
         path : 'tablas/proveedorcliente',
         loadChildren : './modulo-sistema-config/tablas/proveedorcliente/proveedorcliente.module#ProveedorclienteModule'
+      },      
+      
+      //  CABLE, OBTENER TXT JSON DE EXCEL
+      {
+        path: 'cable',
+        component: ExcelJsonComponent
       }            
 
     ]

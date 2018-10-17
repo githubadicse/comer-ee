@@ -169,6 +169,15 @@ const MENUITEMS = [
     type: 'link',
     icon: 'local_library',
     idmenu : '08'
+  },
+  {
+    // state: 'http://primer.nyasha.me/docs',
+    // type: 'extTabLink',
+    state: 'cable',
+    name: 'CABLE',
+    type: 'link',
+    icon: 'local_library',
+    idmenu : '09'
   }
 ];
 
