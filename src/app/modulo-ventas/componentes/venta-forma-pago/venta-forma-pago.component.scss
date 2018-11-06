@@ -1,0 +1,24 @@
+.table-pago tr {
+        border-bottom: rgb(201, 201, 201) solid 1px;
+}
+
+.table-pago {
+        width: 100%;
+}
+
+.table-pago thead>th {
+        display:  inline;
+        // width: 100px;
+}
+.table-pago tr>td {
+  display: inline;
+//   width: 100px;
+}
+
+.iconremove {
+        display: none;
+}
+
+.table-pago tr:hover .iconremove {
+        display: inline-block;
+}
