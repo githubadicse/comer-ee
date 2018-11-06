@@ -8,19 +8,16 @@ import { EditComponent } from './edit/edit.component';
 
 const routes: Routes = [
   {
-    path : 'main' , component : MainComponent,
+    path : '' , component : MainComponent,
     children : [
       {
-        path : '' , redirectTo : 'lista'
+        path : '' , redirectTo : 'venta'
+      },
+      {
+        path : 'venta' , component : EditComponent
       },
       {
         path : 'lista' , component : ListaComponent,
-
-        children : [
-          {
-            path : 'edicion' , component : EditComponent
-          }
-        ]
       }
     ]
   }

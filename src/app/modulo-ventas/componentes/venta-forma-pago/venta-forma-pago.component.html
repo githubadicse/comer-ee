@@ -1,0 +1,55 @@
+<mat-card>
+  <div class="float-right">
+    <i [ngClass]="!datosValidos ? 'fa fa-exclamation-triangle fa-2x text-danger' : 'fa fa-check-circle fa-2x text-success'"
+      aria-hidden="true"></i>
+  </div>
+  <h4>Forma de Pago</h4>
+  <hr>
+
+  <form [formGroup]="form">
+    <br>
+    <table class="table-pago">
+      <thead>
+        <th>
+          <app-comp-find-medio-pago (getObject)="_getObject($event)" [_formControlName]="this.form.get('formapago')"></app-comp-find-medio-pago>
+        </th>
+        <th>
+          <mat-form-field class="w-100">
+            <input matInput type="number" [max]="montoMaximo" (keyup)="validarImporte(importe.value)"  placeholder="Importe" formControlName="importe" #importe>
+          </mat-form-field>
+        </th>
+        <th>
+          <mat-form-field class="w-100">
+            <input matInput placeholder="Obs" formControlName="obs" (keydown.enter)="addFormaPago()">
+          </mat-form-field>
+        </th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listPago; let i = index">
+          <td>{{item.formapago.dscMedioPago}}</td>
+          <td><span class="pl-1">{{item.obs}}</span></td>          
+          <td class="float-right">
+              <i class="fa fa-trash-o pr-1 cursor iconremove" title="Quitar" aria-hidden="true" (click)="removeItem(i)"></i> 
+              {{item.importe  | number:'0.2'}}
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Suma</strong></td>
+          <td colspan="2" class="float-right"><strong>{{sumTotal | number: '0.2'}}</strong></td>          
+        </tr>
+        <tr>
+          <td><strong>Monto a Pagar</strong></td>
+          <td colspan="2" class="float-right"><strong>{{montoPagar | number: '0.2'}}</strong></td>          
+        </tr>
+        <tr>
+          <td><strong>Diferencia</strong></td>
+          <td colspan="2" class="float-right"><strong [ngClass]="montoDiferenciaCalc > -1 ? 'text-success' : 'text-danger'">{{montoDiferenciaCalc
+    | number: '0.2'}}</strong></td>          
+        </tr>
+      </tbody>
+      
+    </table>    
+
+  </form>
+
+</mat-card>

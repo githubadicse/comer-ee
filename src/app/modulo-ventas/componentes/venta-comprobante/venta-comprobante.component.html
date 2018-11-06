@@ -1,0 +1,10 @@
+<mat-card>
+  <div class="float-right">
+    <i [ngClass]="!tipoComprobante ? 'fa fa-exclamation-triangle fa-2x text-danger' : 'fa fa-check-circle fa-2x text-success'"
+      aria-hidden="true"></i>
+  </div>
+  <h4>Seleccionar Comprobante</h4>
+  <hr>  
+  <app-comp-find-tipo-documento-sunat-solo (getObject)="_getObject($event)"></app-comp-find-tipo-documento-sunat-solo>
+</mat-card>
+

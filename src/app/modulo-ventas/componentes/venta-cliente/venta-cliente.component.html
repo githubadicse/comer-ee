@@ -1,0 +1,26 @@
+<mat-card>
+  <div class="float-right">
+    <i [ngClass]="requiereCliente && !form.valid ? 'fa fa-exclamation-triangle fa-2x text-danger' : 'fa fa-check-circle fa-2x text-success'" aria-hidden="true"></i>      
+  </div>
+  <h4>Seleccionar Cliente</h4>
+  <hr>
+    
+  <form [formGroup]="form">
+    <br>
+    <app-comp-find-proveedor-cliente-dni-ruc (getObject)="_getObject($event)" [_formControlName]="this.form.get('nrodoc')"></app-comp-find-proveedor-cliente-dni-ruc>    
+    <br>
+    <ng-container *ngIf="proveedorCliente">
+        <mat-form-field class="w-100">
+          <input matInput placeholder="Nombres / Razon Social" formControlName="razonsocial">
+        </mat-form-field>
+
+        
+        <mat-form-field class="w-100">
+          <textarea matInput placeholder="Direccion" formControlName="direccion" spellcheck="false"></textarea>
+        </mat-form-field>
+
+    </ng-container>
+  </form>
+</mat-card>
+
+
