@@ -29,7 +29,7 @@
         <hr>
         
         <div class="mat-elevation-z8">
-          <table mat-table #table [dataSource]="ListaProducto" class="w-100 tr-color-selected-1" matSort matSortActive="fecha"
+          <table mat-table #table [dataSource]="ListaProducto" class="w-100 h-100 tr-color-selected-1" matSort matSortActive="fecha"
             matSortDisableClear matSortDirection="asc">
 
             <ng-container matColumnDef="#">
@@ -79,8 +79,7 @@
 
       </mat-card>              
     </div>
-    <div class="col-md-4 bg-secondary">
-      <h1>eeee</h1>
+    <div class="col-md-4 bg-light">      
       <app-venta-comprobante></app-venta-comprobante>
       <br>
       <app-venta-cliente></app-venta-cliente>
