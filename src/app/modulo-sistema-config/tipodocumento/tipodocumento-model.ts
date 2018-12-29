@@ -6,6 +6,7 @@ export class TipodocumentoModel {
         public idTipoDocumento:number=null,
         public dscTipoDocumento:string=null,
         public codigoSunat:string=null,
+        public exigecliente: boolean = null,
         public numeradors: NumeradorModel[] = null
     ){
 
